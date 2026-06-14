@@ -1,0 +1,372 @@
+/* ── Score Panel — gothic black-gold battle HUD ── */
+
+.game-scorepanel {
+  width: var(--cg-game-scorepanel-w, 208px);
+  min-width: var(--cg-game-scorepanel-w, 208px);
+  background:
+    linear-gradient(180deg, rgba(14, 10, 18, 0.96) 0%, rgba(8, 6, 10, 0.98) 100%);
+  border-left: 1px solid rgba(255, 180, 60, 0.22);
+  box-shadow:
+    inset 1px 0 0 rgba(255, 200, 100, 0.06),
+    -8px 0 32px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  gap: 0;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.scorepanel__section {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(120, 80, 20, 0.22);
+}
+
+.scorepanel__label {
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(180, 150, 90, 0.78);
+  margin-bottom: 6px;
+}
+
+/* ── Round ── */
+
+.scorepanel__round-value {
+  font-family: "Cinzel", ui-serif, Georgia, serif;
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  color: #ffd76a;
+  text-shadow:
+    0 0 18px rgba(255, 190, 60, 0.55),
+    0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* ── Total score arcade ── */
+
+.scorepanel__arcade {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(22, 16, 10, 0.95) 0%, rgba(10, 8, 6, 0.98) 100%);
+  border: 1px solid rgba(100, 70, 30, 0.45);
+  box-shadow:
+    inset 0 2px 8px rgba(0, 0, 0, 0.65),
+    inset 0 -1px 0 rgba(255, 200, 100, 0.08),
+    0 0 16px rgba(255, 170, 40, 0.12);
+}
+
+.scorepanel__arcade-value {
+  font-family: "Cinzel", ui-monospace, monospace;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #ffe082;
+  text-shadow:
+    0 0 12px rgba(255, 200, 80, 0.5),
+    0 0 24px rgba(255, 150, 40, 0.25);
+  text-align: center;
+}
+
+/* ── Selected ── */
+
+.scorepanel__selected-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.scorepanel__gems {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.scorepanel__gem {
+  font-size: 14px;
+  line-height: 1;
+  color: rgba(60, 55, 65, 0.85);
+  text-shadow: none;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.scorepanel__gem--filled {
+  color: #ffd76a;
+  text-shadow:
+    0 0 8px rgba(255, 200, 80, 0.75),
+    0 0 16px rgba(255, 170, 40, 0.35);
+}
+
+.scorepanel__selected-count {
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(220, 200, 160, 0.88);
+  letter-spacing: 0.06em;
+}
+
+/* ── Current hand card ── */
+
+.scorepanel__hand-card {
+  margin-top: 2px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background:
+    linear-gradient(165deg, rgba(24, 16, 32, 0.88) 0%, rgba(12, 8, 18, 0.92) 100%);
+  border: 1px solid rgba(140, 100, 180, 0.28);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 220, 160, 0.05),
+    0 0 14px rgba(100, 60, 140, 0.12);
+}
+
+.scorepanel__hand-name {
+  font-family: "Cinzel", ui-serif, Georgia, serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #e8dcc8;
+  margin-bottom: 10px;
+}
+
+.scorepanel__hand-name--empty {
+  color: rgba(140, 130, 150, 0.75);
+  font-style: italic;
+  font-size: 13px;
+}
+
+.scorepanel__hand-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.scorepanel__hand-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.scorepanel__hand-stat-label {
+  font-family: ui-monospace, monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(160, 140, 110, 0.72);
+}
+
+.scorepanel__hand-stat-value {
+  font-family: ui-monospace, monospace;
+  font-size: 18px;
+  font-weight: 800;
+  color: #fde68a;
+  text-shadow: 0 0 10px rgba(255, 200, 80, 0.35);
+}
+
+.scorepanel__hand-stat-value--muted {
+  color: rgba(100, 90, 110, 0.65);
+  text-shadow: none;
+}
+
+/* ── Combat log ── */
+
+.scorepanel__combat-log {
+  margin: 0 16px 12px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: rgba(6, 4, 10, 0.72);
+  border: 1px solid rgba(120, 80, 20, 0.25);
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(200, 180, 140, 0.82);
+  text-align: center;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scorepanel__combat-log--damage {
+  color: #fbbf24;
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
+}
+
+.scorepanel__combat-log--shield {
+  color: #c4b5fd;
+  text-shadow: 0 0 10px rgba(167, 139, 250, 0.45);
+}
+
+.scorepanel__combat-log--skill {
+  color: #e9d5ff;
+  text-shadow: 0 0 10px rgba(192, 132, 252, 0.4);
+}
+
+.scorepanel__combat-log--waiting {
+  color: rgba(120, 110, 130, 0.65);
+  font-style: italic;
+}
+
+/* ── Image buttons ── */
+
+.scorepanel__actions {
+  margin-top: auto;
+  padding: 8px 8px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.scorepanel__img-btn {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 72px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
+}
+
+@keyframes scorepanel-btn-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.028);
+  }
+}
+
+@keyframes scorepanel-btn-glow-play {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.78));
+  }
+}
+
+@keyframes scorepanel-btn-glow-discard {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 10px rgba(255, 140, 40, 0.35));
+  }
+  50% {
+    filter: drop-shadow(0 0 18px rgba(255, 170, 60, 0.65));
+  }
+}
+
+.scorepanel__img-btn--breathing.scorepanel__img-btn--play {
+  animation:
+    scorepanel-btn-breathe 2.6s ease-in-out infinite,
+    scorepanel-btn-glow-play 2.6s ease-in-out infinite;
+}
+
+.scorepanel__img-btn--breathing.scorepanel__img-btn--discard {
+  animation:
+    scorepanel-btn-breathe 2.6s ease-in-out infinite,
+    scorepanel-btn-glow-discard 2.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scorepanel__img-btn--breathing {
+    animation: none !important;
+  }
+}
+
+.scorepanel__img-btn-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Align 2/2 on the same row as baked-in label, after "DRAW" */
+.scorepanel__discard-meta {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.scorepanel__discard-badge {
+  position: absolute;
+  left: 83%;
+  top: 43.5%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 14px;
+  padding: 0 5px;
+  border-radius: 3px;
+  background: rgba(12, 6, 6, 0.78);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  box-shadow: inset 0 0 6px rgba(255, 180, 60, 0.08);
+  font-family: "Cinzel", ui-serif, Georgia, serif;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  color: #ffd76a;
+  text-shadow: 0 0 6px rgba(255, 200, 80, 0.35);
+  white-space: nowrap;
+  max-width: 12%;
+}
+
+.scorepanel__img-btn--play:hover:not(:disabled) {
+  animation: none;
+  transform: scale(1.03);
+  filter: drop-shadow(0 0 16px rgba(168, 85, 247, 0.7));
+}
+
+.scorepanel__img-btn--discard:hover:not(:disabled) {
+  animation: none;
+  transform: scale(1.03);
+  filter: drop-shadow(0 0 14px rgba(255, 170, 40, 0.45));
+}
+
+.scorepanel__img-btn:active:not(:disabled) {
+  animation: none;
+  transform: scale(0.98) translateY(1px);
+}
+
+.scorepanel__img-btn:disabled {
+  cursor: not-allowed;
+}
+
+.scorepanel__img-btn--inactive {
+  opacity: 0.38;
+  filter: grayscale(0.35);
+  animation: none !important;
+}
+
+.scorepanel__phase-hint {
+  font-size: 11px;
+  color: rgba(140, 130, 150, 0.75);
+  text-align: center;
+  padding: 0 16px 12px;
+  font-family: ui-monospace, monospace;
+}
+
+.scorepanel__phase-hint--warn {
+  color: #fbbf24;
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.35);
+}

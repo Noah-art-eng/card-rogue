@@ -1,0 +1,53 @@
+.google-signin-wrap {
+  width: 100%;
+}
+
+.google-signin-btn {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 1px solid #747775;
+  background: #fff;
+  font-family: 'Roboto', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #1f1f1f;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease,
+    border-color 0.15s ease;
+}
+
+@media (min-width: 1512px) {
+  .google-signin-btn {
+    font-size: 15px;
+  }
+}
+
+.google-signin-btn:not(:disabled):hover {
+  background: #f7f8f8;
+  box-shadow: 0 1px 2px rgba(60, 64, 67, 0.18);
+}
+
+.google-signin-btn:not(:disabled):active {
+  background: #ececec;
+}
+
+.google-signin-btn--disabled,
+.google-signin-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+  box-shadow: none;
+}
+
+.google-signin-hint {
+  margin-top: 8px;
+  text-align: center;
+  font-family: system-ui, sans-serif;
+  font-size: 12px;
+  color: #94a3b8;
+}

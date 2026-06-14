@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=208" />
+  <title>Score Panel — Before</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0a0810; font-family: ui-monospace, monospace; }
+    .game-scorepanel {
+      width: 208px;
+      background: linear-gradient(180deg, #0c0a08 0%, #12100c 100%);
+      border-left: 1px solid rgba(120, 80, 20, 0.35);
+      display: flex;
+      flex-direction: column;
+    }
+    .scorepanel__section {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(120, 80, 20, 0.25);
+    }
+    .scorepanel__label {
+      color: rgba(120, 90, 40, 0.85);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+    .scorepanel__value--round {
+      font-size: 28px;
+      font-weight: 900;
+      color: #eab308;
+    }
+    .scorepanel__value--total {
+      font-size: 20px;
+      font-weight: 900;
+      color: #fde047;
+    }
+    .scorepanel__selected-line {
+      color: rgba(120, 90, 40, 0.85);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+    }
+    .scorepanel__actions {
+      margin-top: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .scorepanel__btn {
+      border-radius: 8px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      font-size: 12px;
+      padding: 12px;
+      border: none;
+      cursor: pointer;
+    }
+    .scorepanel__btn--primary {
+      background: linear-gradient(180deg, #ca8a04 0%, #854d0e 100%);
+      color: #fef9c3;
+    }
+    .scorepanel__btn--secondary {
+      background: transparent;
+      border: 1px solid rgba(120, 80, 20, 0.55);
+      color: #ca8a04;
+    }
+    .scorepanel__shuffle-badge {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(120, 80, 20, 0.35);
+      color: #eab308;
+      margin-left: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-scorepanel">
+    <div class="scorepanel__section">
+      <div class="scorepanel__label">Round</div>
+      <div class="scorepanel__value--round">2</div>
+    </div>
+    <div class="scorepanel__section">
+      <div class="scorepanel__label">Total Score</div>
+      <div class="scorepanel__value--total">8</div>
+    </div>
+    <div class="scorepanel__section">
+      <div class="scorepanel__selected-line">Selected 0/5</div>
+    </div>
+    <div class="scorepanel__actions">
+      <button class="scorepanel__btn scorepanel__btn--primary">Play &amp; Attack</button>
+      <button class="scorepanel__btn scorepanel__btn--secondary">
+        Discard &amp; Draw 2/2
+      </button>
+    </div>
+  </div>
+</body>
+</html>

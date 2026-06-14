@@ -1,0 +1,239 @@
+.player-hud {
+  position: relative;
+}
+
+.player-hud__panel {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 340px;
+  max-width: 400px;
+  padding: 14px 18px 14px 16px;
+  border: 1px solid rgba(200, 160, 80, 0.62);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(18, 12, 8, 0.96) 0%, rgba(8, 6, 4, 0.98) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 220, 140, 0.1),
+    inset 0 1px 0 rgba(255, 230, 170, 0.06),
+    0 8px 24px rgba(0, 0, 0, 0.55);
+}
+
+.player-hud__info {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.player-hud__name {
+  font-family: var(--cg-font-body, system-ui, sans-serif);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #e8d4a8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-hud__meta {
+  font-size: 14px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-hud__level {
+  color: #d4aa4a;
+  font-weight: 600;
+}
+
+.player-hud__meta-sep {
+  color: rgba(200, 180, 140, 0.55);
+}
+
+.player-hud__rank {
+  color: #b794f6;
+  font-weight: 600;
+}
+
+.player-hud__hp-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 2px;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.player-hud__hp-label {
+  color: rgba(220, 220, 230, 0.82);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.player-hud__hp-values {
+  font-family: var(--cg-font-stat, ui-monospace, monospace);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.player-hud__hp-current {
+  color: #ff5a5a;
+}
+
+.player-hud__hp-sep,
+.player-hud__hp-max {
+  color: rgba(240, 240, 245, 0.88);
+}
+
+.avatar-frame {
+  position: relative;
+  width: 108px;
+  height: 108px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 10px rgba(255, 190, 80, 0.45));
+  transition: filter 0.35s ease;
+}
+
+.avatar-frame--shield {
+  filter: drop-shadow(0 0 14px rgba(80, 180, 255, 0.65));
+}
+
+.avatar-frame__portrait {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 58%;
+  height: 58%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 1;
+  background: #120a04;
+}
+
+.avatar-frame__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.avatar-frame__border {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+}
+
+.player-hud__hp-track {
+  position: relative;
+  width: 100%;
+  min-width: 200px;
+  height: 26px;
+  margin-top: 4px;
+  border-radius: 5px;
+  background: rgba(12, 4, 4, 0.72);
+  overflow: hidden;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.65);
+}
+
+.player-hud__hp-fill {
+  width: var(--hp-percent, 100%);
+  height: 100%;
+  min-width: 0;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #ff7a7a 0%, #ef2020 48%, #b00808 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 220, 220, 0.55),
+    0 0 10px rgba(255, 60, 60, 0.3);
+  transition: width 0.3s ease;
+}
+
+.player-hud__hp-track--critical .player-hud__hp-fill {
+  animation: pulse-hp 0.8s infinite;
+}
+
+.player-hud__shield {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.player-hud__shield-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.player-hud__shield--active {
+  color: #7ec8ff;
+}
+
+.player-hud__shield--cooldown {
+  color: #8a7a7a;
+}
+
+.player-hud__shield--off {
+  color: #7ec8ff;
+}
+
+@keyframes pulse-hp {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.72;
+  }
+}
+
+.player-hud--shake {
+  animation: handHudShake 0.42s ease;
+}
+
+.player-hud--shield-pulse .player-hud__hp-track {
+  animation: shieldAbsorbPulse 1.2s ease-out;
+}
+
+@keyframes handHudShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-5px);
+  }
+  40% {
+    transform: translateX(5px);
+  }
+  60% {
+    transform: translateX(-3px);
+  }
+  80% {
+    transform: translateX(3px);
+  }
+}
+
+@keyframes shieldAbsorbPulse {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  35% {
+    filter: brightness(1.35);
+  }
+}

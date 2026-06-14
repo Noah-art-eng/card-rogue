@@ -1,0 +1,47 @@
+{
+  "name": "backend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test:handEvaluator": "node dist/pve/handEvaluator.test.js",
+    "test:actions": "node dist/pve/actions.test.js",
+    "test:roundLoop": "node dist/pve/roundLoop.test.js",
+    "test:bossIntent": "node dist/pve/bossIntent.test.js",
+    "test:bossConfig": "node dist/pve/bossConfig.test.js",
+    "test:layerConfig": "node dist/pve/layerConfig.test.js",
+    "test:shield": "node dist/pve/shield.test.js",
+    "test:shuffle": "node dist/pve/shuffle.test.js",
+    "test:skillEnergy": "node dist/pve/skillEnergy.test.js",
+    "test:changeColor": "node dist/pve/changeColor.test.js",
+    "test:changeRank": "node dist/pve/changeRank.test.js",
+    "test:matchHistory": "node dist/services/matchArchive.test.js",
+    "test:pveIntegration": "node dist/pve/pveIntegration.test.js",
+    "test:pve": "npm run build && npm run test:handEvaluator && npm run test:actions && npm run test:roundLoop && npm run test:bossIntent && npm run test:bossConfig && npm run test:layerConfig && npm run test:shield && npm run test:shuffle && npm run test:skillEnergy && npm run test:changeColor && npm run test:changeRank && npm run test:pveIntegration && npm run test:matchHistory"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
+    "express": "^4.21.2",
+    "google-auth-library": "^10.7.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.6.3",
+    "multer": "^2.1.1",
+    "socket.io": "^4.8.3"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.1.0",
+    "@types/node": "^22.10.2",
+    "mongodb-memory-server": "^11.2.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

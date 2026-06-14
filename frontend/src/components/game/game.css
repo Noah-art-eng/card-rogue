@@ -1,0 +1,1577 @@
+/* ============================================================
+   Game Layout — full-screen fixed overlay above #root
+   ============================================================ */
+
+.game-page {
+  --cg-game-skillbar-w: 150px;
+  --cg-game-scorepanel-w: 272px;
+  --game-topbar-btn-size: 72px;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  background: var(--cg-background-deep, #0c0c14);
+  color: var(--cg-text-primary, #e0d8c8);
+  font-family: var(--cg-font-body);
+  overflow: hidden;
+  font-size: 13px;
+}
+
+/* ── Top Bar ───────────────────────────────────────────────── */
+
+.game-topbar {
+  height: 72px;
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  background: #12121e;
+  border-bottom: 1px solid #2a2a40;
+  gap: 0;
+  flex-shrink: 0;
+}
+
+.game-topbar__left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.game-topbar__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--cg-accent-gold, #c8a84b);
+  font-family: var(--cg-font-title);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.game-topbar__center {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 2;
+  justify-content: center;
+}
+
+.game-topbar__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.2;
+}
+
+.game-topbar__stat-label {
+  font-size: 10px;
+  color: var(--cg-text-muted, #6b6580);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.game-topbar__stat-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cg-text-primary, #e0d8c8);
+  font-family: var(--cg-font-stat);
+}
+
+.game-topbar__conn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: #6b6580;
+}
+
+.game-topbar__conn-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #3a6640;
+}
+
+.game-topbar__conn-dot--disconnected {
+  background: #8b3030;
+}
+
+.game-topbar__right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+/* ── Middle Row ────────────────────────────────────────────── */
+
+.game-mid {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── Skill Bar ─────────────────────────────────────────────── */
+
+.game-skillbar {
+  width: var(--cg-game-skillbar-w, 150px);
+  min-width: var(--cg-game-skillbar-w, 150px);
+  background: transparent;
+  border-right: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  gap: 0;
+  overflow: visible;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.skillbar__frame-top,
+.skillbar__frame-bottom {
+  width: 90px;
+  display: block;
+  object-fit: fill;
+  flex-shrink: 0;
+}
+
+.skillbar__middle {
+  flex: 1;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: visible;
+  background-image: url('/images/skillbar-middle.png');
+  background-repeat: repeat-y;
+  background-size: 100% auto;
+  background-position: top center;
+  background-color: #0a0804;
+}
+
+.skillbar__energy-hero {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 14px 6px 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.skillbar__energy-big {
+  font-size: 22px;
+  font-weight: 900;
+  font-family: "Cinzel", ui-serif, Georgia, serif;
+  color: #2a2010;
+  line-height: 1;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+.skillbar__energy-big--active {
+  color: #ffd700;
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.7);
+}
+
+.skillbar__energy-caption {
+  font-size: 7px;
+  color: #5a4a28;
+  font-family: ui-monospace, monospace;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.skillbar__energy-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 6px 4px;
+}
+
+.skillbar__energy-label {
+  font-size: 9px;
+  color: #6b6580;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.skillbar__energy-pips {
+  display: flex;
+  gap: 4px;
+}
+
+.skillbar__pip {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #1a1208;
+  border: 1px solid #2a2010;
+}
+
+.skillbar__pip--active {
+  background: radial-gradient(circle at 35% 30%, #ffd700, #a07000);
+  border-color: #ffd700;
+  box-shadow: 0 0 6px rgba(255, 215, 0, 0.6);
+}
+
+.skillbar__energy-count {
+  font-size: 10px;
+  color: #9090a8;
+}
+
+/* Skill slot grid */
+
+.skillbar__slots {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  width: 100%;
+}
+
+.skillbar__slot {
+  width: 72px;
+  height: 72px;
+  position: relative;
+  perspective: 600px;
+}
+
+.skillbar__slot--disabled {
+  opacity: 0.38;
+}
+
+.skillbar__slot--active .skillbar__slot-front {
+  box-shadow: 0 0 10px rgba(58, 142, 221, 0.5);
+}
+
+.skillbar__slot--picking .skillbar__slot-front {
+  box-shadow: 0 0 10px rgba(200, 168, 75, 0.6);
+}
+
+/* 3-D flip (mirrors skill-bar.css logic but scoped to our naming) */
+
+.skillbar__slot-inner {
+  transition: transform 0.5s ease;
+  transform-style: preserve-3d;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.skillbar__slot-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.skillbar__slot-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.skillbar__slot-back {
+  transform: rotateY(180deg);
+  background: radial-gradient(circle at 40% 30%, #1a2a4a, #0a0f1e);
+  border: 1px solid rgba(96, 165, 250, 0.4);
+}
+
+/* Slot frame image + skill button */
+
+.skillbar__skill-btn {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: url('/images/skill-slot.png') no-repeat center / contain;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 0;
+  transition: filter 0.15s, transform 0.1s;
+}
+
+.skillbar__skill-btn:hover:not(:disabled) {
+  filter: brightness(1.2);
+  transform: scale(1.06);
+}
+
+.skillbar__skill-btn:disabled {
+  cursor: not-allowed;
+}
+
+.skillbar__skill-icon {
+  width: 52%;
+  height: 52%;
+  object-fit: contain;
+  display: block;
+}
+
+.skillbar__active-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 10px;
+  color: #3a8edd;
+  text-shadow: 0 0 6px rgba(58, 142, 221, 0.8);
+}
+
+.skillbar__cooldown-count {
+  font-size: 22px;
+  font-weight: 800;
+  color: #4880d0;
+}
+
+.skillbar__cooldown-label {
+  font-size: 9px;
+  color: #4880d0;
+  text-transform: uppercase;
+}
+
+.skillbar__slot-label {
+  position: absolute;
+  bottom: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  color: #6b6580;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* Picker popout — appears to the right of the skill bar */
+
+.skillbar__picker {
+  position: absolute;
+  left: 84px;
+  top: 0;
+  z-index: 20;
+  background: #14141f;
+  border: 1px solid #3a3a55;
+  border-radius: 8px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.6);
+  min-width: 68px;
+}
+
+.skillbar__picker--rank {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  min-width: 100px;
+}
+
+.skillbar__picker-el-btn {
+  padding: 4px 8px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  font-size: 14px;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: opacity 0.1s, transform 0.1s;
+}
+
+.skillbar__picker-el-btn:hover {
+  opacity: 1;
+  transform: scale(1.12);
+}
+
+.skillbar__picker-rank-btn {
+  padding: 4px 3px;
+  border-radius: 4px;
+  border: 1px solid #3a3a55;
+  background: #1a1a2e;
+  color: #c8a84b;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.1s, border-color 0.1s;
+}
+
+.skillbar__picker-rank-btn:hover {
+  background: #252540;
+  border-color: #c8a84b;
+}
+
+/* Phase hint */
+
+.skillbar__phase-hint {
+  font-size: 9px;
+  color: #c8a84b;
+  text-align: center;
+  padding: 3px 4px;
+  width: 100%;
+}
+
+.skillbar__phase-hint--muted {
+  color: #6b6580;
+}
+
+/* ── Battlefield ───────────────────────────────────────────── */
+
+.game-battlefield {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  gap: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Background image fills the entire battlefield */
+.battlefield__bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+}
+
+/* Soft dark overlay for text readability */
+.battlefield__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.35) 0%,
+    rgba(0, 0, 0, 0.2) 50%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  z-index: 1;
+}
+
+.battlefield__floor-plaque {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.65);
+  border: 1px solid rgba(200, 160, 70, 0.25);
+  border-radius: 20px;
+  padding: 3px 14px;
+  backdrop-filter: blur(6px);
+}
+
+.battlefield__floor-text {
+  color: #c8a040;
+  font-size: 11px;
+  font-family: ui-monospace, monospace;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.battlefield__meta {
+  position: absolute;
+  top: 44px;
+  left: 12px;
+  z-index: 50;
+  display: flex;
+  gap: 8px;
+}
+
+.battlefield__meta-tag {
+  font-size: 10px;
+  color: rgba(224, 216, 200, 0.6);
+  background: rgba(0, 0, 0, 0.4);
+  padding: 2px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.battlefield-boss-area {
+  position: relative;
+  z-index: 45;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding-top: 32px;
+  width: 100%;
+}
+
+.battlefield-boss-glow {
+  position: absolute;
+  top: 26%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(120px, 24vmin, 280px);
+  height: clamp(100px, 20vmin, 240px);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(120, 40, 140, 0.2) 0%, rgba(80, 15, 120, 0.1) 45%, transparent 78%);
+  filter: blur(22px);
+  pointer-events: none;
+  z-index: 8;
+}
+
+.battlefield-boss-stack {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: clamp(132px, 20vmin, 228px);
+  max-width: min(228px, 36vw);
+  transform: translateY(clamp(16px, 3.2vmin, 32px));
+}
+
+.battlefield-boss-portrait-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 5;
+  max-height: clamp(200px, 30vmin, 300px);
+  border-radius: 14px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 90% 88% at 50% 70%, rgba(24, 14, 42, 0.55) 0%, rgba(4, 6, 14, 1) 75%),
+    linear-gradient(180deg, rgba(10, 10, 24, 1) 0%, rgba(2, 4, 12, 1) 100%);
+  -webkit-mask-image: radial-gradient(ellipse 104% 124% at 50% 58%, #000 0%, #000 54%, rgba(0, 0, 0, 0.38) 80%, transparent 98%);
+  mask-image: radial-gradient(ellipse 104% 124% at 50% 58%, #000 0%, #000 54%, rgba(0, 0, 0, 0.38) 80%, transparent 98%);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.72), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.battlefield-boss-portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  display: block;
+}
+
+.battlefield-boss-portrait-vignette {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 9;
+  box-shadow:
+    inset 0 0 52px rgba(0, 0, 0, 0.62),
+    inset 0 18px 40px rgba(8, 6, 26, 0.45),
+    inset 0 -36px 64px rgba(4, 4, 14, 0.75);
+}
+
+.battlefield-boss-portrait-fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 24%;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.5) 100%);
+  pointer-events: none;
+  z-index: 11;
+}
+
+.battlefield-boss-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(6px, 1.8vmin, 12px);
+  flex-wrap: nowrap;
+  padding: 0 2px;
+  max-width: min(260px, 42vw);
+}
+
+.battlefield__intent-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(200, 50, 50, 0.7);
+  background: radial-gradient(circle, rgba(80, 20, 20, 0.9) 0%, rgba(40, 10, 10, 0.95) 100%);
+  box-shadow: 0 0 10px rgba(200, 50, 50, 0.4);
+  line-height: 1;
+}
+
+.battlefield__intent-icon--attack {
+  border-color: rgba(200, 50, 50, 0.7);
+}
+
+.battlefield__intent-icon--charge {
+  border-color: rgba(232, 160, 46, 0.7);
+  background: radial-gradient(circle, rgba(80, 60, 20, 0.9) 0%, rgba(40, 30, 10, 0.95) 100%);
+}
+
+.battlefield__intent-icon--defend {
+  border-color: rgba(46, 139, 232, 0.7);
+  background: radial-gradient(circle, rgba(20, 40, 80, 0.9) 0%, rgba(10, 20, 40, 0.95) 100%);
+}
+
+.battlefield__intent-icon-glyph {
+  font-size: 12px;
+  line-height: 1;
+}
+
+.battlefield__intent-icon-val {
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.battlefield__hp-badge {
+  min-width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 800;
+  color: #fff;
+  background: radial-gradient(circle at 35% 30%, #cc3030 0%, #8b1010 55%, #4a0808 100%);
+  border: 2px solid rgba(255, 120, 120, 0.5);
+  box-shadow: 0 0 14px rgba(200, 40, 40, 0.5);
+}
+
+.battlefield-boss-name-pill {
+  padding: 3px 12px;
+  max-width: 140px;
+}
+
+/* legacy — kept for reference */
+.battlefield__boss-info {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Name pill gets its visual from battlefield.css; we add padding here */
+.battlefield-boss-name-pill {
+  padding: 4px 16px;
+}
+
+/* HP bar */
+.battlefield__hp-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.battlefield__hp-bar {
+  flex: 1;
+  height: 8px;
+  background: rgba(20, 20, 40, 0.7);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(50, 50, 80, 0.6);
+}
+
+.battlefield__hp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #8b1a1a, #cc3030);
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.battlefield__hp-text {
+  font-size: 11px;
+  color: #9090a8;
+  white-space: nowrap;
+  min-width: 70px;
+  text-align: right;
+}
+
+/* Intent / status row */
+.battlefield__intent-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.intent-badge {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  border: 1px solid transparent;
+}
+
+.intent-badge--attack {
+  background: rgba(200, 50, 50, 0.25);
+  color: #e85b5b;
+  border-color: rgba(200, 50, 50, 0.5);
+}
+
+.intent-badge--charge {
+  background: rgba(232, 160, 46, 0.25);
+  color: #e8a02e;
+  border-color: rgba(232, 160, 46, 0.5);
+}
+
+.intent-badge--defend {
+  background: rgba(46, 139, 232, 0.25);
+  color: #2e8be8;
+  border-color: rgba(46, 139, 232, 0.5);
+}
+
+.battlefield__atk-preview {
+  font-size: 12px;
+  color: #e85b5b;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.battlefield__charge-tag {
+  font-size: 9px;
+  background: rgba(232, 160, 46, 0.2);
+  color: #e8a02e;
+  padding: 1px 5px;
+  border-radius: 3px;
+  border: 1px solid rgba(232, 160, 46, 0.4);
+  letter-spacing: 0.3px;
+}
+
+.battlefield__status-tag {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 20px;
+  border: 1px solid transparent;
+}
+
+.battlefield__status-tag--defend {
+  background: rgba(46, 139, 232, 0.15);
+  color: #2e8be8;
+  border-color: rgba(46, 139, 232, 0.35);
+}
+
+.battlefield__status-tag--charge {
+  background: rgba(232, 160, 46, 0.15);
+  color: #e8a02e;
+  border-color: rgba(232, 160, 46, 0.35);
+}
+
+.battlefield__phase-banner {
+  font-size: 12px;
+  color: #e8a02e;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* legacy compat */
+.elem--FIRE { background: rgba(232, 91, 46, 0.2); color: #e85b2e; border: 1px solid rgba(232, 91, 46, 0.4); }
+.elem--WATER { background: rgba(46, 139, 232, 0.2); color: #2e8be8; border: 1px solid rgba(46, 139, 232, 0.4); }
+.elem--GRASS { background: rgba(46, 200, 84, 0.2); color: #2ec854; border: 1px solid rgba(46, 200, 84, 0.4); }
+
+/* ── Score Panel ───────────────────────────────────────────── */
+
+.game-scorepanel {
+  width: 208px;
+  min-width: 208px;
+  background: rgba(10, 10, 18, 0.92);
+  border-left: 1px solid #2a2a40;
+  display: flex;
+  flex-direction: column;
+  padding: 14px 12px;
+  gap: 10px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.scorepanel__stats-row {
+  display: flex;
+  gap: 16px;
+}
+
+.scorepanel__stat {
+  flex: 1;
+}
+
+.scorepanel__value--gold {
+  color: #e8a02e;
+}
+
+.scorepanel__selected-line {
+  font-size: 11px;
+  color: #6b6580;
+}
+
+.scorepanel__preview-compact {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.scorepanel__preview-damage {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.scorepanel__preview-num {
+  font-size: 22px;
+  font-weight: 800;
+  color: #e8a02e;
+}
+
+.scorepanel__preview-empty {
+  color: #4a4a60;
+  font-size: 18px;
+}
+
+.scorepanel__block {
+  background: #14141f;
+  border: 1px solid #2a2a40;
+  border-radius: 6px;
+  padding: 7px 10px;
+}
+
+.scorepanel__block--last {
+  border-color: #2a4030;
+  background: #0c1410;
+}
+
+.scorepanel__label {
+  font-size: 10px;
+  color: #6b6580;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 3px;
+}
+
+.scorepanel__value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #c8a84b;
+  line-height: 1.2;
+}
+
+.scorepanel__selected-pips {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.scorepanel__card-pip {
+  width: 16px;
+  height: 20px;
+  border-radius: 3px;
+  background: #2a2a40;
+  border: 1px solid #3a3a55;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  color: #6b6580;
+}
+
+.scorepanel__card-pip--filled {
+  background: #1e1a0a;
+  border-color: #c8a84b;
+  color: #c8a84b;
+}
+
+/* Damage preview */
+.scorepanel__preview {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 2px;
+}
+
+.scorepanel__preview-formula {
+  font-size: 10px;
+  color: #6b6580;
+  font-family: ui-monospace, monospace;
+}
+
+.scorepanel__preview-total {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.scorepanel__defend-tag {
+  font-size: 9px;
+  background: rgba(46, 139, 232, 0.2);
+  color: #2e8be8;
+  border: 1px solid rgba(46, 139, 232, 0.4);
+  padding: 1px 5px;
+  border-radius: 4px;
+  letter-spacing: 0.2px;
+}
+
+.scorepanel__divider {
+  height: 1px;
+  background: #2a2a40;
+  margin: 2px 0;
+}
+
+.scorepanel__btn {
+  width: 100%;
+  padding: 9px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+  letter-spacing: 0.2px;
+}
+
+.scorepanel__btn--primary {
+  background: #c8a84b;
+  color: #0c0c14;
+  border-color: #c8a84b;
+}
+
+.scorepanel__btn--primary:hover:not(:disabled) {
+  background: #d9bc6a;
+}
+
+.scorepanel__btn--secondary {
+  background: #1a1a2e;
+  color: #b0a898;
+  border-color: #3a3a55;
+}
+
+.scorepanel__btn--secondary:hover:not(:disabled) {
+  background: #252540;
+  border-color: #c8a84b;
+  color: #c8a84b;
+}
+
+.scorepanel__btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.scorepanel__phase-hint {
+  font-size: 11px;
+  color: #6b6580;
+  text-align: center;
+  padding: 2px 0;
+}
+
+.scorepanel__phase-hint--warn {
+  color: #e8a02e;
+}
+
+/* ── Hand Area ─────────────────────────────────────────────── */
+
+.game-handarea {
+  --cg-hand-card-w: 192px;
+  --cg-hand-card-h: 282px;
+  --cg-hand-area-h: 210px;
+  height: var(--cg-hand-area-h);
+  min-height: var(--cg-hand-area-h);
+  background: #0a0a12;
+  background-image: url('/images/handarea.png');
+  background-size: cover;
+  background-position: center;
+  border-top: 1px solid #2a2a40;
+  display: flex;
+  align-items: stretch;
+  padding: 0 12px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: visible;
+}
+
+/* Shield active glow on hand area */
+.game-handarea--shield::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-top: 2px solid rgba(58, 142, 221, 0.5);
+  pointer-events: none;
+  box-shadow: inset 0 2px 20px rgba(58, 142, 221, 0.12);
+}
+
+.handarea__left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 90px;
+  gap: 6px;
+  padding: 8px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.handarea__center {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 6px;
+  padding-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.handarea__right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  min-width: 60px;
+  padding: 8px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.handarea__deck-box {
+  min-width: 56px;
+  padding: 8px 10px 6px;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(60, 45, 25, 0.85) 0%, rgba(30, 22, 12, 0.95) 100%);
+  border: 2px solid rgba(200, 168, 75, 0.55);
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 220, 160, 0.12);
+}
+
+.handarea__deck-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: #c8a84b;
+  letter-spacing: 0.12em;
+  margin-top: 2px;
+}
+
+.handarea__deck-info {
+  font-size: 11px;
+  color: #6b6580;
+  text-align: right;
+}
+
+.handarea__deck-count {
+  font-size: 18px;
+  font-weight: 700;
+  color: #9090a8;
+}
+
+/* ── Hand Card (image-based, 96 × 140) ────────────────────── */
+
+.hand-card {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: var(--cg-hand-card-w, 192px);
+  height: var(--cg-hand-card-h, 282px);
+  min-width: var(--cg-hand-card-w, 192px);
+  border-radius: 10px;
+  border: 3px solid #3a3a55;
+  background: #14141f;
+  cursor: pointer;
+  transform-origin: 50% 100%;
+  transition:
+    transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-color 0.15s,
+    box-shadow 0.15s;
+  user-select: none;
+  padding: 0;
+  overflow: visible;
+  flex-shrink: 0;
+  pointer-events: auto;
+  isolation: isolate;
+}
+
+.hand-card:hover:not(.hand-card--disabled) {
+  /* rarity glow handled by .hand-card--rarity-active */
+}
+
+.hand-card--selected {
+  /* rarity + element border handled per-class below */
+}
+
+.hand-card--FIRE  { border-color: #8b3a20; }
+.hand-card--WATER { border-color: #1e5080; }
+.hand-card--GRASS { border-color: #1e6030; }
+
+.hand-card--selected.hand-card--FIRE  { border-color: #e85b2e; }
+.hand-card--selected.hand-card--WATER { border-color: #2e8be8; }
+.hand-card--selected.hand-card--GRASS { border-color: #2ec854; }
+
+/* ── Card rarity outer glow (common / epic / legendary) ── */
+.hand-card::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: calc(10px + 4px);
+  border: 2px solid transparent;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, box-shadow 0.18s ease;
+  z-index: 2;
+}
+
+.hand-card--rarity-active::after {
+  opacity: 1;
+}
+
+.hand-card--common.hand-card--rarity-active::after {
+  border-color: #60a5fa;
+  box-shadow:
+    0 0 12px rgba(59, 130, 246, 0.45),
+    0 0 24px rgba(59, 130, 246, 0.22);
+}
+
+.hand-card--epic.hand-card--rarity-active::after {
+  border-color: #c084fc;
+  box-shadow:
+    0 0 16px rgba(168, 85, 247, 0.55),
+    0 0 32px rgba(139, 92, 246, 0.35);
+}
+
+.hand-card--legendary.hand-card--rarity-active {
+  border-color: #ffe082 !important;
+  border-width: 3px;
+  outline: 2px solid rgba(255, 255, 220, 0.92);
+  outline-offset: 3px;
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease,
+    outline 220ms ease;
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.72),
+    0 0 18px rgba(255, 225, 110, 1),
+    0 0 42px rgba(255, 185, 45, 0.78),
+    0 0 82px rgba(255, 140, 0, 0.48),
+    0 0 120px rgba(255, 100, 0, 0.22);
+  animation: hand-card-legendary-breathe 2.2s ease-in-out infinite;
+}
+
+/* Legendary: inner gold ring + corner flares */
+.hand-card--legendary.hand-card--rarity-active::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 245, 190, 0.88);
+  pointer-events: none;
+  z-index: 3;
+  opacity: 1;
+  background:
+    radial-gradient(ellipse 58% 48% at 4% 6%, rgba(255, 235, 150, 0.62), transparent 68%),
+    radial-gradient(ellipse 54% 44% at 96% 94%, rgba(255, 200, 80, 0.52), transparent 66%);
+  box-shadow:
+    inset 0 0 28px rgba(255, 230, 140, 0.22),
+    inset 0 0 8px rgba(255, 255, 220, 0.15);
+}
+
+/* Legendary: diagonal shimmer sweep */
+.hand-card--legendary.hand-card--rarity-active::after {
+  inset: 0;
+  border: none;
+  border-radius: 16px;
+  opacity: 0.68;
+  z-index: 4;
+  background: linear-gradient(
+    125deg,
+    transparent 0%,
+    transparent 32%,
+    rgba(255, 240, 160, 0.32) 40%,
+    rgba(255, 255, 245, 0.72) 50%,
+    rgba(255, 240, 160, 0.32) 60%,
+    transparent 68%,
+    transparent 100%
+  );
+  background-size: 260% 260%;
+  background-position: -130% -130%;
+  mix-blend-mode: screen;
+  box-shadow: none;
+  animation: hand-card-legendary-shimmer 1.5s ease-in-out infinite;
+}
+
+.hand-card--legendary.hand-card--selected.hand-card--rarity-active::after {
+  animation-duration: 2.8s;
+  opacity: 0.58;
+}
+
+@keyframes hand-card-legendary-breathe {
+  0%,
+  100% {
+    box-shadow:
+      0 10px 28px rgba(0, 0, 0, 0.72),
+      0 0 18px rgba(255, 225, 110, 0.92),
+      0 0 42px rgba(255, 185, 45, 0.68),
+      0 0 82px rgba(255, 140, 0, 0.42),
+      0 0 120px rgba(255, 100, 0, 0.18);
+  }
+  50% {
+    box-shadow:
+      0 12px 32px rgba(0, 0, 0, 0.78),
+      0 0 28px rgba(255, 240, 140, 1),
+      0 0 56px rgba(255, 200, 55, 0.88),
+      0 0 98px rgba(255, 150, 0, 0.58),
+      0 0 140px rgba(255, 110, 0, 0.32);
+  }
+}
+
+@keyframes hand-card-legendary-shimmer {
+  0% {
+    background-position: -130% -130%;
+  }
+  100% {
+    background-position: 130% 130%;
+  }
+}
+
+.hand-card__tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 300;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(8, 6, 3, 0.94);
+  border: 1px solid rgba(200, 160, 70, 0.45);
+  color: #f0e6d0;
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1.3;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.55);
+}
+
+.hand-card--legendary .hand-card__tooltip {
+  border-color: rgba(255, 215, 120, 0.65);
+  color: #fff3cc;
+  box-shadow:
+    0 0 10px rgba(255, 190, 60, 0.35),
+    0 4px 14px rgba(0, 0, 0, 0.55);
+}
+
+.hand-card--common.hand-card--rarity-active {
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.62),
+    0 0 14px rgba(59, 130, 246, 0.28);
+}
+
+.hand-card--epic.hand-card--rarity-active {
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.62),
+    0 0 18px rgba(168, 85, 247, 0.38);
+}
+
+.hand-card--skill-target {
+  border-color: #9b59b6;
+  box-shadow: 0 0 12px rgba(155, 89, 182, 0.45);
+}
+
+.hand-card--disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* Card image fills the entire card */
+.hand-card__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+}
+
+/* Gradient overlay at bottom for rank / chip labels */
+.hand-card__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 6px 5px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.72) 0%, transparent 100%);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-radius: 0 0 6px 6px;
+  pointer-events: none;
+}
+
+.hand-card__rank-label {
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+}
+
+.hand-card__chip-label {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.75);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* Gold selection badge (top-right corner inside card) */
+.hand-card__sel-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  z-index: 5;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #c8a84b;
+  color: #0c0c14;
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* Skill-target star indicator */
+.hand-card__skill-indicator {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  z-index: 5;
+  font-size: 12px;
+  color: #9b59b6;
+  text-shadow: 0 0 6px rgba(155, 89, 182, 0.8);
+  pointer-events: none;
+}
+
+/* ── Overlay ───────────────────────────────────────────────── */
+
+.game-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 5, 10, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  backdrop-filter: blur(4px);
+}
+
+.game-overlay__card {
+  background: #14141f;
+  border: 2px solid #3a3a55;
+  border-radius: 14px;
+  padding: 40px 52px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  min-width: 300px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+}
+
+.game-overlay__title {
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.game-overlay__title--win {
+  color: #c8a84b;
+  text-shadow: 0 0 20px rgba(200, 168, 75, 0.5);
+}
+
+.game-overlay__title--lose {
+  color: #cc3030;
+  text-shadow: 0 0 20px rgba(204, 48, 48, 0.5);
+}
+
+.game-overlay__stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.game-overlay__stat {
+  font-size: 13px;
+  color: #9090a8;
+}
+
+.game-overlay__stat span {
+  color: #c8a84b;
+  font-weight: 600;
+}
+
+.game-overlay__icon {
+  font-size: 56px;
+  line-height: 1;
+}
+
+.game-overlay__summary {
+  font-size: 14px;
+  color: #a8a29e;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.game-overlay__summary span {
+  color: #facc15;
+  font-weight: 700;
+}
+
+.game-overlay__xp {
+  margin-top: 4px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #c4b5fd;
+  text-align: center;
+}
+
+.game-overlay__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.game-overlay__btn {
+  width: 100%;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.game-overlay__btn:active {
+  transform: scale(0.97);
+}
+
+.game-overlay__btn--primary {
+  color: #fef9c3;
+  background: linear-gradient(180deg, #ca8a04 0%, #854d0e 100%);
+  box-shadow: 0 8px 20px rgba(120, 80, 20, 0.45);
+}
+
+.game-overlay__btn--primary:hover {
+  filter: brightness(1.08);
+}
+
+.game-overlay__btn--secondary {
+  color: #d6d3d1;
+  background: linear-gradient(180deg, #44403c 0%, #1c1917 100%);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+.game-overlay__btn--secondary:hover {
+  filter: brightness(1.1);
+}
+
+/* ── Toast ─────────────────────────────────────────────────── */
+
+.game-toast {
+  position: fixed;
+  top: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2e1010;
+  border: 1px solid #8b3030;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 13px;
+  color: #e85b5b;
+  z-index: 50;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  max-width: 400px;
+  text-align: center;
+}
+
+/* ── Shared buttons ────────────────────────────────────────── */
+
+.btn-ghost {
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 1px solid #3a3a55;
+  background: transparent;
+  color: #9090a8;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.btn-ghost:hover {
+  background: #1a1a2e;
+  color: #e0d8c8;
+}
+
+/* ── Debug Panel ───────────────────────────────────────────── */
+
+.game-debug {
+  position: fixed;
+  bottom: 8px;
+  right: 8px;
+  z-index: 10;
+  max-width: 380px;
+  font-size: 11px;
+}
+
+.game-debug summary {
+  cursor: pointer;
+  padding: 4px 8px;
+  background: #1a1a2e;
+  border: 1px solid #3a3a55;
+  border-radius: 4px;
+  color: #6b6580;
+  font-size: 11px;
+  user-select: none;
+}
+
+.game-debug pre {
+  background: #0c0c18;
+  border: 1px solid #2a2a40;
+  border-radius: 4px;
+  padding: 8px;
+  margin-top: 4px;
+  color: #6b8040;
+  font-size: 10px;
+  max-height: 300px;
+  overflow: auto;
+  font-family: ui-monospace, monospace;
+}

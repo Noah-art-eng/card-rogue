@@ -1,0 +1,41 @@
+/* ── Game top bar image buttons ── */
+
+.game-topbar__actions {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.game-topbar__img-btn {
+  position: relative;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+  width: var(--game-topbar-btn-size, 72px);
+  height: var(--game-topbar-btn-size, 72px);
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
+}
+
+.game-topbar__img-btn-bg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+  user-select: none;
+}
+
+.game-topbar__img-btn:hover {
+  transform: scale(1.04);
+  filter: drop-shadow(0 0 12px rgba(255, 170, 60, 0.4));
+}
+
+.game-topbar__img-btn:active {
+  transform: scale(0.97);
+}

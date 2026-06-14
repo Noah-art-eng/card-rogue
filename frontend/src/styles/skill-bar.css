@@ -1,0 +1,438 @@
+/* ── Skill Relic Panel (left battle HUD) ── */
+
+.skill-relic-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: var(--cg-game-skillbar-w, 150px);
+  min-width: var(--cg-game-skillbar-w, 150px);
+  flex-shrink: 0;
+  overflow: visible;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.skill-relic-panel__ornament {
+  width: var(--cg-game-skillbar-w, 150px);
+  display: block;
+  object-fit: fill;
+  flex-shrink: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.skill-relic-panel__ornament--top {
+  height: calc(var(--cg-game-skillbar-w, 150px) * 1208 / 1302);
+  filter: drop-shadow(0 0 10px rgba(255, 170, 40, 0.35));
+  opacity: 0.92;
+}
+
+.skill-relic-panel__ornament--bottom {
+  height: calc(var(--cg-game-skillbar-w, 150px) * 1215 / 1295);
+  filter: drop-shadow(0 0 14px rgba(255, 170, 40, 0.5));
+  opacity: 0.95;
+}
+
+.skill-relic-panel__glass {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 10px 16px;
+  background-color: transparent;
+  background-image: url('/images/skillbar-middle.png');
+  background-repeat: repeat-y;
+  background-size: 100% auto;
+  background-position: top center;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* ── Charges ── */
+
+.skill-relic-panel__charges {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0 10px;
+}
+
+.skill-relic-panel__charges-label {
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: rgba(200, 170, 100, 0.75);
+  text-transform: uppercase;
+}
+
+.skill-relic-panel__charges-value {
+  font-family: "Cinzel", ui-serif, Georgia, serif;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+  background: linear-gradient(180deg, #ffd76a 0%, #ffb300 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 10px rgba(255, 183, 0, 0.45));
+  transition: filter 0.3s ease;
+}
+
+.skill-relic-panel__charges-value--live {
+  filter: drop-shadow(0 0 16px rgba(255, 200, 60, 0.65));
+}
+
+.skill-relic-panel__pips {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+.skill-relic-panel__pip {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #2a2a30;
+  border: 1px solid rgba(60, 60, 70, 0.8);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6);
+  flex-shrink: 0;
+}
+
+.skill-relic-panel__pip--active {
+  background: radial-gradient(circle at 35% 30%, #ffe566, #d4a017);
+  border-color: rgba(255, 215, 100, 0.9);
+  box-shadow:
+    0 0 10px rgba(255, 200, 60, 0.75),
+    0 0 18px rgba(255, 170, 40, 0.35),
+    inset 0 1px 0 rgba(255, 240, 180, 0.5);
+}
+
+.skill-relic-panel__divider {
+  width: calc(100% - 12px);
+  height: 1px;
+  margin: 2px 0 10px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 180, 60, 0.35) 20%,
+    rgba(255, 180, 60, 0.35) 80%,
+    transparent
+  );
+  flex-shrink: 0;
+}
+
+/* ── Skill relic cards ── */
+
+.skill-relic-panel__relics {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  flex: 1;
+}
+
+.skill-relic-card {
+  position: relative;
+  width: 100%;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 14px 6px;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  transition:
+    transform 0.25s ease,
+    filter 0.25s ease;
+}
+
+.skill-relic-card:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 180, 60, 0.2) 25%,
+    rgba(255, 180, 60, 0.2) 75%,
+    transparent
+  );
+  pointer-events: none;
+}
+
+.skill-relic-card:not(.skill-relic-card--disabled):hover {
+  transform: translateX(4px);
+}
+
+.skill-relic-card:not(.skill-relic-card--disabled):hover .skill-relic-card__icon {
+  filter:
+    drop-shadow(0 4px 10px rgba(0, 0, 0, 0.55))
+    drop-shadow(0 0 14px rgba(255, 170, 40, 0.45));
+}
+
+.skill-relic-card--disabled {
+  cursor: not-allowed;
+  opacity: 0.38;
+}
+
+.skill-relic-card--active .skill-relic-card__icon {
+  filter:
+    drop-shadow(0 4px 10px rgba(0, 0, 0, 0.55))
+    drop-shadow(0 0 16px rgba(251, 191, 36, 0.55));
+}
+
+.skill-relic-card--cooldown .skill-relic-card__icon {
+  filter:
+    drop-shadow(0 4px 10px rgba(0, 0, 0, 0.55))
+    drop-shadow(0 0 12px rgba(239, 68, 68, 0.4));
+}
+
+.skill-relic-card__icon {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  pointer-events: none;
+  display: block;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.55));
+  transition: filter 0.25s ease;
+}
+
+.skill-relic-card__name {
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: rgba(210, 190, 140, 0.85);
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.skill-relic-card__status {
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  pointer-events: none;
+}
+
+.skill-relic-card__status--ready {
+  color: #4ade80;
+  text-shadow: 0 0 10px rgba(74, 222, 128, 0.45);
+}
+
+.skill-relic-card__status--active {
+  color: #fbbf24;
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+}
+
+.skill-relic-card__status--cooldown {
+  color: #ef4444;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.45);
+}
+
+/* ── Skill floating panel (Change Color / Change Rank) ── */
+.skill-panel {
+  position: absolute;
+  left: calc(var(--cg-game-skillbar-w, 150px) + 6px);
+  top: 0;
+  z-index: 50;
+  width: 210px;
+  background: linear-gradient(160deg, #0e0c06, #0a0804);
+  border: 1px solid rgba(200, 160, 70, 0.3);
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8);
+}
+
+.skill-panel__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.skill-panel__header:has(+ .skill-panel__shield-active) {
+  margin-bottom: 0;
+}
+
+.skill-panel__title {
+  color: #c8a040;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-family: ui-monospace, monospace;
+}
+
+.skill-panel__close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: #4a3a18;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  padding: 0;
+}
+
+.skill-panel__close:hover {
+  color: #8a7848;
+}
+
+.skill-panel__hint {
+  color: #6b7280;
+  font-size: 11px;
+  margin: 0 0 10px;
+}
+
+.skill-panel__card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: min(320px, 52vh);
+  overflow-y: auto;
+}
+
+.skill-panel__card-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(90, 74, 40, 0.3);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.skill-panel__card-row:hover {
+  background: rgba(200, 160, 70, 0.08);
+  border-color: rgba(200, 160, 70, 0.4);
+}
+
+.skill-panel__card-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.skill-panel__card-rank {
+  color: #e8c86a;
+  font-weight: 800;
+  font-size: 12px;
+  width: 18px;
+  text-align: center;
+  font-family: "Cinzel", ui-serif, Georgia, serif;
+  flex-shrink: 0;
+}
+
+.skill-panel__card-name {
+  color: #6b7280;
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.skill-panel__color-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skill-panel__color-btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.skill-panel__color-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.skill-panel__rank-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+}
+
+.skill-panel__rank-btn {
+  padding: 6px 2px;
+  border-radius: 6px;
+  border: 1px solid #4a3a18;
+  background: rgba(200, 160, 64, 0.1);
+  color: #e8c86a;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: "Cinzel", ui-serif, Georgia, serif;
+}
+
+.skill-panel__rank-btn:hover:not(:disabled) {
+  background: rgba(200, 160, 64, 0.25);
+}
+
+.skill-panel__rank-btn--current,
+.skill-panel__rank-btn:disabled {
+  border-color: #2a2010;
+  background: #0e0c06;
+  color: #2a2010;
+  cursor: not-allowed;
+}
+
+.skill-panel__shield-active {
+  text-align: center;
+  padding: 12px 0;
+}
+
+.skill-panel__shield-icon {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 8px;
+}
+
+.skill-panel__shield-title {
+  color: #93c5fd;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.skill-panel__shield-sub {
+  color: #4b5563;
+  font-size: 11px;
+  margin-top: 6px;
+}

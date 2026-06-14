@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=208" />
+  <title>Score Panel — After</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../src/components/game/score-panel.css" />
+  <style>
+    body { background: #0a0810; margin: 0; min-height: 100vh; display: flex; align-items: stretch; }
+    .game-scorepanel { width: 272px; min-width: 272px; }
+  </style>
+</head>
+<body>
+  <div class="game-scorepanel">
+    <div class="scorepanel__section">
+      <div class="scorepanel__label">Round</div>
+      <div class="scorepanel__round-value">02</div>
+    </div>
+    <div class="scorepanel__section">
+      <div class="scorepanel__label">Total Score</div>
+      <div class="scorepanel__arcade">
+        <div class="scorepanel__arcade-value">00008</div>
+      </div>
+    </div>
+    <div class="scorepanel__section">
+      <div class="scorepanel__label">Selected</div>
+      <div class="scorepanel__gems" aria-hidden="true">
+        <span class="scorepanel__gem scorepanel__gem--filled">◆</span>
+        <span class="scorepanel__gem scorepanel__gem--filled">◆</span>
+        <span class="scorepanel__gem scorepanel__gem--filled">◆</span>
+        <span class="scorepanel__gem">◇</span>
+        <span class="scorepanel__gem">◇</span>
+      </div>
+      <div class="scorepanel__selected-row">
+        <span class="scorepanel__selected-count">3/5</span>
+      </div>
+    </div>
+    <div class="scorepanel__section">
+      <div class="scorepanel__label">Current Hand</div>
+      <div class="scorepanel__hand-card">
+        <div class="scorepanel__hand-name">Three of a Kind</div>
+        <div class="scorepanel__hand-stats">
+          <div class="scorepanel__hand-stat">
+            <span class="scorepanel__hand-stat-label">Damage</span>
+            <span class="scorepanel__hand-stat-value">24</span>
+          </div>
+          <div class="scorepanel__hand-stat">
+            <span class="scorepanel__hand-stat-label">Multiplier</span>
+            <span class="scorepanel__hand-stat-value">3.0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scorepanel__combat-log scorepanel__combat-log--damage">+8 Damage</div>
+    <div class="scorepanel__actions">
+      <button type="button" class="scorepanel__img-btn scorepanel__img-btn--play">
+        <img src="../public/images/play-button.png" alt="" class="scorepanel__img-btn-bg" draggable="false" />
+      </button>
+      <button type="button" class="scorepanel__img-btn scorepanel__img-btn--discard">
+        <img src="../public/images/discard-button.png" alt="" class="scorepanel__img-btn-bg" draggable="false" />
+        <span class="scorepanel__discard-meta">
+          <span class="scorepanel__discard-badge">2/2</span>
+        </span>
+      </button>
+    </div>
+  </div>
+</body>
+</html>

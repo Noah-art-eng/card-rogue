@@ -1,0 +1,564 @@
+
+        @keyframes lobby-pulse {
+          0%, 100% { opacity: 0.36; }
+          50% { opacity: 0.68; }
+        }
+        @keyframes lobbyPremiumCtaBreatheViolet {
+          0%, 100% {
+            transform: scale(1);
+            box-shadow:
+              0 0 0 1px rgba(196, 181, 254, 0.34),
+              0 10px 32px rgba(76, 29, 149, 0.52),
+              0 4px 14px rgba(88, 28, 135, 0.35),
+              0 2px 0 rgba(255, 255, 255, 0.1) inset,
+              0 0 18px rgba(139, 92, 246, 0.32);
+            filter: brightness(1);
+          }
+          45%, 55% {
+            transform: scale(1.015);
+            box-shadow:
+              0 0 0 1px rgba(214, 201, 255, 0.48),
+              0 14px 44px rgba(76, 29, 149, 0.68),
+              0 6px 22px rgba(109, 40, 217, 0.45),
+              0 2px 0 rgba(255, 255, 255, 0.14) inset,
+              0 0 32px rgba(167, 139, 250, 0.52);
+            filter: brightness(1.06);
+          }
+        }
+        @keyframes lobbyPremiumCtaBreatheAmber {
+          0%, 100% {
+            transform: scale(1);
+            box-shadow:
+              0 0 0 1px rgba(253, 230, 138, 0.4),
+              0 10px 32px rgba(180, 83, 9, 0.52),
+              0 4px 14px rgba(146, 64, 14, 0.38),
+              0 2px 0 rgba(255, 255, 255, 0.1) inset,
+              0 0 18px rgba(251, 191, 36, 0.28);
+            filter: brightness(1);
+          }
+          45%, 55% {
+            transform: scale(1.015);
+            box-shadow:
+              0 0 0 1px rgba(254, 243, 199, 0.52),
+              0 14px 44px rgba(180, 83, 9, 0.66),
+              0 6px 22px rgba(217, 119, 6, 0.48),
+              0 2px 0 rgba(255, 255, 255, 0.14) inset,
+              0 0 34px rgba(251, 191, 36, 0.45);
+            filter: brightness(1.06);
+          }
+        }
+        @keyframes lobbyPremiumCtaBloomViolet {
+          0%, 100% {
+            opacity: 0.22;
+            transform: translate(-50%, 0) scale(0.98, 0.9);
+          }
+          50% {
+            opacity: 0.5;
+            transform: translate(-50%, 0) scale(1.03, 1.05);
+          }
+        }
+        @keyframes lobbyPremiumCtaBloomAmber {
+          0%, 100% {
+            opacity: 0.2;
+            transform: translate(-50%, 0) scale(0.98, 0.9);
+          }
+          50% {
+            opacity: 0.48;
+            transform: translate(-50%, 0) scale(1.03, 1.05);
+          }
+        }
+        @keyframes lobbyPremiumCtaShimmer {
+          0% {
+            transform: translateX(-120%) skewX(-10deg);
+            opacity: 0;
+          }
+          35% {
+            opacity: 0.15;
+          }
+          65% {
+            opacity: 0.08;
+          }
+          100% {
+            transform: translateX(120%) skewX(-10deg);
+            opacity: 0;
+          }
+        }
+        .lobby-dash-root .lobby-premium-cta {
+          position: relative;
+          isolation: isolate;
+          transform-origin: center center;
+        }
+        .lobby-dash-root .lobby-premium-cta--violet {
+          background: linear-gradient(180deg, #8b5cf6 0%, #7c3aed 50%, #5b21b6 100%);
+          animation: lobbyPremiumCtaBreatheViolet 4.8s ease-in-out infinite;
+        }
+        .lobby-dash-root .lobby-premium-cta--amber {
+          background: linear-gradient(180deg, #f59e0b 0%, #d97706 50%, #92400e 100%);
+          animation: lobbyPremiumCtaBreatheAmber 4.8s ease-in-out infinite;
+        }
+        .lobby-dash-root .lobby-premium-cta::before {
+          content: '';
+          position: absolute;
+          top: -15%;
+          left: 0;
+          width: 55%;
+          height: 130%;
+          border-radius: inherit;
+          z-index: 1;
+          pointer-events: none;
+          background: linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.04) 36%,
+            rgba(224, 231, 255, 0.12) 50%,
+            rgba(255, 255, 255, 0.04) 64%,
+            transparent 100%
+          );
+          filter: blur(4px);
+          mix-blend-mode: soft-light;
+          animation: lobbyPremiumCtaShimmer 6.75s ease-in-out infinite;
+          animation-delay: -1.4s;
+        }
+        .lobby-dash-root .lobby-solo-cta:hover .lobby-premium-cta {
+          filter: brightness(1.18);
+          animation-play-state: paused;
+        }
+        .lobby-dash-root .lobby-solo-cta:hover .lobby-premium-cta .lobby-premium-cta__bloom {
+          animation-play-state: paused;
+        }
+        .lobby-dash-root .lobby-solo-cta:hover .lobby-premium-cta::before {
+          animation-play-state: paused;
+        }
+        .lobby-dash-root .lobby-solo-cta:active .lobby-premium-cta {
+          transform: scale(0.985);
+          filter: brightness(1.02);
+          animation-play-state: paused;
+        }
+        .lobby-dash-root .lobby-solo-cta:active .lobby-premium-cta .lobby-premium-cta__bloom {
+          animation-play-state: paused;
+        }
+        .lobby-dash-root .lobby-solo-cta:active .lobby-premium-cta::before {
+          animation-play-state: paused;
+        }
+        .lobby-dash-root .lobby-premium-cta__bloom {
+          position: absolute;
+          left: 50%;
+          bottom: -35%;
+          width: 130%;
+          height: 85%;
+          border-radius: 50%;
+          pointer-events: none;
+          z-index: 0;
+          transform-origin: center bottom;
+          mix-blend-mode: screen;
+          filter: blur(0.5px);
+        }
+        .lobby-dash-root .lobby-premium-cta--violet .lobby-premium-cta__bloom {
+          background: radial-gradient(
+            closest-side at 50% 100%,
+            rgba(210, 195, 255, 0.62) 0%,
+            rgba(124, 58, 237, 0.4) 38%,
+            transparent 72%
+          );
+          animation: lobbyPremiumCtaBloomViolet 4.8s ease-in-out infinite;
+        }
+        .lobby-dash-root .lobby-premium-cta--amber .lobby-premium-cta__bloom {
+          background: radial-gradient(
+            closest-side at 50% 100%,
+            rgba(254, 243, 199, 0.55) 0%,
+            rgba(217, 119, 6, 0.42) 38%,
+            transparent 72%
+          );
+          animation: lobbyPremiumCtaBloomAmber 4.8s ease-in-out infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .lobby-dash-root .lobby-premium-cta--violet {
+            animation: none !important;
+            transform: none !important;
+            filter: none;
+            box-shadow:
+              0 0 0 1px rgba(196, 181, 254, 0.4),
+              0 10px 28px rgba(76, 29, 149, 0.48),
+              0 2px 0 rgba(255, 255, 255, 0.1) inset,
+              0 0 20px rgba(139, 92, 246, 0.3);
+          }
+          .lobby-dash-root .lobby-premium-cta--amber {
+            animation: none !important;
+            transform: none !important;
+            filter: none;
+            box-shadow:
+              0 0 0 1px rgba(253, 230, 138, 0.42),
+              0 10px 28px rgba(180, 83, 9, 0.48),
+              0 2px 0 rgba(255, 255, 255, 0.1) inset,
+              0 0 20px rgba(251, 191, 36, 0.28);
+          }
+          .lobby-dash-root .lobby-premium-cta::before {
+            animation: none !important;
+            opacity: 0;
+          }
+          .lobby-dash-root .lobby-premium-cta__bloom {
+            animation: none !important;
+            transform: translate(-50%, 0) scale(1) !important;
+            opacity: 0.38;
+            filter: none;
+          }
+          .lobby-dash-root .lobby-solo-cta:hover .lobby-premium-cta {
+            filter: brightness(1.08);
+          }
+          .lobby-dash-root .lobby-solo-cta:active .lobby-premium-cta {
+            transform: none !important;
+          }
+        }
+        .lobby-glow-orb { animation: lobby-pulse 11s ease-in-out infinite; }
+        .lobby-display-serif {
+          font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        .lobby-sidebar-label {
+          font-size: 0.625rem;
+          font-weight: 600;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+        }
+        .lobby-header-brand-word {
+          font-family: Georgia, 'Times New Roman', Times, serif;
+          font-weight: 900;
+          letter-spacing: 0.09em;
+          line-height: 0.92;
+          text-transform: uppercase;
+          font-size: clamp(1.1rem, 3.35vw, 1.92rem);
+          background-image: linear-gradient(
+            172deg,
+            #ffffff 0%,
+            #f6f4ff 8%,
+            #e8e2fb 22%,
+            #c9bce8 45%,
+            #8f7ec2 62%,
+            #5f4f8f 82%,
+            #3c2f5f 100%
+          );
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          transform: skewX(-2deg);
+          filter: drop-shadow(0 3px 1px rgba(0, 0, 0, 0.95)) drop-shadow(0 1px 0 rgba(167, 139, 250, 0.5))
+            drop-shadow(0 0 18px rgba(186, 170, 255, 0.55)) drop-shadow(0 0 36px rgba(88, 28, 135, 0.45));
+        }
+
+        /* ── 14″ / narrow desktop only: proportional tighten; ≥1601px unchanged ── */
+        @media (max-width: 1600px) {
+          .lobby-dash-root .lobby-dash-shell {
+            padding-left: clamp(0.85rem, 1.9vw, 2.75rem);
+            padding-right: clamp(0.85rem, 1.9vw, 2.75rem);
+            padding-top: clamp(0.95rem, 2vw, 1.35rem);
+            padding-bottom: clamp(0.95rem, 2vw, 1.35rem);
+          }
+          .lobby-dash-root .lobby-dash-header {
+            margin-bottom: clamp(1.35rem, 2.65vw, 2.65rem);
+          }
+          .lobby-dash-root .lobby-dash-main {
+            gap: clamp(1.65rem, 2.85vw, 2.85rem);
+          }
+          .lobby-dash-root .lobby-dash-aside {
+            gap: clamp(1.65rem, 2.85vw, 2.85rem);
+          }
+        }
+
+        @media (max-width: 1600px) and (min-width: 1024px) {
+          .lobby-dash-root .lobby-dash-grid {
+            gap: clamp(1.75rem, 3vw, 3rem);
+            grid-template-columns: minmax(200px, min(246px, 16.85vw)) minmax(0, 1fr) minmax(210px, min(264px, 17.95vw));
+          }
+        }
+
+        @media (max-width: 1512px) and (min-width: 1024px) {
+          .lobby-dash-root .lobby-dash-grid {
+            gap: clamp(1.35rem, 2.65vw, 2.65rem);
+            grid-template-columns: minmax(180px, min(226px, 15.95vw)) minmax(0, 1fr) minmax(196px, min(246px, 17vw));
+          }
+          .lobby-dash-root .lobby-dash-hero-title {
+            font-size: clamp(1.5rem, 3.95vw, 2.72rem);
+            letter-spacing: 0.032em;
+          }
+        }
+
+        @media (max-width: 1440px) and (min-width: 1024px) {
+          .lobby-dash-root .lobby-dash-grid {
+            gap: clamp(1.25rem, 2.35vw, 2.35rem);
+            grid-template-columns: minmax(166px, min(210px, 15.55vw)) minmax(0, 1fr) minmax(184px, min(232px, 17.15vw));
+          }
+          .lobby-dash-root .lobby-dash-shell {
+            padding-left: clamp(0.75rem, 1.65vw, 2.25rem);
+            padding-right: clamp(0.75rem, 1.65vw, 2.25rem);
+          }
+        }
+
+        @media (max-width: 1280px) and (min-width: 1024px) {
+          .lobby-dash-root .lobby-dash-grid {
+            gap: clamp(0.55rem, 1.05vw, 0.95rem) !important;
+            grid-template-columns: minmax(132px, min(172px, 15.5vw)) minmax(0, 1fr) minmax(148px, min(194px, 16.95vw)) !important;
+          }
+          .lobby-dash-root .lobby-dash-hero-title {
+            font-size: clamp(1.38rem, 3.85vw, 2.48rem);
+          }
+          .lobby-dash-root .lobby-solo-cta {
+            width: min(100%, 22rem);
+          }
+        }
+
+        /* ── 14″ / narrow laptop (1024–1536px): fit first screen, no clip, tighter gaps — ≥1537px unchanged ── */
+        @media (max-width: 1536px) and (min-width: 1024px) {
+          .lobby-dash-root .lobby-dash-shell {
+            padding-left: clamp(0.65rem, 1.35vw, 1.5rem);
+            padding-right: clamp(0.65rem, 1.35vw, 1.5rem);
+            padding-top: clamp(0.65rem, 1.35vw, 1rem);
+            padding-bottom: clamp(0.5rem, 1.1vw, 0.85rem);
+            overflow-y: hidden;
+          }
+          .lobby-dash-root .lobby-dash-header {
+            margin-bottom: clamp(0.65rem, 1.35vw, 1.1rem) !important;
+            padding: clamp(0.65rem, 1.4vw, 1rem) clamp(0.85rem, 1.6vw, 1.25rem) !important;
+            gap: 0.65rem !important;
+          }
+          .lobby-dash-root .lobby-dash-header .lobby-header-brand-word {
+            font-size: clamp(0.95rem, 2.35vw, 1.45rem) !important;
+          }
+          .lobby-dash-root .lobby-dash-header img[alt=''] {
+            height: 2.25rem !important;
+            width: 2.25rem !important;
+          }
+          .lobby-dash-root .lobby-dash-header .flex.shrink-0.items-center.gap-2 button,
+          .lobby-dash-root .lobby-dash-header .flex.shrink-0.items-center.gap-3 button {
+            height: 2.35rem !important;
+            width: 2.35rem !important;
+            border-radius: 0.65rem !important;
+          }
+          .lobby-dash-root .lobby-dash-header .flex.shrink-0.items-center.gap-2 svg,
+          .lobby-dash-root .lobby-dash-header .flex.shrink-0.items-center.gap-3 svg {
+            height: 1.1rem !important;
+            width: 1.1rem !important;
+          }
+          .lobby-dash-root .lobby-dash-grid {
+            gap: clamp(0.45rem, 1vw, 0.82rem) !important;
+            grid-template-columns: minmax(128px, min(188px, 15.05vw)) minmax(0, 1fr) minmax(
+                138px,
+                min(208px, 16.95vw)
+              ) !important;
+            padding-bottom: 0.15rem !important;
+            min-height: 0;
+          }
+          .lobby-dash-root .lobby-dash-grid > aside:first-child {
+            padding: clamp(0.48rem, 0.95vw, 0.62rem) clamp(0.45rem, 1vw, 0.68rem) !important;
+          }
+          .lobby-dash-root .lobby-sidebar-inner {
+            gap: 0.6rem !important;
+          }
+          .lobby-dash-root .lobby-sidebar-rail-top {
+            gap: 0.42rem !important;
+          }
+          .lobby-dash-root .lobby-sidebar-avatar {
+            height: 2.85rem !important;
+            width: 2.85rem !important;
+            font-size: 0.8rem !important;
+          }
+          .lobby-dash-root .lobby-sidebar-rail-top h2 {
+            font-size: 0.8rem !important;
+          }
+          .lobby-dash-root .lobby-sidebar-rail-top .lobby-sidebar-level-row {
+            font-size: 0.58rem !important;
+            letter-spacing: 0.08em !important;
+          }
+          .lobby-dash-root aside:first-child .lobby-sidebar-rail-top .lobby-sidebar-label {
+            font-size: 0.5rem !important;
+            letter-spacing: 0.18em !important;
+          }
+          .lobby-dash-root .lobby-sidebar-rail-top .lobby-sidebar-xp-row {
+            font-size: 0.54rem !important;
+          }
+          .lobby-dash-root .lobby-sidebar-rail-top .mt-3 {
+            margin-top: 0.5rem !important;
+          }
+          .lobby-dash-root .lobby-sidebar-stats {
+            padding: 0.28rem 0.32rem !important;
+          }
+          .lobby-dash-root .lobby-sidebar-stats .grid {
+            gap: 0.28rem !important;
+          }
+          .lobby-dash-root .lobby-sidebar-stats .text-lg {
+            font-size: 0.76rem !important;
+          }
+          .lobby-dash-root .lobby-sidebar-stats .lobby-sidebar-stat-caption {
+            font-size: 0.52rem !important;
+          }
+          .lobby-dash-root .lobby-dash-grid > aside:first-child nav.mt-7 {
+            margin-top: 0.65rem !important;
+            padding-top: 0.65rem !important;
+            gap: 0.2rem !important;
+          }
+          .lobby-dash-root .lobby-dash-grid > aside:first-child nav a,
+          .lobby-dash-root .lobby-dash-grid > aside:first-child nav button[class*='cursor-not-allowed'] {
+            padding: 0.28rem 0.36rem !important;
+            font-size: 0.62rem !important;
+            gap: 0.3rem !important;
+            border-radius: 0.45rem !important;
+          }
+          .lobby-dash-root .lobby-dash-grid > aside:first-child nav svg {
+            height: 0.72rem !important;
+            width: 0.72rem !important;
+          }
+          .lobby-dash-root aside:first-child nav span.ml-auto.rounded-md {
+            padding: 0.08rem 0.32rem !important;
+            font-size: 0.45rem !important;
+          }
+          .lobby-dash-root .lobby-sidebar-logout {
+            margin-top: 0.65rem !important;
+            padding-top: 0.65rem !important;
+          }
+          .lobby-dash-root .lobby-sidebar-logout button {
+            padding: 0.28rem !important;
+            font-size: 0.62rem !important;
+          }
+          .lobby-dash-root .lobby-sidebar-logout button svg {
+            height: 0.72rem !important;
+            width: 0.72rem !important;
+          }
+
+          .lobby-dash-root main.lobby-dash-main {
+            gap: clamp(0.6rem, 1.25vw, 1rem) !important;
+            min-height: 0;
+          }
+          .lobby-dash-root .lobby-welcome-hero {
+            min-height: 0 !important;
+            padding: clamp(0.65rem, 1.35vw, 0.95rem) clamp(0.85rem, 1.55vw, 1.25rem) !important;
+            max-width: min(52%, 20rem);
+          }
+          .lobby-dash-root .lobby-welcome-hero .lobby-dash-hero-title {
+            font-size: clamp(1.15rem, 2.75vw, 1.95rem) !important;
+            letter-spacing: 0.03em !important;
+          }
+          .lobby-dash-root .lobby-welcome-hero p[class*='italic'] {
+            margin-top: 0.35rem !important;
+            font-size: 0.78rem !important;
+          }
+          .lobby-dash-root .lobby-welcome-hero p.text-sm {
+            margin-top: 0.35rem !important;
+            font-size: 0.72rem !important;
+            line-height: 1.35 !important;
+          }
+          .lobby-dash-root .lobby-welcome-hero .mb-2 {
+            margin-bottom: 0.25rem !important;
+          }
+
+          .lobby-dash-root .lobby-solo-cta {
+            flex: 1 1 0% !important;
+            min-height: 9.5rem !important;
+            min-width: 0 !important;
+            gap: 0.55rem !important;
+            padding: clamp(0.65rem, 1.35vw, 0.95rem) !important;
+            width: min(100%, 24rem);
+            max-width: 100%;
+          }
+          .lobby-dash-root .lobby-solo-cta video {
+            object-position: 50% 45%;
+          }
+          .lobby-dash-root .lobby-solo-cta .lobby-solo-cta-intro h3 {
+            font-size: 0.92rem !important;
+            margin-top: 0.35rem !important;
+            line-height: 1.2 !important;
+          }
+          .lobby-dash-root .lobby-solo-cta .lobby-solo-cta-intro p.lobby-solo-lead {
+            font-size: 0.7rem !important;
+            margin-top: 0.25rem !important;
+          }
+          .lobby-dash-root .lobby-solo-cta .lobby-solo-cta-intro .lobby-solo-label {
+            font-size: 0.5625rem !important;
+          }
+          .lobby-dash-root .lobby-solo-cta .lobby-solo-cta-btn {
+            padding-top: 0.55rem !important;
+            padding-bottom: 0.55rem !important;
+            padding-left: 0.85rem !important;
+            padding-right: 0.65rem !important;
+            font-size: 0.78rem !important;
+            border-radius: 9999px !important;
+          }
+
+          .lobby-dash-root .lobby-bottom-row {
+            gap: clamp(0.5rem, 1vw, 0.75rem) !important;
+          }
+          .lobby-dash-root .lobby-bottom-row button {
+            min-height: 5.25rem !important;
+            padding: clamp(0.55rem, 1vw, 0.75rem) !important;
+          }
+          .lobby-dash-root .lobby-bottom-row .lobby-display-serif {
+            font-size: 0.82rem !important;
+          }
+          .lobby-dash-root .lobby-bottom-row .lobby-bottom-desc {
+            margin-top: 0.25rem !important;
+            font-size: 0.72rem !important;
+          }
+
+          .lobby-dash-root aside.lobby-dash-aside {
+            gap: clamp(0.45rem, 0.95vw, 0.68rem) !important;
+            min-height: 0;
+          }
+          .lobby-dash-root .lobby-season-panel {
+            padding: clamp(0.35rem, 0.82vw, 0.52rem) clamp(0.4rem, 0.88vw, 0.55rem)
+              clamp(0.35rem, 0.78vw, 0.5rem) !important;
+          }
+          .lobby-dash-root .lobby-season-panel header p:first-child {
+            font-size: 0.48rem !important;
+            letter-spacing: 0.2em !important;
+          }
+          .lobby-dash-root .lobby-season-panel header .lobby-display-serif {
+            font-size: clamp(0.72rem, 1.92vw, 1.02rem) !important;
+          }
+          .lobby-dash-root .lobby-season-panel .lobby-season-emblem {
+            margin-top: 0.25rem !important;
+            min-height: 4.1rem !important;
+          }
+          .lobby-dash-root .lobby-season-panel .lobby-season-emblem img {
+            width: min(64%, 5.25rem) !important;
+            max-width: 5.25rem !important;
+          }
+          .lobby-dash-root .lobby-season-panel footer {
+            margin-top: 0.5rem !important;
+            gap: 0.2rem !important;
+          }
+          .lobby-dash-root .lobby-season-panel footer p:last-child {
+            font-size: 0.72rem !important;
+          }
+
+          .lobby-dash-root .lobby-recent-panel {
+            padding: clamp(0.35rem, 0.82vw, 0.52rem) clamp(0.4rem, 0.88vw, 0.55rem) !important;
+            flex: 1 1 0% !important;
+            min-height: 0 !important;
+          }
+          .lobby-dash-root .lobby-recent-panel h3 {
+            font-size: 0.52rem !important;
+          }
+          .lobby-dash-root .lobby-recent-panel .lobby-recent-list {
+            margin-top: 0.45rem !important;
+            gap: 0.28rem !important;
+            font-size: 0.66rem !important;
+          }
+          .lobby-dash-root .lobby-recent-panel li {
+            padding-bottom: 0.35rem !important;
+            gap: 0.45rem !important;
+          }
+          .lobby-dash-root .lobby-recent-panel button[class*='cursor-not-allowed'] {
+            font-size: 0.56rem !important;
+          }
+          .lobby-dash-root .lobby-recent-panel li img {
+            height: 1.28rem !important;
+            width: 1.28rem !important;
+          }
+
+          .lobby-dash-root .lobby-dash-footer {
+            padding-top: 0.45rem !important;
+            padding-bottom: 0.45rem !important;
+            margin-top: 0.35rem !important;
+            gap: 0.65rem !important;
+            font-size: 0.58rem !important;
+          }
+        }
+
+      
