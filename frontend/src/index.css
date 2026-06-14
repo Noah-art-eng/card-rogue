@@ -4,12 +4,14 @@
 
 @layer base {
   html {
+    font-size: 16px;
     background-color: var(--cg-background-deep, #040410);
   }
   body {
     background-color: var(--cg-background-deep, #040410);
     min-height: 100dvh;
     font-family: var(--cg-font-body);
+    line-height: 1.45;
     color: var(--cg-text-secondary);
   }
 }
@@ -31,8 +33,6 @@
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
   color-scheme: light dark;
   color: var(--text);
   background: var(--bg);
@@ -40,10 +40,6 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
 }
 
 @media (prefers-color-scheme: dark) {

@@ -65,7 +65,7 @@ function formatMatchEndedRelative(endedAtInput: string | null | undefined): stri
 }
 
 export default function LobbyPage() {
-  const { user, isLoading, fetchMe, updateUser } = useAuth()
+  const { user, isLoading, updateUser } = useAuth()
   const navigate = useNavigate()
   const avatarInputRef = useRef<HTMLInputElement>(null)
 
@@ -127,9 +127,10 @@ export default function LobbyPage() {
     return getLobbyXpForUser(user?.id, stats)
   }, [user?.id, stats])
 
-  useEffect(() => {
-    if (user) void fetchMe()
-  }, [user?.id, fetchMe])
+  // TEMP: disabled — caused ProtectedRoute ↔ fetchMe loop (isLoading toggled, infinite /users/me)
+  // useEffect(() => {
+  //   if (user) void fetchMe()
+  // }, [user?.id, fetchMe])
 
   useEffect(() => {
     let timer: ReturnType<typeof setInterval> | null = null
