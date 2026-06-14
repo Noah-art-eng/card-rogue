@@ -192,13 +192,13 @@ export function LobbyPremiumCta({
       />
       <span className="relative z-[2] flex shrink-0 items-center gap-1.5 sm:gap-2" aria-hidden>
         <span
-          className={`hidden h-px w-6 bg-gradient-to-l to-transparent sm:block sm:w-9 md:w-11 min-[1512px]:w-14 ${lineClass}`}
+          className={`hidden h-px w-6 bg-gradient-to-l to-transparent sm:block sm:w-9 md:w-11 ${lineClass}`}
         />
         <span
           className={`h-1.5 w-1.5 shrink-0 rotate-45 border sm:h-2 sm:w-2 ${diamondClass}`}
         />
       </span>
-      <span className="relative z-[2] min-w-0 flex-1 select-none text-center font-serif text-[0.58rem] font-semibold uppercase leading-snug tracking-[0.1em] text-white sm:text-[0.65rem] sm:tracking-[0.14em] md:text-xs md:tracking-[0.18em] lg:text-[0.7rem] xl:text-sm xl:tracking-[0.22em] min-[1512px]:text-[0.95rem] min-[1512px]:tracking-[0.26em]">
+      <span className="relative z-[2] min-w-0 flex-1 select-none text-center font-serif text-[0.58rem] font-semibold uppercase leading-snug tracking-[0.1em] text-white sm:text-[0.65rem] sm:tracking-[0.14em] md:text-xs md:tracking-[0.18em] lg:text-[0.7rem] xl:text-sm xl:tracking-[0.22em]">
         {label}
       </span>
       <span className="relative z-[2] flex shrink-0 items-center gap-1.5 sm:gap-2" aria-hidden>
@@ -206,7 +206,7 @@ export function LobbyPremiumCta({
           className={`h-1.5 w-1.5 shrink-0 rotate-45 border sm:h-2 sm:w-2 ${diamondClass}`}
         />
         <span
-          className={`hidden h-px w-6 bg-gradient-to-r to-transparent sm:block sm:w-9 md:w-11 min-[1512px]:w-14 ${lineClass}`}
+          className={`hidden h-px w-6 bg-gradient-to-r to-transparent sm:block sm:w-9 md:w-11 ${lineClass}`}
         />
         <span
           className={`pl-0.5 text-[1.05rem] font-medium leading-none text-white/92 sm:pl-1 sm:text-[1.2rem] ${chevronGlow}`}

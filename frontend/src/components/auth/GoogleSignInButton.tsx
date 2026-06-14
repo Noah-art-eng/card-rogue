@@ -2,9 +2,9 @@ import './GoogleSignInButton.css'
 
 const SIZE_CLASSES = {
   login:
-    'rounded-xl px-3.5 py-3.5 sm:py-3.5 lg:py-[0.9375rem] xl:py-4 min-[1512px]:px-4 min-[1512px]:py-5',
+    'rounded-xl px-3.5 py-3.5 sm:py-3.5 lg:py-[0.9375rem] xl:py-4',
   register:
-    'rounded-xl px-6 py-[0.85rem] xl:px-4 xl:py-[0.68rem] min-[1440px]:px-[1.2rem] min-[1440px]:py-[0.78rem] min-[1512px]:px-6 min-[1512px]:py-4',
+    'rounded-xl px-6 py-[0.85rem] xl:px-4 xl:py-[0.68rem] min-[1440px]:px-[1.2rem] min-[1440px]:py-[0.78rem]',
 } as const
 
 interface GoogleSignInButtonProps {

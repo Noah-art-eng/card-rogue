@@ -146,7 +146,7 @@ export default function RegisterPage() {
   const inputShell =
     'flex min-h-0 w-full items-stretch overflow-hidden rounded-xl border border-violet-500/22 bg-black/48 shadow-inner shadow-black/30 backdrop-blur-md transition focus-within:border-violet-400 focus-within:ring-2 focus-within:ring-violet-500/45 focus-within:shadow-[0_0_16px_rgba(139,92,246,0.18)]';
   const inputField =
-    'cg-input min-w-0 flex-1 border-0 bg-transparent px-3.5 py-3 text-[0.95rem] text-white placeholder:text-slate-500 disabled:opacity-55 sm:px-4 sm:py-3 xl:min-h-[2.5rem] xl:px-[0.625rem] xl:py-2 xl:text-[0.8125rem] xl:leading-snug xl:placeholder:text-[0.76rem] min-[1440px]:min-h-[3rem] min-[1440px]:px-[0.9375rem] min-[1440px]:py-3 min-[1440px]:text-[0.95rem] min-[1440px]:leading-relaxed min-[1440px]:placeholder:text-[0.9rem] min-[1512px]:min-h-0 min-[1512px]:px-4 min-[1512px]:py-3.5 min-[1512px]:text-base min-[1512px]:leading-normal';
+    'cg-input min-w-0 flex-1 border-0 bg-transparent px-3.5 py-3 text-[0.95rem] text-white placeholder:text-slate-500 disabled:opacity-55 sm:px-4 sm:py-3 xl:min-h-[2.5rem] xl:px-[0.625rem] xl:py-2 xl:text-[0.8125rem] xl:leading-snug xl:placeholder:text-[0.76rem] min-[1440px]:min-h-[3rem] min-[1440px]:px-[0.9375rem] min-[1440px]:py-3 min-[1440px]:text-[0.95rem] min-[1440px]:leading-relaxed min-[1440px]:placeholder:text-[0.9rem]';
 
   return (
     <div className="register-page-root cg-page relative isolate min-h-[calc(100dvh_-_var(--navbar-height))] w-full overflow-x-hidden overflow-y-auto overscroll-y-contain bg-[#060312] text-slate-200">
@@ -269,12 +269,6 @@ export default function RegisterPage() {
             height: 96px;
           }
         }
-        @media (min-width: 1512px) {
-          .register-benefit-icon-img {
-            width: 120px;
-            height: 120px;
-          }
-        }
         .register-benefit-icon-img--nature {
           --icon-glow: rgba(52, 211, 153, 0.95);
         }
@@ -337,38 +331,38 @@ export default function RegisterPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/55" aria-hidden />
       </div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-[min(98vw,1820px)] flex-col px-4 py-8 sm:px-6 sm:py-10 xl:grid xl:min-h-[calc(100dvh_-_var(--navbar-height))] xl:grid-cols-[1.02fr_minmax(min(292px,28vw),1.08fr)_0.96fr] xl:items-center xl:gap-x-[clamp(0.5rem,1.35vw,1.25rem)] xl:pl-[clamp(3.35rem,6vw,5.25rem)] xl:pr-[clamp(1rem,2vw,1.625rem)] xl:py-[clamp(1.5rem,2.8dvh,2.25rem)] min-[1440px]:grid-cols-[1.03fr_minmax(min(312px,27vw),1.06fr)_0.97fr] min-[1440px]:gap-x-[clamp(0.625rem,1.55vw,1.65rem)] min-[1440px]:pl-14 min-[1440px]:pr-8 min-[1440px]:py-9 min-[1512px]:grid-cols-[1.06fr_minmax(min(312px,22vw),1.08fr)_1fr] min-[1512px]:gap-x-12 min-[1512px]:px-14 min-[1512px]:py-14">
+      <div className="relative z-10 mx-auto flex w-full max-w-[min(98vw,1400px)] flex-col px-4 py-8 sm:px-6 sm:py-10 xl:grid xl:min-h-[calc(100dvh_-_var(--navbar-height))] xl:grid-cols-[1.02fr_minmax(min(292px,28vw),1.08fr)_0.96fr] xl:items-center xl:gap-x-[clamp(0.5rem,1.35vw,1.25rem)] xl:pl-[clamp(3.35rem,6vw,5.25rem)] xl:pr-[clamp(1rem,2vw,1.625rem)] xl:py-[clamp(1.5rem,2.8dvh,2.25rem)] min-[1440px]:grid-cols-[1.03fr_minmax(min(312px,27vw),1.06fr)_0.97fr] min-[1440px]:gap-x-[clamp(0.625rem,1.55vw,1.65rem)] min-[1440px]:pl-14 min-[1440px]:pr-8 min-[1440px]:py-9">
         {/* Left — form */}
         <section className="order-1 xl:order-1 xl:min-w-0 xl:justify-self-start xl:self-center">
-          <div className="mx-auto w-full max-w-[min(440px,100%)] xl:mx-0 xl:max-w-[min(418px,100%)] min-[1440px]:max-w-[min(452px,100%)] min-[1512px]:max-w-[min(560px,100%)]">
-            <p className="cg-label text-[0.72rem] font-semibold uppercase tracking-[0.34em] text-violet-200/95 sm:text-[0.74rem] xl:text-[0.685rem] xl:tracking-[0.28em] min-[1512px]:text-[0.74rem] min-[1512px]:tracking-[0.34em]">
+          <div className="mx-auto w-full max-w-[min(440px,100%)] xl:mx-0 xl:max-w-[min(418px,100%)] min-[1440px]:max-w-[min(452px,100%)]">
+            <p className="cg-label text-[0.72rem] font-semibold uppercase tracking-[0.34em] text-violet-200/95 sm:text-[0.74rem] xl:text-[0.685rem] xl:tracking-[0.28em]">
               CREATE YOUR ACCOUNT
             </p>
-            <h1 className="cg-title mt-2 font-serif text-[1.9rem] font-bold leading-snug tracking-tight text-white sm:text-4xl xl:mt-1.5 xl:text-[1.75rem] xl:leading-tight min-[1440px]:mt-2 min-[1440px]:text-[2.125rem] min-[1512px]:mt-3 min-[1512px]:text-[clamp(2.5rem,2.9vw,2.85rem)] min-[1512px]:leading-snug">
+            <h1 className="cg-title mt-2 font-serif text-[1.9rem] font-bold leading-snug tracking-tight text-white sm:text-4xl xl:mt-1.5 xl:text-[1.75rem] xl:leading-tight min-[1440px]:mt-2 min-[1440px]:text-[2.125rem]">
               Begin Your Adventure
             </h1>
-            <p className="cg-subtitle mt-2 max-w-[28rem] text-[0.95rem] leading-relaxed text-slate-300 sm:mt-3.5 sm:text-[1rem] xl:text-[0.92rem] xl:leading-snug min-[1440px]:mt-3 min-[1440px]:text-[0.95rem] min-[1440px]:leading-snug min-[1512px]:mt-4 min-[1512px]:text-[1.05rem] min-[1512px]:leading-relaxed">
+            <p className="cg-subtitle mt-2 max-w-[28rem] text-[0.95rem] leading-relaxed text-slate-300 sm:mt-3.5 sm:text-[1rem] xl:text-[0.92rem] xl:leading-snug min-[1440px]:mt-3 min-[1440px]:text-[0.95rem] min-[1440px]:leading-snug">
               Create your account and step into the arena.
               <br />
               Your legend starts here.
             </p>
 
-            <div className="relative my-6 flex items-center xl:my-5 min-[1440px]:my-6 min-[1512px]:my-10" aria-hidden>
+            <div className="relative my-6 flex items-center xl:my-5 min-[1440px]:my-6" aria-hidden>
               <div className="h-px flex-1 bg-gradient-to-r from-transparent via-violet-500/45 to-violet-400/25" />
               <div className="mx-3 h-2.5 w-2.5 rotate-45 border border-violet-400/75 bg-violet-500/20 shadow-[0_0_10px_rgba(167,139,250,0.5)]" />
               <div className="h-px flex-1 bg-gradient-to-l from-transparent via-violet-500/45 to-violet-400/25" />
             </div>
 
-            <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-[1.1rem] sm:gap-5 xl:gap-3.5 min-[1440px]:gap-[0.98rem] min-[1512px]:gap-[1.35rem]">
-              <div className="flex flex-col gap-2 xl:gap-1 min-[1512px]:gap-2">
+            <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-[1.1rem] sm:gap-5 xl:gap-3.5 min-[1440px]:gap-[0.98rem]">
+              <div className="flex flex-col gap-2 xl:gap-1">
                 <label
                   htmlFor="username"
-                  className="text-[0.7rem] font-semibold uppercase tracking-[0.26em] text-violet-200/95 sm:text-[0.72rem] xl:text-[0.7rem] xl:tracking-[0.24em] min-[1512px]:text-[0.72rem] min-[1512px]:tracking-[0.26em]"
+                  className="text-[0.7rem] font-semibold uppercase tracking-[0.26em] text-violet-200/95 sm:text-[0.72rem] xl:text-[0.7rem] xl:tracking-[0.24em]"
                 >
                   Username
                 </label>
                 <div className={inputShell}>
-                  <div className="flex h-[3rem] w-[3rem] shrink-0 items-center justify-center self-stretch border-r border-white/[0.09] bg-white/[0.05] xl:min-h-[2.5rem] xl:w-10 xl:[&_svg]:h-[0.9rem] xl:[&_svg]:w-[0.9rem] min-[1440px]:min-h-[3rem] min-[1440px]:w-[3rem] min-[1440px]:[&_svg]:h-[1.125rem] min-[1440px]:[&_svg]:w-[1.125rem] min-[1512px]:min-h-0 min-[1512px]:h-[3rem] min-[1512px]:w-[3.25rem] min-[1512px]:[&_svg]:h-5 min-[1512px]:[&_svg]:w-5">
+                  <div className="flex h-[3rem] w-[3rem] shrink-0 items-center justify-center self-stretch border-r border-white/[0.09] bg-white/[0.05] xl:min-h-[2.5rem] xl:w-10 xl:[&_svg]:h-[0.9rem] xl:[&_svg]:w-[0.9rem] min-[1440px]:min-h-[3rem] min-[1440px]:w-[3rem] min-[1440px]:[&_svg]:h-[1.125rem] min-[1440px]:[&_svg]:w-[1.125rem]">
                     <IconUserMini />
                   </div>
                   <input
@@ -386,15 +380,15 @@ export default function RegisterPage() {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2 xl:gap-1 min-[1512px]:gap-2">
+              <div className="flex flex-col gap-2 xl:gap-1">
                 <label
                   htmlFor="email"
-                  className="text-[0.7rem] font-semibold uppercase tracking-[0.26em] text-violet-200/95 sm:text-[0.72rem] xl:text-[0.7rem] xl:tracking-[0.24em] min-[1512px]:text-[0.72rem] min-[1512px]:tracking-[0.26em]"
+                  className="text-[0.7rem] font-semibold uppercase tracking-[0.26em] text-violet-200/95 sm:text-[0.72rem] xl:text-[0.7rem] xl:tracking-[0.24em]"
                 >
                   Email
                 </label>
                 <div className={inputShell}>
-                  <div className="flex h-[3rem] w-[3rem] shrink-0 items-center justify-center self-stretch border-r border-white/[0.09] bg-white/[0.05] xl:min-h-[2.5rem] xl:w-10 xl:[&_svg]:h-[0.9rem] xl:[&_svg]:w-[0.9rem] min-[1440px]:min-h-[3rem] min-[1440px]:w-[3rem] min-[1440px]:[&_svg]:h-[1.125rem] min-[1440px]:[&_svg]:w-[1.125rem] min-[1512px]:min-h-0 min-[1512px]:h-[3rem] min-[1512px]:w-[3.25rem] min-[1512px]:[&_svg]:h-5 min-[1512px]:[&_svg]:w-5">
+                  <div className="flex h-[3rem] w-[3rem] shrink-0 items-center justify-center self-stretch border-r border-white/[0.09] bg-white/[0.05] xl:min-h-[2.5rem] xl:w-10 xl:[&_svg]:h-[0.9rem] xl:[&_svg]:w-[0.9rem] min-[1440px]:min-h-[3rem] min-[1440px]:w-[3rem] min-[1440px]:[&_svg]:h-[1.125rem] min-[1440px]:[&_svg]:w-[1.125rem]">
                     <IconMailMini />
                   </div>
                   <input
@@ -410,15 +404,15 @@ export default function RegisterPage() {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2 xl:gap-1 min-[1512px]:gap-2">
+              <div className="flex flex-col gap-2 xl:gap-1">
                 <label
                   htmlFor="password"
-                  className="text-[0.7rem] font-semibold uppercase tracking-[0.26em] text-violet-200/95 sm:text-[0.72rem] xl:text-[0.7rem] xl:tracking-[0.24em] min-[1512px]:text-[0.72rem] min-[1512px]:tracking-[0.26em]"
+                  className="text-[0.7rem] font-semibold uppercase tracking-[0.26em] text-violet-200/95 sm:text-[0.72rem] xl:text-[0.7rem] xl:tracking-[0.24em]"
                 >
                   Password
                 </label>
                 <div className={inputShell}>
-                  <div className="flex h-[3rem] w-[3rem] shrink-0 items-center justify-center self-stretch border-r border-white/[0.09] bg-white/[0.05] xl:min-h-[2.5rem] xl:w-10 xl:[&_svg]:h-[0.9rem] xl:[&_svg]:w-[0.9rem] min-[1440px]:min-h-[3rem] min-[1440px]:w-[3rem] min-[1440px]:[&_svg]:h-[1.125rem] min-[1440px]:[&_svg]:w-[1.125rem] min-[1512px]:min-h-0 min-[1512px]:h-[3rem] min-[1512px]:w-[3.25rem] min-[1512px]:[&_svg]:h-5 min-[1512px]:[&_svg]:w-5">
+                  <div className="flex h-[3rem] w-[3rem] shrink-0 items-center justify-center self-stretch border-r border-white/[0.09] bg-white/[0.05] xl:min-h-[2.5rem] xl:w-10 xl:[&_svg]:h-[0.9rem] xl:[&_svg]:w-[0.9rem] min-[1440px]:min-h-[3rem] min-[1440px]:w-[3rem] min-[1440px]:[&_svg]:h-[1.125rem] min-[1440px]:[&_svg]:w-[1.125rem]">
                     <IconLockMini />
                   </div>
                   <input
@@ -437,7 +431,7 @@ export default function RegisterPage() {
               {error && (
                 <p
                   role="alert"
-                  className="rounded-xl border border-red-500/40 bg-red-950/50 px-4 py-3 text-[0.95rem] leading-snug text-red-100 backdrop-blur-sm xl:py-2 xl:text-[0.8125rem] xl:leading-snug min-[1440px]:py-[0.6rem] min-[1440px]:text-[0.9rem] min-[1512px]:py-3 min-[1512px]:text-[0.95rem]"
+                  className="rounded-xl border border-red-500/40 bg-red-950/50 px-4 py-3 text-[0.95rem] leading-snug text-red-100 backdrop-blur-sm xl:py-2 xl:text-[0.8125rem] xl:leading-snug min-[1440px]:py-[0.6rem] min-[1440px]:text-[0.9rem]"
                 >
                   {error}
                 </p>
@@ -446,7 +440,7 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="register-submit-btn cg-button cg-button-primary mt-1 w-full rounded-xl px-6 py-[0.85rem] text-[0.85rem] font-bold uppercase tracking-[0.26em] text-white outline-none hover:brightness-105 focus-visible:ring-2 focus-visible:ring-violet-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#060312] active:brightness-95 disabled:cursor-not-allowed disabled:opacity-55 disabled:active:brightness-100 xl:rounded-xl xl:px-4 xl:py-[0.68rem] xl:text-[0.78rem] xl:tracking-[0.19em] min-[1440px]:px-[1.2rem] min-[1440px]:py-[0.78rem] min-[1440px]:text-[0.805rem] min-[1440px]:tracking-[0.22em] min-[1512px]:rounded-xl min-[1512px]:px-6 min-[1512px]:py-4 min-[1512px]:text-[0.95rem] min-[1512px]:tracking-[0.26em]"
+                className="register-submit-btn cg-button cg-button-primary mt-1 w-full rounded-xl px-6 py-[0.85rem] text-[0.85rem] font-bold uppercase tracking-[0.26em] text-white outline-none hover:brightness-105 focus-visible:ring-2 focus-visible:ring-violet-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#060312] active:brightness-95 disabled:cursor-not-allowed disabled:opacity-55 disabled:active:brightness-100 xl:rounded-xl xl:px-4 xl:py-[0.68rem] xl:text-[0.78rem] xl:tracking-[0.19em] min-[1440px]:px-[1.2rem] min-[1440px]:py-[0.78rem] min-[1440px]:text-[0.805rem] min-[1440px]:tracking-[0.22em]"
                 style={{
                   background: 'linear-gradient(125deg, #7c3aed 0%, #a855f7 38%, #d946ef 62%, #f97316 100%)',
                 }}
@@ -455,7 +449,7 @@ export default function RegisterPage() {
               </button>
             </form>
 
-            <div className="relative my-5 flex items-center xl:my-4 min-[1512px]:my-6" aria-hidden>
+            <div className="relative my-5 flex items-center xl:my-4" aria-hidden>
               <div className="h-px flex-1 bg-gradient-to-r from-transparent via-violet-500/45 to-violet-400/25" />
               <span className="mx-3 text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-slate-500">
                 or
@@ -465,7 +459,7 @@ export default function RegisterPage() {
 
             <GoogleSignInButton variant="register" />
 
-            <p className="mt-8 text-center text-[0.95rem] text-slate-300 xl:mt-5 xl:text-left xl:text-[0.9rem] min-[1440px]:mt-6 min-[1440px]:text-[0.94rem] min-[1512px]:mt-10 min-[1512px]:text-[1rem]">
+            <p className="mt-8 text-center text-[0.95rem] text-slate-300 xl:mt-5 xl:text-left xl:text-[0.9rem] min-[1440px]:mt-6 min-[1440px]:text-[0.94rem]">
               Already have an account?{' '}
               <Link
                 to="/login"
@@ -482,21 +476,13 @@ export default function RegisterPage() {
           aria-hidden
           className="pointer-events-none order-3 hidden min-h-0 min-w-0 xl:order-2 xl:flex xl:flex-col xl:items-center xl:justify-center xl:self-center"
         >
-          <div className="relative flex w-full max-w-full items-center justify-center xl:h-[clamp(380px,min(58dvh,620px),620px)] xl:w-[min(100%,clamp(420px,34vw,560px))] min-[1440px]:h-[clamp(400px,min(60dvh,620px),620px)] min-[1440px]:w-[min(100%,clamp(420px,33vw,580px))] min-[1512px]:h-[clamp(320px,45dvh,560px)] min-[1512px]:w-[clamp(300px,28vw,520px)]">
+          <div className="relative flex w-full max-w-full items-center justify-center xl:h-[clamp(380px,min(58dvh,620px),620px)] xl:w-[min(100%,clamp(420px,34vw,560px))] min-[1440px]:h-[clamp(400px,min(60dvh,620px),620px)] min-[1440px]:w-[min(100%,clamp(420px,33vw,580px))]">
             <div
-              className="absolute z-0 min-[1512px]:hidden"
+              className="absolute z-0"
               style={{
                 inset: '-12%',
                 background:
                   'radial-gradient(circle at center, rgba(168,85,247,0.26) 0%, rgba(139,92,246,0.1) 38%, transparent 66%)',
-              }}
-            />
-            <div
-              className="absolute z-0 hidden min-[1512px]:block"
-              style={{
-                inset: '-14%',
-                background:
-                  'radial-gradient(circle at center, rgba(168,85,247,0.3) 0%, rgba(139,92,246,0.12) 40%, transparent 68%)',
               }}
             />
             <video
@@ -506,7 +492,7 @@ export default function RegisterPage() {
               loop
               playsInline
               preload="metadata"
-              className="relative z-[1] h-full w-full object-contain opacity-[0.78] mix-blend-screen min-[1512px]:opacity-[0.82]"
+              className="relative z-[1] h-full w-full object-contain opacity-[0.78] mix-blend-screen"
               style={{
                 maskImage:
                   'radial-gradient(ellipse at center, black 0%, black 42%, rgba(0,0,0,0.65) 56%, transparent 74%)',
@@ -522,13 +508,13 @@ export default function RegisterPage() {
         </div>
 
         <aside className="order-2 mt-11 max-xl:border-t max-xl:border-white/[0.08] max-xl:pt-10 xl:order-3 xl:mt-0 xl:min-w-0 xl:self-center xl:justify-self-end">
-          <ul className="flex w-full flex-col xl:w-full xl:max-w-[min(100%,480px)] min-[1512px]:max-w-[min(100%,500px)]">
+          <ul className="flex w-full flex-col xl:w-full xl:max-w-[min(100%,480px)]">
             {BENEFITS.map((b, idx) => (
               <li key={b.title}>
                 {idx > 0 ? (
-                  <div className="my-6 h-px w-full bg-gradient-to-r from-transparent via-violet-500/35 to-transparent min-[1512px]:my-7" />
+                  <div className="my-6 h-px w-full bg-gradient-to-r from-transparent via-violet-500/35 to-transparent" />
                 ) : null}
-                <div className="flex items-center gap-6 max-xl:items-start xl:gap-6 min-[1512px]:gap-10">
+                <div className="flex items-center gap-6 max-xl:items-start xl:gap-6">
                   <div className="register-benefit-icon-slot max-xl:self-start xl:-translate-y-0.5" aria-hidden>
                     <img
                       src={b.icon}
@@ -539,10 +525,10 @@ export default function RegisterPage() {
                     />
                   </div>
                   <div className="min-w-0 max-xl:pt-1">
-                    <h2 className="font-serif text-[1.05rem] font-semibold text-white min-[1512px]:text-lg">
+                    <h2 className="font-serif text-[1.05rem] font-semibold text-white">
                       {b.title}
                     </h2>
-                    <p className="mt-2 text-[0.9rem] leading-relaxed text-slate-400 min-[1512px]:text-[0.98rem]">
+                    <p className="mt-2 text-[0.9rem] leading-relaxed text-slate-400">
                       {b.desc}
                     </p>
                   </div>

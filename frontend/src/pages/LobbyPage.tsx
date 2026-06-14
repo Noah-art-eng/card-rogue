@@ -253,8 +253,8 @@ export default function LobbyPage() {
         }}
       />
 
-      <div className="lobby-dash-shell relative z-10 flex min-h-0 min-w-0 max-w-full flex-1 flex-col overflow-x-hidden overflow-y-auto px-4 pb-5 pt-5 sm:px-6 md:pb-6 xl:px-12">
-        <div className="lobby-dash-grid grid min-h-0 min-w-0 max-w-full flex-1 grid-cols-1 gap-8 pb-3 lg:grid-cols-[minmax(280px,320px)_minmax(0,1fr)_minmax(300px,360px)] lg:items-stretch lg:gap-12 xl:gap-16">
+      <div className="lobby-dash-shell relative z-10 mx-auto flex min-h-0 min-w-0 w-full max-w-[1400px] flex-1 flex-col overflow-x-hidden overflow-y-auto px-4 pb-5 pt-5 sm:px-6 md:pb-6 xl:px-12">
+        <div className="lobby-dash-grid grid min-h-0 min-w-0 max-w-full flex-1 grid-cols-1 gap-8 pb-3 lg:grid-cols-[minmax(280px,320px)_minmax(0,1fr)_minmax(300px,360px)] lg:items-stretch lg:gap-12 xl:gap-12">
           {/* LEFT — profile / stats / recent matches */}
           <aside
             className={`lobby-sidebar-left ${panelSurface} ${padStd} flex min-h-0 min-w-0 flex-col overflow-y-auto`}

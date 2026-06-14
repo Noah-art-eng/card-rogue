@@ -125,12 +125,12 @@ function ShowcaseHeroSection({ innerKey, fanHovered, setFanHovered }: ShowcaseHe
 
         <div
           key={innerKey}
-          className="relative z-10 flex-1 flex flex-col md:flex-row items-center pl-6 pr-3 sm:pl-8 sm:pr-4 lg:pl-16 xl:pl-24 2xl:pl-40 lg:pr-6 pb-8 pt-5 min-[1512px]:pb-10 min-[1512px]:pt-6 lg:pb-7 gap-6 md:gap-0"
+          className="relative z-10 flex-1 flex flex-col md:flex-row items-center pl-6 pr-3 sm:pl-8 sm:pr-4 lg:pl-16 xl:pl-24 lg:pr-6 pb-8 pt-5 lg:pb-7 gap-6 md:gap-0"
         >
 
-          <div className="hero-stagger-copy w-full min-w-0 md:w-[38%] flex flex-col gap-4 md:gap-5 min-[1512px]:gap-6 2xl:gap-7 md:pr-2 min-[1512px]:pr-3 order-2 md:order-1 items-center md:items-start text-center md:text-left">
+          <div className="hero-stagger-copy w-full min-w-0 md:w-[38%] flex flex-col gap-4 md:gap-5 md:pr-2 order-2 md:order-1 items-center md:items-start text-center md:text-left">
             {/* Laptop: lighter type; min-[1512px]+ / 2xl: step up toward original desktop */}
-            <h1 className="hero-stagger-headline text-4xl sm:text-5xl md:text-[2.5rem] lg:text-[2.75rem] xl:text-[3rem] min-[1512px]:text-[3.75rem] 2xl:text-7xl font-black text-white leading-[1.04] tracking-tight">
+            <h1 className="hero-stagger-headline text-4xl sm:text-5xl md:text-[2.5rem] lg:text-[2.75rem] xl:text-[3rem] font-black text-white leading-[1.04] tracking-tight">
               Strategic<br />Card Battles,<br />
               <span style={{
                 background: 'linear-gradient(90deg, #a78bfa 0%, #818cf8 50%, #60a5fa 100%)',
@@ -141,18 +141,16 @@ function ShowcaseHeroSection({ innerKey, fanHovered, setFanHovered }: ShowcaseHe
                 Powered by Skill
               </span>
             </h1>
-            <div className="hero-stagger-subcta flex flex-col gap-4 md:gap-5 min-[1512px]:gap-6 2xl:gap-7">
-            <p className="text-slate-400 text-base md:text-base lg:text-[1.05rem] min-[1512px]:text-xl leading-relaxed max-w-sm">
+            <div className="hero-stagger-subcta flex flex-col gap-4 md:gap-5">
+            <p className="text-slate-400 text-base md:text-base lg:text-[1.05rem] leading-relaxed max-w-sm">
               A PvE card game where strategy, timing, and elemental combos decide every match.
             </p>
             {/* Single row on laptop: nowrap + tighter padding until min-[1512px] */}
-            <div className="flex flex-nowrap items-center gap-2 sm:gap-2.5 min-[1512px]:gap-5">
+            <div className="flex flex-nowrap items-center gap-2 sm:gap-2.5">
               <Link
                 to="/login"
                 className="glow-purple shrink-0 rounded-full font-extrabold text-white tracking-wide
-                           px-5 py-2.5 text-sm md:px-6 md:py-3 md:text-base
-                           min-[1512px]:px-10 min-[1512px]:py-4 min-[1512px]:text-lg
-                           2xl:px-14 2xl:py-5 2xl:text-2xl"
+                           px-5 py-2.5 text-sm md:px-6 md:py-3 md:text-base"
                 style={{ background: 'linear-gradient(135deg, #7c3aed, #4f46e5)' }}
               >
                 Start Game
@@ -160,9 +158,7 @@ function ShowcaseHeroSection({ innerKey, fanHovered, setFanHovered }: ShowcaseHe
               <Link
                 to="/leaderboard"
                 className="glow-outline shrink-0 rounded-full font-extrabold text-white tracking-wide border-2 border-white/30 backdrop-blur-sm
-                           px-5 py-2.5 text-sm md:px-6 md:py-3 md:text-base
-                           min-[1512px]:px-10 min-[1512px]:py-4 min-[1512px]:text-lg
-                           2xl:px-14 2xl:py-5 2xl:text-2xl"
+                           px-5 py-2.5 text-sm md:px-6 md:py-3 md:text-base"
               >
                 View Leaderboard
               </Link>
@@ -760,35 +756,18 @@ function HomePage() {
           animation: showcaseS3Card 0.72s cubic-bezier(0.45, 0, 0.15, 1) 0.44s both;
         }
 
-        /* Skills panel — laptops <1512px: proportionally smaller; 1512+ premium width/height */
+        /* Skills panel — capped at xl desktop width */
         .showcase-s4-panel-responsive {
           width: 100%;
           max-width: min(100%, 1180px);
           min-height: clamp(328px, 56dvh, 508px);
         }
-        @media (min-width: 1512px) {
-          .showcase-s4-panel-responsive {
-            max-width: 1800px;
-            min-height: clamp(420px, 72dvh, 680px);
-          }
-        }
 
-        /* PvE panel — match laptop shrink / 1512+ ramp (same breakpoint as Navbar) */
+        /* PvE panel — same cap as skills panel */
         .showcase-s2-panel-responsive {
           width: 100%;
           max-width: min(100%, 1180px);
           min-height: clamp(356px, 50dvh, 488px);
-        }
-        @media (min-width: 1512px) {
-          .showcase-s2-panel-responsive {
-            max-width: 1800px;
-            min-height: clamp(500px, 56dvh, 620px);
-          }
-        }
-        @media (min-width: 1920px) {
-          .showcase-s2-panel-responsive {
-            min-height: clamp(520px, 48dvh, 680px);
-          }
         }
 
         /* Laptop: icon cluster vw matches scaled panel (~980/760 aspect) */
@@ -861,7 +840,7 @@ function HomePage() {
           >
       {/* py reduced at smaller viewports so panel can breathe inside the slide */}
       <section
-        className="relative h-full min-h-0 flex flex-col justify-center py-3 lg:py-5 xl:py-8 min-[1512px]:py-10 px-2 md:px-4 overflow-hidden"
+        className="relative h-full min-h-0 flex flex-col justify-center py-3 lg:py-5 xl:py-8 px-2 md:px-4 overflow-hidden"
         style={{ background: '#040410' }}
       >
         {/* Ambient background glow */}
@@ -933,8 +912,8 @@ function HomePage() {
             style={{ zIndex: 10 }}
           >
             {/* LEFT — copy + CTAs */}
-            <div className="flex flex-col justify-center px-6 md:px-8 lg:px-12 xl:px-14 min-[1512px]:px-16 py-5 lg:py-8 xl:py-10 min-[1512px]:py-12 md:w-[48%] shrink-0 gap-6 min-[1512px]:gap-8">
-              <h2 className="text-3xl md:text-4xl xl:text-[2.875rem] min-[1512px]:text-[3.25rem] font-black text-white leading-tight">
+            <div className="flex flex-col justify-center px-6 md:px-8 lg:px-12 xl:px-14 py-5 lg:py-8 xl:py-10 md:w-[48%] shrink-0 gap-6">
+              <h2 className="text-3xl md:text-4xl xl:text-[2.875rem] font-black text-white leading-tight">
                 Master Skills.<br />
                 <span style={{
                   background: 'linear-gradient(90deg, #a78bfa 0%, #818cf8 50%, #60a5fa 100%)',
@@ -969,7 +948,7 @@ function HomePage() {
             </div>
 
             {/* RIGHT — 3 staggered floating element icons */}
-            <div className="relative flex-1 flex items-center justify-center px-6 py-5 lg:py-7 xl:py-8 min-[1512px]:py-10">
+            <div className="relative flex-1 flex items-center justify-center px-6 py-5 lg:py-7 xl:py-8">
 
               {/* Atmospheric bloom — scaled to match larger icons */}
               <div
@@ -1163,7 +1142,7 @@ function HomePage() {
           >
       {/* py reduced so the panel fits comfortably inside the slide at 1366×768 */}
       <section
-        className="relative h-full min-h-0 flex flex-col justify-center items-center py-5 lg:py-8 xl:py-11 min-[1512px]:py-16 px-2 md:px-4 overflow-hidden"
+        className="relative h-full min-h-0 flex flex-col justify-center items-center py-5 lg:py-8 xl:py-11 px-2 md:px-4 overflow-hidden"
         style={{ background: 'linear-gradient(180deg, #040410 0%, #06061a 100%)' }}
       >
         {/* Section ambient glow */}
@@ -1284,8 +1263,8 @@ function HomePage() {
           <div className="relative flex flex-col md:flex-row min-h-0" style={{ zIndex: 10 }}>
 
             {/* LEFT — copy */}
-            <div className="flex flex-col justify-center px-8 md:px-11 lg:px-14 min-[1512px]:px-20 py-9 min-[1512px]:py-14 md:w-[44%] shrink-0 gap-5 min-[1512px]:gap-7">
-              <h2 className="text-2xl md:text-3xl xl:text-[2.55rem] min-[1512px]:text-[2.75rem] font-black text-white leading-tight">
+            <div className="flex flex-col justify-center px-8 md:px-11 lg:px-14 py-9 md:w-[44%] shrink-0 gap-5">
+              <h2 className="text-2xl md:text-3xl xl:text-[2.55rem] font-black text-white leading-tight">
                 Explore Endless<br />
                 <span style={{
                   background: 'linear-gradient(90deg, #c4b5fd 0%, #818cf8 50%, #38bdf8 100%)',

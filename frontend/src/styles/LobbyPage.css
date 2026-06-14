@@ -606,3 +606,13 @@
     font-size: 0.58rem !important;
   }
 }
+
+/* Wide screens: keep lobby density close to 1440px — do not expand past xl layout */
+@media (min-width: 1601px) {
+  .lobby-dash-root .lobby-dash-shell {
+    max-width: 1400px !important;
+  }
+  .lobby-dash-root .lobby-dash-grid {
+    gap: 3rem !important;
+  }
+}
