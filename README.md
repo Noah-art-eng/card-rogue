@@ -1,3 +1,10 @@
+![React](https://img.shields.io/badge/Frontend-React%2019-61DAFB)
+![TypeScript](https://img.shields.io/badge/Language-TypeScript-3178C6)
+![Node.js](https://img.shields.io/badge/Backend-Node.js-339933)
+![MongoDB](https://img.shields.io/badge/Database-MongoDB-47A248)
+![Socket.IO](https://img.shields.io/badge/Realtime-Socket.IO-010101)
+![Status](https://img.shields.io/badge/Status-Live-success)
+
 # Card Rogue
 
 A full-stack, browser-based PVE card battler built around poker hand mechanics. Players select cards to form poker combinations, deal damage to bosses across layered floors, use tactical skills, and track results on a seasonal leaderboard. The project is an npm workspaces monorepo with a React SPA frontend and an Express + Socket.IO backend.
