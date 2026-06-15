@@ -11,10 +11,24 @@ const AUDIO_PATHS: Record<SfxKey | 'bgm', string> = {
 
 const STORAGE_MUTED = 'cg-game-audio-muted'
 const STORAGE_VOLUME = 'cg-game-audio-volume'
+const STORAGE_MUTED_SCHEMA = 'cg-game-audio-muted-schema'
+const MUTED_SCHEMA_VERSION = '2'
 const MIN_SFX_INTERVAL_MS = 45
+
+function migrateMutedPreference(): void {
+  try {
+    if (localStorage.getItem(STORAGE_MUTED_SCHEMA) === MUTED_SCHEMA_VERSION) return
+    // v2: default unmuted; drop legacy values that may have been written incorrectly.
+    localStorage.removeItem(STORAGE_MUTED)
+    localStorage.setItem(STORAGE_MUTED_SCHEMA, MUTED_SCHEMA_VERSION)
+  } catch {
+    // ignore storage failures
+  }
+}
 
 function readMutedPreference(): boolean {
   try {
+    migrateMutedPreference()
     return localStorage.getItem(STORAGE_MUTED) === 'true'
   } catch {
     return false
@@ -29,6 +43,19 @@ function readVolumePreference(): number {
     return Number.isFinite(value) ? Math.min(1, Math.max(0, value)) : 1
   } catch {
     return 1
+  }
+}
+
+function persistUserMutedPreference(muted: boolean): void {
+  try {
+    if (muted) {
+      localStorage.setItem(STORAGE_MUTED, 'true')
+    } else {
+      localStorage.removeItem(STORAGE_MUTED)
+    }
+    localStorage.setItem(STORAGE_MUTED_SCHEMA, MUTED_SCHEMA_VERSION)
+  } catch {
+    // ignore storage failures
   }
 }
 
@@ -74,6 +101,10 @@ class GameAudioManager {
     return this.muted
   }
 
+  isUnlocked(): boolean {
+    return this.unlocked
+  }
+
   getVolume(): number {
     return this.sfxVolume
   }
@@ -87,19 +118,21 @@ class GameAudioManager {
     }
   }
 
-  setMuted(muted: boolean): void {
+  /** Update runtime mute state without touching persisted user preference. */
+  private applyMuted(muted: boolean): void {
     this.muted = muted
-    try {
-      localStorage.setItem(STORAGE_MUTED, String(muted))
-    } catch {
-      // ignore storage failures
-    }
     if (muted) {
       this.stopBgm()
     } else if (this.unlocked) {
       void this.playBgm()
     }
     this.notifyMutedChange()
+  }
+
+  /** Explicit user preference change (mute button). */
+  setMuted(muted: boolean): void {
+    this.applyMuted(muted)
+    persistUserMutedPreference(muted)
   }
 
   toggleMuted(): boolean {

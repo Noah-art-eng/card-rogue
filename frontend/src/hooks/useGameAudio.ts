@@ -20,7 +20,10 @@ export function useGameAudio() {
   }, [])
 
   const toggleMute = useCallback(() => {
-    void gameAudioManager.unlock()
+    if (!gameAudioManager.isUnlocked()) {
+      void gameAudioManager.unlock()
+      return
+    }
     gameAudioManager.toggleMuted()
   }, [])
 
