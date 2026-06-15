@@ -21,7 +21,8 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     return <Navigate to="/login" replace />
   }
 
-  if (isLoading || !user) {
+  // Once we have a user, keep the page mounted even during silent background refresh.
+  if (!user) {
     return <LoadingScreen message="Verifying session…" />
   }
 

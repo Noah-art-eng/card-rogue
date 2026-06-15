@@ -65,7 +65,7 @@ function formatMatchEndedRelative(endedAtInput: string | null | undefined): stri
 }
 
 export default function LobbyPage() {
-  const { user, isLoading, fetchMe, updateUser } = useAuth()
+  const { user, updateUser } = useAuth()
   const navigate = useNavigate()
   const avatarInputRef = useRef<HTMLInputElement>(null)
 
@@ -126,10 +126,6 @@ export default function LobbyPage() {
   const lobbyXp = useMemo(() => {
     return getLobbyXpForUser(user?.id, stats)
   }, [user?.id, stats])
-
-  useEffect(() => {
-    if (user) void fetchMe()
-  }, [user?.id, fetchMe])
 
   useEffect(() => {
     let timer: ReturnType<typeof setInterval> | null = null
@@ -217,10 +213,6 @@ export default function LobbyPage() {
     await new Promise((resolve) => window.setTimeout(resolve, 650))
     navigate('/game?layer=1')
   }, [navigate, startingGame])
-
-  if (isLoading) {
-    return <LoadingScreen message="Loading lobby…" />
-  }
 
   if (!user) {
     return null

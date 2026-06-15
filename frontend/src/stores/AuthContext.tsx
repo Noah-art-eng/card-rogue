@@ -4,6 +4,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from 'react'
@@ -29,6 +30,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setTokenState] = useState<string | null>(() => getToken())
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(() => Boolean(getToken()))
+  const userRef = useRef<User | null>(null)
+
+  userRef.current = user
 
   const logout = useCallback(() => {
     clearToken()
@@ -58,7 +62,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     setTokenState(storedToken)
-    setIsLoading(true)
+
+    // Only block the app on the initial bootstrap when no user is cached yet.
+    // Background refreshes must not flip isLoading back to true.
+    const isBootstrap = userRef.current === null
+    if (isBootstrap) {
+      setIsLoading(true)
+    }
 
     try {
       const response = await getMe()
@@ -66,7 +76,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch {
       logout()
     } finally {
-      setIsLoading(false)
+      if (isBootstrap) {
+        setIsLoading(false)
+      }
     }
   }, [logout])
 
