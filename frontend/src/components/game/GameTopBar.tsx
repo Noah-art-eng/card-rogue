@@ -49,7 +49,7 @@ export default function GameTopBar({
             aria-pressed={!muted}
           >
             <img
-              src={muted ? '/images/volume-on.png' : '/images/volume-off.png'}
+              src={muted ? '/images/volume-off.png' : '/images/volume-on.png'}
               alt=""
               className="game-topbar__img-btn-bg"
               draggable={false}
