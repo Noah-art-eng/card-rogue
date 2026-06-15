@@ -3,9 +3,12 @@
    ============================================================ */
 
 .game-page {
-  --cg-game-skillbar-w: 150px;
-  --cg-game-scorepanel-w: 272px;
-  --game-topbar-btn-size: 72px;
+  /* Layout tokens — tiered at 1280 / 1440, capped at 1600 */
+  --cg-game-skillbar-w: 120px;
+  --cg-game-scorepanel-w: 188px;
+  --cg-game-topbar-h: 64px;
+  --game-topbar-btn-size: 64px;
+  --cg-game-skill-icon: 64px;
   position: fixed;
   inset: 0;
   z-index: 50;
@@ -18,11 +21,54 @@
   font-size: 13px;
 }
 
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .game-page {
+    --cg-game-skillbar-w: 86px;
+    --cg-game-scorepanel-w: 128px;
+    --cg-game-topbar-h: 38px;
+    --game-topbar-btn-size: 38px;
+    --cg-game-skill-icon: 36px;
+    --cg-scorepanel-btn-h: 44px;
+    --cg-scorepanel-round-size: 20px;
+    --cg-scorepanel-arcade-size: 15px;
+    font-size: 10px;
+  }
+}
+
+@media (min-width: 1280px) and (max-width: 1599px) {
+  .game-page {
+    --cg-game-skillbar-w: 108px;
+    --cg-game-scorepanel-w: 158px;
+    --cg-game-topbar-h: 48px;
+    --game-topbar-btn-size: 48px;
+    --cg-game-skill-icon: 48px;
+    --cg-scorepanel-btn-h: 50px;
+    --cg-scorepanel-round-size: 26px;
+    --cg-scorepanel-arcade-size: 20px;
+    font-size: 11px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .game-page {
+    /* Large desktop — shrink chrome so battlefield reads larger */
+    --cg-game-skillbar-w: 118px;
+    --cg-game-scorepanel-w: 176px;
+    --cg-game-topbar-h: 52px;
+    --game-topbar-btn-size: 52px;
+    --cg-game-skill-icon: 52px;
+    --cg-scorepanel-btn-h: 56px;
+    --cg-scorepanel-round-size: 28px;
+    --cg-scorepanel-arcade-size: 22px;
+    font-size: 12px;
+  }
+}
+
 /* ── Top Bar ───────────────────────────────────────────────── */
 
 .game-topbar {
-  height: 72px;
-  min-height: 72px;
+  height: var(--cg-game-topbar-h, 72px);
+  min-height: var(--cg-game-topbar-h, 72px);
   display: flex;
   align-items: center;
   padding: 0 12px;
@@ -131,7 +177,7 @@
 
 .skillbar__frame-top,
 .skillbar__frame-bottom {
-  width: 90px;
+  width: var(--cg-game-skillbar-w, 90px);
   display: block;
   object-fit: fill;
   flex-shrink: 0;
@@ -237,8 +283,8 @@
 }
 
 .skillbar__slot {
-  width: 72px;
-  height: 72px;
+  width: var(--cg-game-skill-icon, 72px);
+  height: var(--cg-game-skill-icon, 72px);
   position: relative;
   perspective: 600px;
 }
@@ -289,8 +335,8 @@
 /* Slot frame image + skill button */
 
 .skillbar__skill-btn {
-  width: 72px;
-  height: 72px;
+  width: var(--cg-game-skill-icon, 72px);
+  height: var(--cg-game-skill-icon, 72px);
   border-radius: 50%;
   background: url('/images/skill-slot.png') no-repeat center / contain;
   border: none;
@@ -434,6 +480,11 @@
   gap: 10px;
   overflow: hidden;
   position: relative;
+  pointer-events: none;
+}
+
+.game-battlefield > * {
+  pointer-events: auto;
 }
 
 /* Background image fills the entire battlefield */
@@ -797,8 +848,8 @@
 /* ── Score Panel ───────────────────────────────────────────── */
 
 .game-scorepanel {
-  width: 208px;
-  min-width: 208px;
+  width: var(--cg-game-scorepanel-w, 208px);
+  min-width: var(--cg-game-scorepanel-w, 208px);
   background: rgba(10, 10, 18, 0.92);
   border-left: 1px solid #2a2a40;
   display: flex;
@@ -993,9 +1044,13 @@
 /* ── Hand Area ─────────────────────────────────────────────── */
 
 .game-handarea {
+  --cg-hand-zone-scale: 0.6885;
+  --cg-hand-card-scale: 0.9;
+  --cg-hand-fan-visual-scale: calc(var(--cg-hand-zone-scale) * var(--cg-hand-card-scale));
+  --cg-hand-fan-spread: 1.38;
   --cg-hand-card-w: 192px;
   --cg-hand-card-h: 282px;
-  --cg-hand-area-h: 210px;
+  --cg-hand-area-h: calc(210px * var(--cg-hand-zone-scale));
   height: var(--cg-hand-area-h);
   min-height: var(--cg-hand-area-h);
   background: #0a0a12;
@@ -1084,39 +1139,7 @@
   color: #9090a8;
 }
 
-/* ── Hand Card (image-based, 96 × 140) ────────────────────── */
-
-.hand-card {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  width: var(--cg-hand-card-w, 192px);
-  height: var(--cg-hand-card-h, 282px);
-  min-width: var(--cg-hand-card-w, 192px);
-  border-radius: 10px;
-  border: 3px solid #3a3a55;
-  background: #14141f;
-  cursor: pointer;
-  transform-origin: 50% 100%;
-  transition:
-    transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
-    border-color 0.15s,
-    box-shadow 0.15s;
-  user-select: none;
-  padding: 0;
-  overflow: visible;
-  flex-shrink: 0;
-  pointer-events: auto;
-  isolation: isolate;
-}
-
-.hand-card:hover:not(.hand-card--disabled) {
-  /* rarity glow handled by .hand-card--rarity-active */
-}
-
-.hand-card--selected {
-  /* rarity + element border handled per-class below */
-}
+/* ── Hand Card — base layout in game-visual-ref.css (.game-handarea .hand-card) ── */
 
 .hand-card--FIRE  { border-color: #8b3a20; }
 .hand-card--WATER { border-color: #1e5080; }

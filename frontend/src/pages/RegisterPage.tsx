@@ -146,7 +146,7 @@ export default function RegisterPage() {
   const inputShell =
     'flex min-h-0 w-full items-stretch overflow-hidden rounded-xl border border-violet-500/22 bg-black/48 shadow-inner shadow-black/30 backdrop-blur-md transition focus-within:border-violet-400 focus-within:ring-2 focus-within:ring-violet-500/45 focus-within:shadow-[0_0_16px_rgba(139,92,246,0.18)]';
   const inputField =
-    'cg-input min-w-0 flex-1 border-0 bg-transparent px-3.5 py-3 text-[0.95rem] text-white placeholder:text-slate-500 disabled:opacity-55 sm:px-4 sm:py-3 xl:min-h-[2.5rem] xl:px-[0.625rem] xl:py-2 xl:text-[0.8125rem] xl:leading-snug xl:placeholder:text-[0.76rem] min-[1440px]:min-h-[3rem] min-[1440px]:px-[0.9375rem] min-[1440px]:py-3 min-[1440px]:text-[0.95rem] min-[1440px]:leading-relaxed min-[1440px]:placeholder:text-[0.9rem]';
+    'cg-input min-w-0 flex-1 border-0 bg-transparent px-3.5 py-3 text-[0.95rem] text-white placeholder:text-slate-500 disabled:opacity-55 sm:px-4 sm:py-3 lg:max-xl:px-3 lg:max-xl:py-2.5 lg:max-xl:text-[0.88rem] xl:min-h-[2.5rem] xl:px-[0.625rem] xl:py-2 xl:text-[0.8125rem] xl:leading-snug xl:placeholder:text-[0.76rem] min-[1440px]:min-h-[3rem] min-[1440px]:px-[0.9375rem] min-[1440px]:py-3 min-[1440px]:text-[0.95rem] min-[1440px]:leading-relaxed min-[1440px]:placeholder:text-[0.9rem]';
 
   return (
     <div className="register-page-root cg-page relative isolate min-h-[calc(100dvh_-_var(--navbar-height))] w-full overflow-x-hidden overflow-y-auto overscroll-y-contain bg-[#060312] text-slate-200">
@@ -298,6 +298,55 @@ export default function RegisterPage() {
             filter: brightness(1.1) drop-shadow(0 0 20px var(--icon-glow)) !important;
           }
         }
+        /* 1024–1279 — narrower left scrim so center crystal shows between form and benefits */
+        @media (min-width: 1024px) and (max-width: 1279px) {
+          .register-hero-scrim {
+            background: linear-gradient(
+              105deg,
+              rgba(6, 3, 18, 0.94) 0%,
+              rgba(6, 3, 18, 0.72) min(26%, 300px),
+              rgba(12, 10, 48, 0.18) 44%,
+              transparent 80%
+            ) !important;
+          }
+          .register-crystal-glow {
+            opacity: 0 !important;
+          }
+          .register-crystal-stage {
+            width: auto !important;
+            height: auto !important;
+            max-height: min(48dvh, 360px) !important;
+            max-width: min(210px, 22vw) !important;
+            overflow: visible !important;
+            background: transparent !important;
+          }
+          .register-crystal-video {
+            width: auto !important;
+            height: auto !important;
+            max-height: min(48dvh, 360px) !important;
+            max-width: min(210px, 22vw) !important;
+            object-fit: contain !important;
+            mix-blend-mode: normal !important;
+            opacity: 0.94 !important;
+            filter: drop-shadow(0 0 28px rgba(168, 85, 247, 0.28));
+            -webkit-mask-image: radial-gradient(
+              ellipse at center,
+              black 0%,
+              black 28%,
+              rgba(0, 0, 0, 0.75) 42%,
+              rgba(0, 0, 0, 0.35) 58%,
+              transparent 82%
+            ) !important;
+            mask-image: radial-gradient(
+              ellipse at center,
+              black 0%,
+              black 28%,
+              rgba(0, 0, 0, 0.75) 42%,
+              rgba(0, 0, 0, 0.35) 58%,
+              transparent 82%
+            ) !important;
+          }
+        }
       `}</style>
       {/* Hero background — full area below navbar (cover, bias right); not a boxed image */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -312,7 +361,7 @@ export default function RegisterPage() {
         />
         {/* Readability scrim — strong on the left where the form sits */}
         <div
-          className="absolute inset-0"
+          className="register-hero-scrim absolute inset-0"
           aria-hidden
           style={{
             background:
@@ -331,38 +380,38 @@ export default function RegisterPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/55" aria-hidden />
       </div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-[min(98vw,1400px)] flex-col px-4 py-8 sm:px-6 sm:py-10 xl:grid xl:min-h-[calc(100dvh_-_var(--navbar-height))] xl:grid-cols-[1.02fr_minmax(min(292px,28vw),1.08fr)_0.96fr] xl:items-center xl:gap-x-[clamp(0.5rem,1.35vw,1.25rem)] xl:pl-[clamp(3.35rem,6vw,5.25rem)] xl:pr-[clamp(1rem,2vw,1.625rem)] xl:py-[clamp(1.5rem,2.8dvh,2.25rem)] min-[1440px]:grid-cols-[1.03fr_minmax(min(312px,27vw),1.06fr)_0.97fr] min-[1440px]:gap-x-[clamp(0.625rem,1.55vw,1.65rem)] min-[1440px]:pl-14 min-[1440px]:pr-8 min-[1440px]:py-9">
+      <div className="relative z-10 mx-auto flex w-full max-w-[min(98vw,1360px)] flex-col px-4 py-8 sm:px-6 sm:py-10 lg:grid lg:min-h-[calc(100dvh_-_var(--navbar-height))] lg:grid-cols-[minmax(0,0.68fr)_minmax(150px,200px)_minmax(200px,260px)] lg:items-center lg:gap-x-4 lg:px-5 lg:py-7 lg:max-xl:max-w-[min(900px,92vw)] lg:max-xl:grid-cols-[minmax(0,264px)_minmax(130px,1fr)_228px] lg:max-xl:gap-x-4 lg:max-xl:px-8 lg:max-xl:py-7 xl:max-w-[min(98vw,1360px)] xl:grid-cols-[1.02fr_minmax(min(292px,28vw),1.08fr)_0.96fr] xl:gap-x-[clamp(0.5rem,1.35vw,1.25rem)] xl:pl-[clamp(3.35rem,6vw,5.25rem)] xl:pr-[clamp(1rem,2vw,1.625rem)] xl:py-[clamp(1.5rem,2.8dvh,2.25rem)] min-[1440px]:grid-cols-[1.03fr_minmax(min(312px,27vw),1.06fr)_0.97fr] min-[1440px]:gap-x-[clamp(0.625rem,1.55vw,1.65rem)] min-[1440px]:pl-14 min-[1440px]:pr-8 min-[1440px]:py-9">
         {/* Left — form */}
-        <section className="order-1 xl:order-1 xl:min-w-0 xl:justify-self-start xl:self-center">
-          <div className="mx-auto w-full max-w-[min(440px,100%)] xl:mx-0 xl:max-w-[min(418px,100%)] min-[1440px]:max-w-[min(452px,100%)]">
-            <p className="cg-label text-[0.72rem] font-semibold uppercase tracking-[0.34em] text-violet-200/95 sm:text-[0.74rem] xl:text-[0.685rem] xl:tracking-[0.28em]">
+        <section className="order-1 lg:min-w-0 lg:justify-self-start lg:self-center lg:max-xl:pl-1 xl:order-1">
+          <div className="mx-auto w-full max-w-[min(440px,100%)] lg:mx-0 lg:max-w-[min(300px,100%)] xl:max-w-[min(418px,100%)] min-[1440px]:max-w-[min(452px,100%)]">
+            <p className="cg-label text-[0.72rem] font-semibold uppercase tracking-[0.34em] text-violet-200/95 sm:text-[0.74rem] lg:max-xl:text-[0.66rem] lg:max-xl:tracking-[0.26em] xl:text-[0.685rem] xl:tracking-[0.28em]">
               CREATE YOUR ACCOUNT
             </p>
-            <h1 className="cg-title mt-2 font-serif text-[1.9rem] font-bold leading-snug tracking-tight text-white sm:text-4xl xl:mt-1.5 xl:text-[1.75rem] xl:leading-tight min-[1440px]:mt-2 min-[1440px]:text-[2.125rem]">
+            <h1 className="cg-title mt-2 font-serif text-[1.9rem] font-bold leading-snug tracking-tight text-white sm:text-4xl lg:max-xl:mt-1 lg:max-xl:text-[1.5rem] xl:mt-1.5 xl:text-[1.75rem] xl:leading-tight min-[1440px]:mt-2 min-[1440px]:text-[2.125rem]">
               Begin Your Adventure
             </h1>
-            <p className="cg-subtitle mt-2 max-w-[28rem] text-[0.95rem] leading-relaxed text-slate-300 sm:mt-3.5 sm:text-[1rem] xl:text-[0.92rem] xl:leading-snug min-[1440px]:mt-3 min-[1440px]:text-[0.95rem] min-[1440px]:leading-snug">
+            <p className="cg-subtitle mt-2 max-w-[28rem] text-[0.95rem] leading-relaxed text-slate-300 sm:mt-3.5 sm:text-[1rem] lg:max-xl:mt-1 lg:max-xl:text-[0.84rem] lg:max-xl:leading-snug xl:text-[0.92rem] xl:leading-snug min-[1440px]:mt-3 min-[1440px]:text-[0.95rem] min-[1440px]:leading-snug">
               Create your account and step into the arena.
               <br />
               Your legend starts here.
             </p>
 
-            <div className="relative my-6 flex items-center xl:my-5 min-[1440px]:my-6" aria-hidden>
+            <div className="relative my-6 flex items-center lg:max-xl:my-3 xl:my-5 min-[1440px]:my-6" aria-hidden>
               <div className="h-px flex-1 bg-gradient-to-r from-transparent via-violet-500/45 to-violet-400/25" />
               <div className="mx-3 h-2.5 w-2.5 rotate-45 border border-violet-400/75 bg-violet-500/20 shadow-[0_0_10px_rgba(167,139,250,0.5)]" />
               <div className="h-px flex-1 bg-gradient-to-l from-transparent via-violet-500/45 to-violet-400/25" />
             </div>
 
-            <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-[1.1rem] sm:gap-5 xl:gap-3.5 min-[1440px]:gap-[0.98rem]">
-              <div className="flex flex-col gap-2 xl:gap-1">
+            <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-[1.1rem] sm:gap-5 lg:max-xl:gap-3 xl:gap-3.5 min-[1440px]:gap-[0.98rem]">
+              <div className="flex flex-col gap-2 lg:max-xl:gap-1.5 xl:gap-1">
                 <label
                   htmlFor="username"
-                  className="text-[0.7rem] font-semibold uppercase tracking-[0.26em] text-violet-200/95 sm:text-[0.72rem] xl:text-[0.7rem] xl:tracking-[0.24em]"
+                  className="text-[0.7rem] font-semibold uppercase tracking-[0.26em] text-violet-200/95 sm:text-[0.72rem] lg:max-xl:text-[0.66rem] xl:text-[0.7rem] xl:tracking-[0.24em]"
                 >
                   Username
                 </label>
                 <div className={inputShell}>
-                  <div className="flex h-[3rem] w-[3rem] shrink-0 items-center justify-center self-stretch border-r border-white/[0.09] bg-white/[0.05] xl:min-h-[2.5rem] xl:w-10 xl:[&_svg]:h-[0.9rem] xl:[&_svg]:w-[0.9rem] min-[1440px]:min-h-[3rem] min-[1440px]:w-[3rem] min-[1440px]:[&_svg]:h-[1.125rem] min-[1440px]:[&_svg]:w-[1.125rem]">
+                  <div className="flex h-[3rem] w-[3rem] shrink-0 items-center justify-center self-stretch border-r border-white/[0.09] bg-white/[0.05] lg:max-xl:h-11 lg:max-xl:w-11 lg:max-xl:[&_svg]:h-4 lg:max-xl:[&_svg]:w-4 xl:min-h-[2.5rem] xl:w-10 xl:[&_svg]:h-[0.9rem] xl:[&_svg]:w-[0.9rem] min-[1440px]:min-h-[3rem] min-[1440px]:w-[3rem] min-[1440px]:[&_svg]:h-[1.125rem] min-[1440px]:[&_svg]:w-[1.125rem]">
                     <IconUserMini />
                   </div>
                   <input
@@ -380,15 +429,15 @@ export default function RegisterPage() {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2 xl:gap-1">
+              <div className="flex flex-col gap-2 lg:max-xl:gap-1.5 xl:gap-1">
                 <label
                   htmlFor="email"
-                  className="text-[0.7rem] font-semibold uppercase tracking-[0.26em] text-violet-200/95 sm:text-[0.72rem] xl:text-[0.7rem] xl:tracking-[0.24em]"
+                  className="text-[0.7rem] font-semibold uppercase tracking-[0.26em] text-violet-200/95 sm:text-[0.72rem] lg:max-xl:text-[0.66rem] xl:text-[0.7rem] xl:tracking-[0.24em]"
                 >
                   Email
                 </label>
                 <div className={inputShell}>
-                  <div className="flex h-[3rem] w-[3rem] shrink-0 items-center justify-center self-stretch border-r border-white/[0.09] bg-white/[0.05] xl:min-h-[2.5rem] xl:w-10 xl:[&_svg]:h-[0.9rem] xl:[&_svg]:w-[0.9rem] min-[1440px]:min-h-[3rem] min-[1440px]:w-[3rem] min-[1440px]:[&_svg]:h-[1.125rem] min-[1440px]:[&_svg]:w-[1.125rem]">
+                  <div className="flex h-[3rem] w-[3rem] shrink-0 items-center justify-center self-stretch border-r border-white/[0.09] bg-white/[0.05] lg:max-xl:h-11 lg:max-xl:w-11 lg:max-xl:[&_svg]:h-4 lg:max-xl:[&_svg]:w-4 xl:min-h-[2.5rem] xl:w-10 xl:[&_svg]:h-[0.9rem] xl:[&_svg]:w-[0.9rem] min-[1440px]:min-h-[3rem] min-[1440px]:w-[3rem] min-[1440px]:[&_svg]:h-[1.125rem] min-[1440px]:[&_svg]:w-[1.125rem]">
                     <IconMailMini />
                   </div>
                   <input
@@ -404,15 +453,15 @@ export default function RegisterPage() {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2 xl:gap-1">
+              <div className="flex flex-col gap-2 lg:max-xl:gap-1.5 xl:gap-1">
                 <label
                   htmlFor="password"
-                  className="text-[0.7rem] font-semibold uppercase tracking-[0.26em] text-violet-200/95 sm:text-[0.72rem] xl:text-[0.7rem] xl:tracking-[0.24em]"
+                  className="text-[0.7rem] font-semibold uppercase tracking-[0.26em] text-violet-200/95 sm:text-[0.72rem] lg:max-xl:text-[0.66rem] xl:text-[0.7rem] xl:tracking-[0.24em]"
                 >
                   Password
                 </label>
                 <div className={inputShell}>
-                  <div className="flex h-[3rem] w-[3rem] shrink-0 items-center justify-center self-stretch border-r border-white/[0.09] bg-white/[0.05] xl:min-h-[2.5rem] xl:w-10 xl:[&_svg]:h-[0.9rem] xl:[&_svg]:w-[0.9rem] min-[1440px]:min-h-[3rem] min-[1440px]:w-[3rem] min-[1440px]:[&_svg]:h-[1.125rem] min-[1440px]:[&_svg]:w-[1.125rem]">
+                  <div className="flex h-[3rem] w-[3rem] shrink-0 items-center justify-center self-stretch border-r border-white/[0.09] bg-white/[0.05] lg:max-xl:h-11 lg:max-xl:w-11 lg:max-xl:[&_svg]:h-4 lg:max-xl:[&_svg]:w-4 xl:min-h-[2.5rem] xl:w-10 xl:[&_svg]:h-[0.9rem] xl:[&_svg]:w-[0.9rem] min-[1440px]:min-h-[3rem] min-[1440px]:w-[3rem] min-[1440px]:[&_svg]:h-[1.125rem] min-[1440px]:[&_svg]:w-[1.125rem]">
                     <IconLockMini />
                   </div>
                   <input
@@ -440,7 +489,7 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="register-submit-btn cg-button cg-button-primary mt-1 w-full rounded-xl px-6 py-[0.85rem] text-[0.85rem] font-bold uppercase tracking-[0.26em] text-white outline-none hover:brightness-105 focus-visible:ring-2 focus-visible:ring-violet-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#060312] active:brightness-95 disabled:cursor-not-allowed disabled:opacity-55 disabled:active:brightness-100 xl:rounded-xl xl:px-4 xl:py-[0.68rem] xl:text-[0.78rem] xl:tracking-[0.19em] min-[1440px]:px-[1.2rem] min-[1440px]:py-[0.78rem] min-[1440px]:text-[0.805rem] min-[1440px]:tracking-[0.22em]"
+                className="register-submit-btn cg-button cg-button-primary mt-1 w-full rounded-xl px-6 py-[0.85rem] text-[0.85rem] font-bold uppercase tracking-[0.26em] text-white outline-none hover:brightness-105 focus-visible:ring-2 focus-visible:ring-violet-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#060312] active:brightness-95 disabled:cursor-not-allowed disabled:opacity-55 disabled:active:brightness-100 lg:max-xl:py-3 lg:max-xl:text-[0.78rem] lg:max-xl:tracking-[0.22em] xl:rounded-xl xl:px-4 xl:py-[0.68rem] xl:text-[0.78rem] xl:tracking-[0.19em] min-[1440px]:px-[1.2rem] min-[1440px]:py-[0.78rem] min-[1440px]:text-[0.805rem] min-[1440px]:tracking-[0.22em]"
                 style={{
                   background: 'linear-gradient(125deg, #7c3aed 0%, #a855f7 38%, #d946ef 62%, #f97316 100%)',
                 }}
@@ -471,18 +520,26 @@ export default function RegisterPage() {
           </div>
         </section>
 
-        {/* Center — crystal video in-grid (desktop); keeps same three-zone composition as large screens */}
+        {/* Center — crystal video in-grid (desktop); visible from lg so 1024 shows center crystal */}
         <div
           aria-hidden
-          className="pointer-events-none order-3 hidden min-h-0 min-w-0 xl:order-2 xl:flex xl:flex-col xl:items-center xl:justify-center xl:self-center"
+          className="pointer-events-none order-3 hidden min-h-0 min-w-0 lg:order-2 lg:flex lg:flex-col lg:items-center lg:justify-center lg:self-center xl:order-2"
         >
-          <div className="relative flex w-full max-w-full items-center justify-center xl:h-[clamp(380px,min(58dvh,620px),620px)] xl:w-[min(100%,clamp(420px,34vw,560px))] min-[1440px]:h-[clamp(400px,min(60dvh,620px),620px)] min-[1440px]:w-[min(100%,clamp(420px,33vw,580px))]">
+          <div className="register-crystal-stage relative flex w-full max-w-full items-center justify-center lg:h-[clamp(240px,min(48dvh,360px),360px)] lg:w-[min(100%,clamp(170px,19vw,210px))] xl:h-[clamp(380px,min(58dvh,620px),620px)] xl:w-[min(100%,clamp(420px,34vw,560px))] min-[1440px]:h-[clamp(400px,min(60dvh,620px),620px)] min-[1440px]:w-[min(100%,clamp(420px,33vw,580px))]">
             <div
-              className="absolute z-0"
+              className="register-crystal-glow absolute z-0"
               style={{
                 inset: '-12%',
                 background:
                   'radial-gradient(circle at center, rgba(168,85,247,0.26) 0%, rgba(139,92,246,0.1) 38%, transparent 66%)',
+              }}
+            />
+            <div
+              className="absolute z-0 hidden"
+              style={{
+                inset: '-14%',
+                background:
+                  'radial-gradient(circle at center, rgba(168,85,247,0.3) 0%, rgba(139,92,246,0.12) 40%, transparent 68%)',
               }}
             />
             <video
@@ -492,7 +549,7 @@ export default function RegisterPage() {
               loop
               playsInline
               preload="metadata"
-              className="relative z-[1] h-full w-full object-contain opacity-[0.78] mix-blend-screen"
+              className="register-crystal-video relative z-[1] h-full w-full object-contain opacity-[0.78] mix-blend-screen"
               style={{
                 maskImage:
                   'radial-gradient(ellipse at center, black 0%, black 42%, rgba(0,0,0,0.65) 56%, transparent 74%)',
@@ -507,15 +564,15 @@ export default function RegisterPage() {
           </div>
         </div>
 
-        <aside className="order-2 mt-11 max-xl:border-t max-xl:border-white/[0.08] max-xl:pt-10 xl:order-3 xl:mt-0 xl:min-w-0 xl:self-center xl:justify-self-end">
-          <ul className="flex w-full flex-col xl:w-full xl:max-w-[min(100%,480px)]">
+        <aside className="order-2 mt-11 max-lg:border-t max-lg:border-white/[0.08] max-lg:pt-10 lg:order-3 lg:mt-0 lg:min-w-0 lg:w-full lg:self-center lg:max-xl:justify-self-stretch lg:max-xl:pr-1 xl:justify-self-end">
+          <ul className="flex w-full flex-col xl:max-w-[min(100%,480px)]">
             {BENEFITS.map((b, idx) => (
               <li key={b.title}>
                 {idx > 0 ? (
-                  <div className="my-6 h-px w-full bg-gradient-to-r from-transparent via-violet-500/35 to-transparent" />
+                  <div className="my-6 h-px w-full bg-gradient-to-r from-transparent via-violet-500/35 to-transparent lg:max-xl:my-3.5 lg:my-4 xl:my-6" />
                 ) : null}
-                <div className="flex items-center gap-6 max-xl:items-start xl:gap-6">
-                  <div className="register-benefit-icon-slot max-xl:self-start xl:-translate-y-0.5" aria-hidden>
+                <div className="flex items-center gap-6 max-lg:items-start lg:max-xl:gap-3.5 xl:gap-6">
+                  <div className="register-benefit-icon-slot max-lg:self-start lg:max-xl:scale-[0.88] xl:-translate-y-0.5" aria-hidden>
                     <img
                       src={b.icon}
                       alt={b.alt}
@@ -524,11 +581,11 @@ export default function RegisterPage() {
                       draggable={false}
                     />
                   </div>
-                  <div className="min-w-0 max-xl:pt-1">
-                    <h2 className="font-serif text-[1.05rem] font-semibold text-white">
+                  <div className="min-w-0 max-lg:pt-1">
+                    <h2 className="font-serif text-[1.05rem] font-semibold text-white lg:max-xl:text-[0.95rem]">
                       {b.title}
                     </h2>
-                    <p className="mt-2 text-[0.9rem] leading-relaxed text-slate-400">
+                    <p className="mt-2 text-[0.9rem] leading-relaxed text-slate-400 lg:max-xl:mt-1.5 lg:max-xl:text-[0.82rem] lg:max-xl:leading-snug">
                       {b.desc}
                     </p>
                   </div>

@@ -208,9 +208,11 @@ export default function LeaderboardPage() {
         aria-hidden
       />
 
-      <div className="lb-dash-shell relative z-10 flex min-h-0 min-w-0 max-w-full flex-1 flex-col overflow-x-hidden overflow-y-auto px-4 pb-5 pt-5 sm:px-6 md:pb-6 xl:px-12">
+      <div className="lb-dash-shell relative z-10 mx-auto flex min-h-0 min-w-0 w-full max-w-[1360px] flex-1 flex-col overflow-x-hidden overflow-y-auto px-4 pb-5 pt-5 sm:px-6 md:pb-6 xl:px-12">
         <section className="lb-dash-main-stack flex min-h-0 min-w-0 flex-col gap-2 md:gap-4 lg:gap-5">
-          <div className="lb-dash-hero-card cg-panel overflow-visible rounded-none border border-[#c89b3c]/70 bg-black/[0.52] shadow-[0_28px_64px_-20px_rgba(0,0,0,0.82),inset_0_1px_0_rgba(200,155,60,0.15)] min-h-36 sm:min-h-52 lg:min-h-72 p-3 sm:p-4 lg:p-6">
+          <div
+            className={`lb-dash-main-panel ${leaderboardRankingsFrame} flex min-h-0 flex-col overflow-visible p-3 sm:p-4 lg:p-6`}
+          >
             <div className="lb-dash-hero-inner flex min-w-0 flex-row flex-nowrap items-start justify-between gap-2 md:gap-3 lg:gap-6">
               <div className="flex min-w-0 flex-1 gap-2 md:gap-3 lg:gap-5">
                 <img
@@ -259,67 +261,82 @@ export default function LeaderboardPage() {
               </div>
             </div>
 
-            <div className="mb-px h-px bg-gradient-to-r from-transparent via-[#c89b3c]/45 to-transparent" />
+            <div className="my-3 h-px bg-gradient-to-r from-transparent via-[#c89b3c]/45 to-transparent sm:my-4" />
 
-            <div className="lb-dash-eligibility-outer pt-2 pb-2 sm:pb-2 lg:pb-2">
-              <div className="lb-dash-eligibility-mat relative mx-auto border border-[#c89b3c]/70 bg-[linear-gradient(152deg,#0c0c10_0%,#0a0a0c_50%,#08080b_100%)] p-2.5 shadow-[inset_0_0_0_1px_rgba(200,155,60,0.09),inset_0_1px_0_rgba(255,255,255,0.035)] sm:p-3 lg:p-4">
-                <div className="lb-dash-eligibility-row flex flex-row flex-nowrap items-center justify-between gap-2 md:gap-6 lg:gap-8 lg:pr-4">
-                  <div className="lb-dash-eligibility-copy flex min-w-0 flex-1 items-start gap-2 md:gap-4 lg:gap-6 lg:pr-5">
-                    <div
-                      className="relative z-[2] mt-0.5 flex shrink-0 items-center justify-center"
-                      aria-hidden
-                    >
-                      <img
-                        src={LEADERBOARD_CUP_URL}
-                        alt=""
-                        draggable={false}
-                        className="h-10 w-auto object-contain object-center drop-shadow-[0_4px_22px_rgba(200,155,60,0.22)] sm:h-14 lg:h-20"
-                      />
-                    </div>
-                    <div className="min-w-0 pt-0.5">
-                      <p className={lbGoldCaps}>Eligibility</p>
-                      <h2 className="lb-ft-epic-line lb-dash-eligibility-epic mt-1">
-                        Climb the ranks and prove your mastery!
-                      </h2>
-                      <p className="lb-dash-eligibility-rules mt-1.5 font-sans text-sm leading-relaxed text-[#9aa8cb] lg:text-base">
-                        Complete at least one game to appear on the leaderboard. Higher game counts
-                        rank first, then win rate breaks ties.
-                      </p>
-                    </div>
+            <div
+              className={`${leaderboardRankingsMat} lb-dash-eligibility-mat p-2.5 sm:p-3 lg:p-4`}
+            >
+              <div className="lb-dash-eligibility-row flex flex-row flex-nowrap items-center justify-between gap-2 md:gap-6 lg:gap-8 lg:pr-4">
+                <div className="lb-dash-eligibility-copy flex min-w-0 flex-1 items-start gap-2 md:gap-4 lg:gap-6 lg:pr-5">
+                  <div
+                    className="relative z-[2] mt-0.5 flex shrink-0 items-center justify-center"
+                    aria-hidden
+                  >
+                    <img
+                      src={LEADERBOARD_CUP_URL}
+                      alt=""
+                      draggable={false}
+                      className="h-10 w-auto object-contain object-center drop-shadow-[0_4px_22px_rgba(200,155,60,0.22)] sm:h-14 lg:h-20"
+                    />
                   </div>
-                  <div className="lb-dash-eligibility-side flex shrink-0 items-center gap-1.5 border-l border-[#c89b3c]/35 pl-2 md:gap-2.5 md:pl-4 lg:gap-4 lg:pl-6">
-                    <div
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#c89b3c]/70 bg-[#0a0a0c] shadow-[inset_0_0_0_1px_rgba(200,155,60,0.12)] lg:h-11 lg:w-11"
-                      aria-hidden
-                    >
-                      <LeaderboardClockGlyph className="lb-dash-eligibility-clock h-4 w-4 text-[#c89b3c] lg:h-6 lg:w-6" />
-                    </div>
-                    <p
-                      className={`${lbGoldCaps} lb-ft-gold-caps--compact max-w-[10rem] leading-snug lg:max-w-[12rem]`}
-                    >
-                      Rankings update in real time
+                  <div className="min-w-0 pt-0.5">
+                    <p className={lbGoldCaps}>Eligibility</p>
+                    <h2 className="lb-ft-epic-line lb-dash-eligibility-epic mt-1">
+                      Climb the ranks and prove your mastery!
+                    </h2>
+                    <p className="lb-dash-eligibility-rules mt-1.5 font-sans text-sm leading-relaxed text-[#9aa8cb] lg:text-base">
+                      Complete at least one game to appear on the leaderboard. Higher game counts
+                      rank first, then win rate breaks ties.
                     </p>
                   </div>
                 </div>
+                <div className="lb-dash-eligibility-side flex shrink-0 items-center gap-1.5 border-l border-[#c89b3c]/35 pl-2 md:gap-2.5 md:pl-4 lg:gap-4 lg:pl-6">
+                  <div
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#c89b3c]/70 bg-[#0a0a0c] shadow-[inset_0_0_0_1px_rgba(200,155,60,0.12)] lg:h-11 lg:w-11"
+                    aria-hidden
+                  >
+                    <LeaderboardClockGlyph className="lb-dash-eligibility-clock h-4 w-4 text-[#c89b3c] lg:h-6 lg:w-6" />
+                  </div>
+                  <p
+                    className={`${lbGoldCaps} lb-ft-gold-caps--compact max-w-[10rem] leading-snug lg:max-w-[12rem]`}
+                  >
+                    Rankings update in real time
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div
-            className={`lb-dash-rankings-frame-wrap ${leaderboardRankingsFrame} flex min-h-0 flex-col p-3 sm:p-4 lg:p-6`}
-          >
+            <div className="my-3 h-px bg-gradient-to-r from-transparent via-[#c89b3c]/35 to-transparent sm:my-4" />
+
             <div
               className={`${leaderboardRankingsMat} lb-rankings-mat-inner overflow-x-auto overflow-y-auto max-h-[min(52vh,42rem)]`}
               aria-busy={leaderboardLoading}
             >
               <table className="lb-rankings-table w-full min-w-[min(460px,100%)] border-collapse text-left">
+                <colgroup>
+                  <col className="lb-col-rank" />
+                  <col className="lb-col-player" />
+                  <col className="lb-col-stat" />
+                  <col className="lb-col-stat" />
+                  <col className="lb-col-winrate" />
+                </colgroup>
                 <thead>
                   <tr className="border-b border-[#c89b3c]/35 bg-[rgba(12,11,14,0.94)]">
-                    {['Rank', 'Player', 'Games', 'Wins', 'WIN RATE'].map((h) => (
-                      <th key={h} scope="col" className="lb-ft-table-th lb-table-cell">
-                        {h}
-                      </th>
-                    ))}
+                    <th scope="col" className="lb-ft-table-th lb-table-cell lb-th-rank">
+                      Rank
+                    </th>
+                    <th scope="col" className="lb-ft-table-th lb-table-cell lb-th-player">
+                      Player
+                    </th>
+                    <th scope="col" className="lb-ft-table-th lb-table-cell lb-th-stat">
+                      Games
+                    </th>
+                    <th scope="col" className="lb-ft-table-th lb-table-cell lb-th-stat">
+                      Wins
+                    </th>
+                    <th scope="col" className="lb-ft-table-th lb-table-cell lb-th-winrate">
+                      WIN RATE
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -388,21 +405,26 @@ export default function LeaderboardPage() {
                                 }
                           }
                         >
-                          <td className="lb-table-cell align-middle">
-                            <span className="lb-ft-rank-num inline-flex min-w-[1.75rem] items-center gap-2 font-bold tabular-nums text-[#f0e6d8] sm:gap-2.5">
-                              {rank <= 3 && (
+                          <td className="lb-table-cell lb-td-rank align-middle">
+                            <span className="lb-ft-rank-num inline-flex w-full min-w-0 items-center gap-2 font-bold tabular-nums text-[#f0e6d8] sm:gap-2.5">
+                              {rank <= 3 ? (
                                 <img
                                   src={LEADERBOARD_RANK_IMG[rank]}
                                   alt=""
-                                  className="h-8 w-auto max-w-[2.25rem] object-contain object-left drop-shadow-[0_0_8px_rgba(255,220,140,0.25)] sm:h-10"
+                                  className="h-8 w-8 shrink-0 object-contain object-center drop-shadow-[0_0_8px_rgba(255,220,140,0.25)] sm:h-10 sm:w-10"
+                                  aria-hidden
+                                />
+                              ) : (
+                                <span
+                                  className="inline-flex h-8 w-8 shrink-0 sm:h-10 sm:w-10"
                                   aria-hidden
                                 />
                               )}
                               {rank}
                             </span>
                           </td>
-                          <td className="lb-table-cell align-middle">
-                            <span className="inline-flex min-w-0 items-center gap-2.5 font-medium tabular-nums text-[#dfe6f2]">
+                          <td className="lb-table-cell lb-td-player align-middle">
+                            <span className="inline-flex min-w-0 max-w-full items-center gap-2.5 font-medium tabular-nums text-[#dfe6f2]">
                               <span className="flex h-8 w-8 shrink-0 overflow-hidden rounded-full ring-1 ring-[#c89b3c]/25">
                                 <UserAvatar
                                   username={entry.username}
@@ -415,13 +437,13 @@ export default function LeaderboardPage() {
                               <span className="truncate">{entry.username ?? '—'}</span>
                             </span>
                           </td>
-                          <td className="lb-table-cell align-middle tabular-nums text-[#c4c9d8]">
+                          <td className="lb-table-cell lb-td-stat align-middle tabular-nums text-[#c4c9d8]">
                             {entry.totalGames ?? '—'}
                           </td>
-                          <td className="lb-table-cell align-middle tabular-nums text-[#c4c9d8]">
+                          <td className="lb-table-cell lb-td-stat align-middle tabular-nums text-[#c4c9d8]">
                             {entry.totalWins ?? '—'}
                           </td>
-                          <td className="lb-table-cell align-middle">
+                          <td className="lb-table-cell lb-td-winrate align-middle">
                             <span className="lb-winrate-cell font-bold tabular-nums text-[#e8dcc8]">
                               {formatWinRate(entry.winRate)}
                             </span>

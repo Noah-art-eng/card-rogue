@@ -74,6 +74,24 @@ const NATURE_THEME = {
 /** Image 1 fire, 2 ice, 3 nature, 4 fire, 5 nature, 6 ice */
 const carouselThemes = [FIRE_THEME, ICE_THEME, NATURE_THEME, FIRE_THEME, NATURE_THEME, ICE_THEME];
 
+/** Per-character vertical nudge by slot — compensates PNG framing (indices: 0/3 fire, 2 grass, 4 turtle). */
+const CHARACTER_SLOT_NUDGE_Y: Readonly<
+  Record<number, Partial<Record<'active' | 'prev' | 'next', string>>>
+> = {
+  0: { active: 'clamp(1.25rem, 3dvh, 2.5rem)' },
+  2: { prev: 'clamp(-0.85rem, -1.8dvh, -1.25rem)' },
+  3: { active: 'clamp(1.25rem, 3dvh, 2.5rem)' },
+  4: { active: 'clamp(1.5rem, 3.5dvh, 2.75rem)' },
+};
+
+function characterSlotNudgeY(
+  index: number,
+  slot: 'active' | 'prev' | 'next' | 'hidden',
+): string {
+  if (slot === 'hidden') return '0';
+  return CHARACTER_SLOT_NUDGE_Y[index]?.[slot] ?? '0';
+}
+
 function validate(email: string, password: string): string | null {
   if (!email.trim()) return 'Email is required.'
   if (!EMAIL_REGEX.test(email)) return 'Enter a valid email address.'
@@ -101,47 +119,54 @@ function getCarouselLayout(index: number, activeIndex: number, total: number): {
     return {
       slot: 'active',
       style: {
-        transform: 'translateX(0) translateY(2%) scale(1)',
+        '--carousel-tx': '0',
+        '--carousel-scale': '1',
+        '--carousel-character-nudge-y': characterSlotNudgeY(index, 'active'),
         opacity: 1,
         zIndex: 10,
-        pointerEvents: 'auto' as const,
+        pointerEvents: 'auto',
         filter: 'none',
-      },
+      } as CSSProperties,
     };
   }
   if (index === prevIdx) {
     return {
       slot: 'prev',
       style: {
-        transform: 'translateX(var(--carousel-prev-tx)) translateY(2%) scale(var(--carousel-side-scale))',
+        '--carousel-tx': 'var(--carousel-prev-tx)',
+        '--carousel-scale': 'var(--carousel-side-scale)',
+        '--carousel-character-nudge-y': characterSlotNudgeY(index, 'prev'),
         opacity: 0.38,
         zIndex: 4,
-        pointerEvents: 'none' as const,
+        pointerEvents: 'none',
         filter: 'brightness(0.87) blur(0.45px)',
-      },
+      } as CSSProperties,
     };
   }
   if (index === nextIdx) {
     return {
       slot: 'next',
       style: {
-        transform: 'translateX(var(--carousel-next-tx)) translateY(2%) scale(var(--carousel-side-scale))',
+        '--carousel-tx': 'var(--carousel-next-tx)',
+        '--carousel-scale': 'var(--carousel-side-scale)',
+        '--carousel-character-nudge-y': characterSlotNudgeY(index, 'next'),
         opacity: 0.38,
         zIndex: 6,
-        pointerEvents: 'none' as const,
+        pointerEvents: 'none',
         filter: 'brightness(0.87) blur(0.45px)',
-      },
+      } as CSSProperties,
     };
   }
   return {
     slot: 'hidden',
     style: {
-      transform: 'translateX(0) scale(0.92)',
+      '--carousel-tx': '0',
+      '--carousel-scale': '0.92',
       opacity: 0,
       zIndex: 0,
       pointerEvents: 'none',
       filter: 'none',
-    },
+    } as CSSProperties,
   };
 }
 
@@ -417,13 +442,13 @@ export default function LoginPage() {
 
         /* Two-column shell (siblings — no shared card border) */
         .login-page-layout {
-          width: min(94vw, 1360px);
+          width: min(94vw, var(--cg-page-max-width, 1360px));
         }
         .login-form-card {
           width: 100%;
           max-height: min(78dvh, calc(100dvh - var(--navbar-height) - 0.5rem));
         }
-        /* Laptop / desktop: keep form card compact — no wide-screen jump */
+        /* Small / mid laptop: portrait card — narrow width, height from viewport (not aggressive dvh caps) */
         @media (min-width: 1024px) and (max-width: 1279px) {
           .login-form-card {
             flex: 0 0 auto;
@@ -448,6 +473,11 @@ export default function LoginPage() {
         @media (min-width: 1280px) {
           .login-carousel-shell {
             min-height: min(64dvh, 560px);
+          }
+        }
+        @media (min-width: 1512px) {
+          .login-carousel-shell {
+            min-height: min(68dvh, 620px);
           }
         }
 
@@ -643,28 +673,20 @@ export default function LoginPage() {
           }
         }
 
-        /* Stacked carousel — premium spread on large desktop; tighter on laptop */
+        /* Stacked carousel — same overlap/spread at all lg+ widths (matches 1024 laptop) */
         .login-carousel-visual {
-          --carousel-prev-tx: -34%;
-          --carousel-next-tx: 34%;
-          --carousel-side-scale: 0.76;
+          --carousel-prev-tx: -24%;
+          --carousel-next-tx: 24%;
+          --carousel-side-scale: 0.64;
         }
-        @media (min-width: 1024px) and (max-width: 1511px) {
-          .login-carousel-visual {
-            --carousel-prev-tx: -24%;
-            --carousel-next-tx: 24%;
-            --carousel-side-scale: 0.64;
-          }
-        }
-        @media (min-width: 1024px) and (max-width: 1511px) and (max-height: 820px) {
+        @media (min-width: 1024px) and (max-height: 820px) {
           .login-carousel-visual {
             --carousel-prev-tx: -20%;
             --carousel-next-tx: 20%;
             --carousel-side-scale: 0.6;
           }
         }
-
-        /* Hero character — capped on all desktop widths */
+        /* Hero character — fixed caps; do not grow on ultra-wide (same as 1024) */
         .login-carousel-character {
           width: auto;
           max-width: min(100%, clamp(360px, 50vw, 560px));
@@ -672,10 +694,10 @@ export default function LoginPage() {
           max-height: min(86%, clamp(380px, 58dvh, 600px));
           object-position: 50% 52%;
         }
-        @media (min-width: 1280px) {
+        @media (min-width: 1512px) {
           .login-carousel-character {
-            max-width: min(100%, clamp(400px, 44vw, 680px));
-            max-height: min(88%, clamp(420px, 66dvh, 720px));
+            max-width: min(100%, 540px);
+            max-height: min(88%, 480px);
           }
         }
 
@@ -687,11 +709,22 @@ export default function LoginPage() {
           align-items: center;
           justify-content: center;
           padding: 0;
+          transform: translateX(var(--carousel-tx, 0)) translateY(var(--carousel-ty, 2%))
+            scale(var(--carousel-scale, 1));
+          transform-origin: var(--carousel-origin-x, 50%) var(--carousel-origin-y, 50%);
           transition:
             transform 0.62s cubic-bezier(0.38, 0, 0.24, 1),
             opacity 0.58s ease,
             filter 0.52s ease;
           will-change: transform, opacity;
+        }
+        .login-carousel-slide .login-carousel-character {
+          transition: transform 0.62s cubic-bezier(0.38, 0, 0.24, 1);
+        }
+        .login-carousel-slide[data-slot='prev'] .login-carousel-character,
+        .login-carousel-slide[data-slot='next'] .login-carousel-character,
+        .login-carousel-slide[data-slot='active'] .login-carousel-character {
+          transform: translateY(var(--carousel-character-nudge-y, 0));
         }
         .login-carousel-slide[data-slot='active'] .login-carousel-character {
           filter:
@@ -966,6 +999,7 @@ export default function LoginPage() {
                     className="login-carousel-slide"
                     style={style}
                     data-slot={slot}
+                    data-character-index={i}
                     data-active={slot === 'active' ? 'true' : 'false'}
                   >
                     <img

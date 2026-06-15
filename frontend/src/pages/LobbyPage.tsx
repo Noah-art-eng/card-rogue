@@ -65,7 +65,7 @@ function formatMatchEndedRelative(endedAtInput: string | null | undefined): stri
 }
 
 export default function LobbyPage() {
-  const { user, isLoading, updateUser } = useAuth()
+  const { user, isLoading, fetchMe, updateUser } = useAuth()
   const navigate = useNavigate()
   const avatarInputRef = useRef<HTMLInputElement>(null)
 
@@ -127,10 +127,9 @@ export default function LobbyPage() {
     return getLobbyXpForUser(user?.id, stats)
   }, [user?.id, stats])
 
-  // TEMP: disabled — caused ProtectedRoute ↔ fetchMe loop (isLoading toggled, infinite /users/me)
-  // useEffect(() => {
-  //   if (user) void fetchMe()
-  // }, [user?.id, fetchMe])
+  useEffect(() => {
+    if (user) void fetchMe()
+  }, [user?.id, fetchMe])
 
   useEffect(() => {
     let timer: ReturnType<typeof setInterval> | null = null
@@ -253,8 +252,8 @@ export default function LobbyPage() {
         }}
       />
 
-      <div className="lobby-dash-shell relative z-10 mx-auto flex min-h-0 min-w-0 w-full max-w-[1400px] flex-1 flex-col overflow-x-hidden overflow-y-auto px-4 pb-5 pt-5 sm:px-6 md:pb-6 xl:px-12">
-        <div className="lobby-dash-grid grid min-h-0 min-w-0 max-w-full flex-1 grid-cols-1 gap-8 pb-3 lg:grid-cols-[minmax(280px,320px)_minmax(0,1fr)_minmax(300px,360px)] lg:items-stretch lg:gap-12 xl:gap-12">
+      <div className="lobby-dash-shell relative z-10 mx-auto flex min-h-0 min-w-0 w-full max-w-[1360px] flex-1 flex-col overflow-x-hidden overflow-y-auto px-4 pb-5 pt-5 sm:px-6 md:pb-6 xl:px-12 min-[1601px]:max-w-[min(98vw,1720px)] min-[1601px]:px-5">
+        <div className="lobby-dash-grid grid min-h-0 min-w-0 max-w-full flex-1 grid-cols-1 gap-8 pb-3 lg:grid-cols-[minmax(280px,320px)_minmax(0,1fr)_minmax(300px,360px)] lg:items-stretch lg:gap-12 xl:gap-12 min-[1601px]:gap-10 min-[1601px]:lg:grid-cols-[minmax(240px,280px)_minmax(0,1fr)_minmax(300px,340px)]">
           {/* LEFT — profile / stats / recent matches */}
           <aside
             className={`lobby-sidebar-left ${panelSurface} ${padStd} flex min-h-0 min-w-0 flex-col overflow-y-auto`}
@@ -449,11 +448,14 @@ export default function LobbyPage() {
               onClick={() => void handleStartSolo()}
               disabled={startingGame}
               aria-busy={startingGame}
-              className={`${actionCardBase} ${soloCardGlow} flex min-h-[9rem] flex-col justify-between gap-3 self-stretch text-left font-sans${startingGame ? ' opacity-70' : ''}`}
+              className={`lobby-action-card lobby-action-card--tall ${actionCardBase} ${soloCardGlow} flex min-h-[9rem] flex-col justify-between gap-3 self-stretch text-left font-sans${startingGame ? ' opacity-70' : ''}`}
             >
-              <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden>
+              <div
+                className="lobby-action-card__media pointer-events-none absolute inset-0 z-0 overflow-hidden"
+                aria-hidden
+              >
                 <video
-                  className="absolute left-1/2 top-1/2 h-full min-h-full w-full min-w-full max-w-none -translate-x-1/2 -translate-y-1/2 object-cover"
+                  className="lobby-action-card__video"
                   autoPlay
                   muted
                   loop
@@ -489,11 +491,14 @@ export default function LobbyPage() {
             <button
               type="button"
               onClick={() => navigate('/rogue')}
-              className={`${actionCardBase} shadow-[0_0_36px_rgba(251,191,36,0.22),0_10px_36px_rgba(0,0,0,0.45)] flex min-h-[9rem] flex-col justify-between gap-3 self-stretch text-left font-sans`}
+              className={`lobby-action-card lobby-action-card--tall ${actionCardBase} shadow-[0_0_36px_rgba(251,191,36,0.22),0_10px_36px_rgba(0,0,0,0.45)] flex min-h-[9rem] flex-col justify-between gap-3 self-stretch text-left font-sans`}
             >
-              <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden>
+              <div
+                className="lobby-action-card__media pointer-events-none absolute inset-0 z-0 overflow-hidden"
+                aria-hidden
+              >
                 <video
-                  className="absolute left-1/2 top-1/2 h-full min-h-full w-full min-w-full max-w-none -translate-x-1/2 -translate-y-1/2 object-cover"
+                  className="lobby-action-card__video"
                   autoPlay
                   muted
                   loop
@@ -529,15 +534,13 @@ export default function LobbyPage() {
             <button
               type="button"
               onClick={() => navigate('/leaderboard')}
-              className={`${actionCardBase} flex min-h-[7rem] flex-col justify-between text-left font-sans`}
+              className={`lobby-action-card ${actionCardBase} flex min-h-[7rem] flex-col justify-between text-left font-sans`}
             >
-              <div className="pointer-events-none absolute inset-0" aria-hidden>
+              <div className="lobby-action-card__media pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
                 <div
-                  className="absolute inset-0 bg-no-repeat"
+                  className="lobby-action-card__bg absolute inset-0 bg-no-repeat"
                   style={{
                     backgroundImage: "url('/lobby/goldCup.png')",
-                    backgroundPosition: '64% 52%',
-                    backgroundSize: 'cover',
                     opacity: 0.46,
                     filter: 'brightness(1.08) contrast(1.06) saturate(1.04)',
                   }}
@@ -563,16 +566,14 @@ export default function LobbyPage() {
             </button>
 
             <div
-              className={`${actionCardBase} flex min-h-[7rem] flex-col justify-between text-left font-sans ring-1 ring-fuchsia-500/25`}
+              className={`lobby-action-card lobby-action-card--season ${actionCardBase} flex min-h-[7rem] flex-col justify-between text-left font-sans ring-1 ring-fuchsia-500/25`}
               aria-label="Current season information"
             >
-              <div className="pointer-events-none absolute inset-0" aria-hidden>
+              <div className="lobby-action-card__media pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
                 <div
-                  className="absolute inset-0 bg-no-repeat"
+                  className="lobby-action-card__bg lobby-action-card__bg--season absolute inset-0 bg-no-repeat"
                   style={{
                     backgroundImage: `url('${LOBBY_SEASON_ICON_URL}')`,
-                    backgroundPosition: '72% 50%',
-                    backgroundSize: '55%',
                     opacity: 0.52,
                     filter: 'brightness(1.12) contrast(1.05) saturate(1.08)',
                   }}

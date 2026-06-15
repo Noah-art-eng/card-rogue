@@ -1,0 +1,27 @@
+/* Shared responsive caps — sizes stop growing at ~1512px viewport */
+
+:root {
+  --cg-page-max-width: min(94vw, 1180px);
+  --cg-showcase-panel-max: min(100%, 1180px);
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --cg-page-max-width: min(92vw, 1280px);
+    --cg-showcase-panel-max: min(100%, 1280px);
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --cg-page-max-width: min(90vw, 1320px);
+    --cg-showcase-panel-max: min(100%, 1320px);
+  }
+}
+
+@media (min-width: 1512px) {
+  :root {
+    --cg-page-max-width: 1360px;
+    --cg-showcase-panel-max: min(100%, 1360px);
+  }
+}

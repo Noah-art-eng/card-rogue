@@ -36,9 +36,39 @@
 .lobby-dash-root .lobby-sidebar-left,
 .lobby-dash-root .lobby-dash-aside,
 .lobby-dash-root .lobby-solo-cta,
-.lobby-dash-root .lobby-dash-aside button {
+.lobby-dash-root .lobby-dash-aside button,
+.lobby-dash-root .lobby-action-card {
   border: none !important;
   outline: none;
+}
+
+/* Right aside action cards — fill column width; media clips to card bounds */
+.lobby-dash-root .lobby-dash-aside .lobby-action-card {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+.lobby-dash-root .lobby-action-card__media {
+  border-radius: inherit;
+}
+.lobby-dash-root .lobby-action-card__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  max-width: none;
+  object-fit: cover;
+  object-position: 62% 50%;
+}
+.lobby-dash-root .lobby-action-card__bg {
+  background-position: 64% 52%;
+  background-size: cover;
+}
+.lobby-dash-root .lobby-action-card__bg--season {
+  background-position: 72% 50%;
+  background-size: 55%;
 }
 
 .lobby-dash-root .lobby-welcome-hero {
@@ -314,13 +344,13 @@
 @media (max-width: 1600px) and (min-width: 1024px) {
   .lobby-dash-root .lobby-dash-grid {
     gap: clamp(1.75rem, 3vw, 3rem);
-    grid-template-columns: minmax(240px, min(296px, 18.5vw)) minmax(0, 1fr) minmax(210px, min(264px, 17.95vw));
+    grid-template-columns: minmax(240px, min(296px, 18.5vw)) minmax(0, 1fr) minmax(250px, min(300px, 20.5vw));
   }
 }
 @media (max-width: 1512px) and (min-width: 1024px) {
   .lobby-dash-root .lobby-dash-grid {
     gap: clamp(1.35rem, 2.65vw, 2.65rem);
-    grid-template-columns: minmax(220px, min(272px, 17.5vw)) minmax(0, 1fr) minmax(196px, min(246px, 17vw));
+    grid-template-columns: minmax(220px, min(272px, 17.5vw)) minmax(0, 1fr) minmax(230px, min(290px, 21vw));
   }
   .lobby-dash-root .lobby-dash-hero-title {
     font-size: clamp(1.5rem, 3.95vw, 2.72rem);
@@ -330,7 +360,7 @@
 @media (max-width: 1440px) and (min-width: 1024px) {
   .lobby-dash-root .lobby-dash-grid {
     gap: clamp(1.25rem, 2.35vw, 2.35rem);
-    grid-template-columns: minmax(200px, min(250px, 16.5vw)) minmax(0, 1fr) minmax(184px, min(232px, 17.15vw));
+    grid-template-columns: minmax(200px, min(250px, 16.5vw)) minmax(0, 1fr) minmax(240px, min(300px, 24vw));
   }
   .lobby-dash-root .lobby-dash-shell {
     padding-left: clamp(0.75rem, 1.65vw, 2.25rem);
@@ -340,10 +370,33 @@
 @media (max-width: 1280px) and (min-width: 1024px) {
   .lobby-dash-root .lobby-dash-grid {
     gap: clamp(0.55rem, 1.05vw, 0.95rem) !important;
-    grid-template-columns: minmax(188px, min(228px, 16.5vw)) minmax(0, 1fr) minmax(148px, min(194px, 16.95vw)) !important;
+    grid-template-columns: minmax(188px, min(228px, 16.5vw)) minmax(0, 1fr) minmax(220px, min(280px, 27vw)) !important;
   }
   .lobby-dash-root .lobby-dash-hero-title {
     font-size: clamp(1.38rem, 3.85vw, 2.48rem);
+  }
+  .lobby-dash-root .lobby-dash-aside .lobby-action-card {
+    max-height: none !important;
+    padding: 0.48rem 0.52rem !important;
+    gap: 0.28rem !important;
+  }
+  .lobby-dash-root aside.lobby-dash-aside {
+    gap: 0.72rem !important;
+    padding: 0.5rem 0.55rem !important;
+  }
+  .lobby-dash-root .lobby-dash-aside .lobby-action-card--tall {
+    min-height: 8.125rem !important;
+    max-height: none !important;
+  }
+  .lobby-dash-root .lobby-dash-aside .lobby-action-card:not(.lobby-action-card--tall) {
+    min-height: 7rem !important;
+    max-height: none !important;
+  }
+  .lobby-dash-root .lobby-dash-aside .lobby-action-card h3 {
+    font-size: 0.625rem !important;
+  }
+  .lobby-dash-root .lobby-dash-aside .lobby-action-card p {
+    font-size: 0.53125rem !important;
   }
   .lobby-dash-root .lobby-solo-cta {
     width: min(100%, 22rem);
@@ -384,8 +437,8 @@
   .lobby-dash-root .lobby-dash-grid {
     gap: clamp(0.45rem, 1vw, 0.82rem) !important;
     grid-template-columns: minmax(180px, min(240px, 16.5vw)) minmax(0, 1fr) minmax(
-        138px,
-        min(208px, 16.95vw)
+        220px,
+        min(300px, 26vw)
       ) !important;
     padding-bottom: 0.15rem !important;
     min-height: 0;
@@ -537,8 +590,65 @@
     font-size: 0.72rem !important;
   }
   .lobby-dash-root aside.lobby-dash-aside {
-    gap: clamp(0.45rem, 0.95vw, 0.68rem) !important;
+    gap: clamp(0.68rem, 1.1vw, 0.82rem) !important;
     min-height: 0;
+    padding: 0.52rem 0.58rem !important;
+    justify-content: center !important;
+  }
+  .lobby-dash-root .lobby-dash-aside .lobby-action-card {
+    flex: 0 0 auto !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    padding: 0.48rem 0.54rem !important;
+    gap: 0.28rem !important;
+  }
+  .lobby-dash-root .lobby-dash-aside .lobby-action-card--tall {
+    aspect-ratio: auto;
+    min-height: 8rem !important;
+    max-height: none !important;
+    flex: 0 0 auto !important;
+  }
+  .lobby-dash-root .lobby-dash-aside .lobby-action-card:not(.lobby-action-card--tall) {
+    aspect-ratio: auto;
+    min-height: 6.875rem !important;
+    max-height: none !important;
+  }
+  .lobby-dash-root .lobby-dash-aside .lobby-action-card h3 {
+    font-size: 0.6875rem !important;
+    margin-top: 0.18rem !important;
+    line-height: 1.12 !important;
+    letter-spacing: 0.05em !important;
+  }
+  .lobby-dash-root .lobby-dash-aside .lobby-action-card p {
+    font-size: 0.5625rem !important;
+    margin-top: 0.14rem !important;
+    line-height: 1.25 !important;
+  }
+  .lobby-dash-root .lobby-dash-aside .lobby-action-card .cg-label {
+    font-size: 0.46875rem !important;
+    letter-spacing: 0.14em !important;
+  }
+  .lobby-dash-root .lobby-dash-aside .lobby-action-card > span,
+  .lobby-dash-root .lobby-dash-aside .lobby-action-card span.self-start {
+    font-size: 0.5625rem !important;
+    letter-spacing: 0.1em !important;
+  }
+  .lobby-dash-root .lobby-dash-aside .lobby-action-card .relative.z-\[1\] p,
+  .lobby-dash-root .lobby-dash-aside .lobby-action-card .relative.z-\[2\] p {
+    font-size: 0.5625rem !important;
+  }
+  .lobby-dash-root .lobby-dash-aside .lobby-action-card .lobby-action-card__video {
+    object-position: 58% 48%;
+  }
+  .lobby-dash-root .lobby-dash-aside .lobby-action-card__bg--season {
+    background-size: min(58%, 5.5rem) !important;
+  }
+  .lobby-dash-root .lobby-dash-aside .lobby-action-card .absolute.-right-6 {
+    height: clamp(2.5rem, 6vw, 3.75rem) !important;
+    width: clamp(2.5rem, 6vw, 3.75rem) !important;
   }
   .lobby-dash-root .lobby-season-panel {
     padding: clamp(0.35rem, 0.82vw, 0.52rem) clamp(0.4rem, 0.88vw, 0.55rem)
@@ -607,12 +717,40 @@
   }
 }
 
-/* Wide screens: keep lobby density close to 1440px — do not expand past xl layout */
+/* Large desktop — push side panels toward viewport edges */
 @media (min-width: 1601px) {
   .lobby-dash-root .lobby-dash-shell {
-    max-width: 1400px !important;
+    max-width: min(98vw, 1720px);
+    padding-left: clamp(0.75rem, 1.25vw, 1.25rem);
+    padding-right: clamp(0.75rem, 1.25vw, 1.25rem);
   }
   .lobby-dash-root .lobby-dash-grid {
-    gap: 3rem !important;
+    gap: clamp(1.75rem, 2.5vw, 3rem);
+    grid-template-columns: minmax(240px, min(280px, 16vw)) minmax(0, 1fr) minmax(300px, min(340px, 19vw));
+  }
+}
+
+/* 1440 — taller cards + looser stack spacing */
+@media (max-width: 1440px) and (min-width: 1281px) {
+  .lobby-dash-root aside.lobby-dash-aside {
+    gap: 0.875rem !important;
+    padding: 0.55rem 0.6rem !important;
+  }
+  .lobby-dash-root .lobby-dash-aside .lobby-action-card {
+    padding: 0.52rem 0.58rem !important;
+    gap: 0.32rem !important;
+  }
+  .lobby-dash-root .lobby-dash-aside .lobby-action-card--tall {
+    min-height: 8.625rem !important;
+  }
+  .lobby-dash-root .lobby-dash-aside .lobby-action-card:not(.lobby-action-card--tall) {
+    min-height: 7.375rem !important;
+  }
+  .lobby-dash-root .lobby-dash-aside .lobby-action-card h3 {
+    font-size: 0.6875rem !important;
+    margin-top: 0.2rem !important;
+  }
+  .lobby-dash-root .lobby-dash-aside .lobby-action-card p {
+    margin-top: 0.16rem !important;
   }
 }

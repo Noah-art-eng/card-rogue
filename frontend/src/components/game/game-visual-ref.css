@@ -7,6 +7,11 @@
   background: #050302;
   padding: 0;
   justify-content: center;
+  pointer-events: none;
+}
+
+.game-battlefield > * {
+  pointer-events: auto;
 }
 
 /* ── Battlefield looping video backdrop ── */
@@ -393,9 +398,15 @@
 
 /* ── Hand area (copy layout) ── */
 .game-handarea {
+  --cg-hand-zone-scale: 0.6885;
+  --cg-hand-card-scale: 0.9;
+  --cg-hand-fan-visual-scale: calc(var(--cg-hand-zone-scale) * var(--cg-hand-card-scale));
+  --cg-hand-fan-spread: 1.38;
+  --cg-hand-hud-scale: 1;
   --cg-hand-card-w: 192px;
   --cg-hand-card-h: 282px;
-  --cg-hand-area-h: 210px;
+  --cg-hand-area-h: calc(210px * var(--cg-hand-zone-scale));
+  --cg-hand-fan-lift: -30px;
   position: relative;
   z-index: 52;
   height: var(--cg-hand-area-h);
@@ -404,13 +415,15 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding: 0 96px 10px 220px;
+  padding: 0 calc(96px * var(--cg-hand-zone-scale)) calc(10px * var(--cg-hand-zone-scale))
+    calc(220px * var(--cg-hand-zone-scale));
   background:
     linear-gradient(0deg, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.45) 55%, transparent 100%),
     url('/images/handarea.png') center / cover no-repeat;
   border-top: 1px solid rgba(120, 80, 20, 0.45);
   box-shadow: inset 0 6px 20px rgba(0, 0, 0, 0.25);
   overflow: visible;
+  pointer-events: auto;
 }
 
 .handarea__fan {
@@ -420,16 +433,18 @@
   overflow: visible;
 }
 
-/* Center card axis aligned with battlefield / boss center */
 .handarea__fan-pivot {
   position: absolute;
   left: calc(
     50% + (var(--cg-game-skillbar-w, 90px) - var(--cg-game-scorepanel-w, 208px)) / 2
   );
-  bottom: 10px;
+  bottom: calc(18px * var(--cg-hand-zone-scale, 1));
   width: 0;
   height: var(--cg-hand-card-h, 282px);
   pointer-events: none;
+  transform: translateY(var(--cg-hand-fan-lift, 0px))
+    scale(var(--cg-hand-fan-visual-scale, 1));
+  transform-origin: bottom center;
 }
 
 .handarea__top-line {
@@ -465,10 +480,52 @@
 
 .handarea__hud-slot {
   position: absolute;
-  left: 36px;
-  bottom: 14px;
+  left: calc(36px * var(--cg-hand-zone-scale, 1));
+  bottom: calc(14px * var(--cg-hand-zone-scale, 1));
   z-index: 10;
   overflow: visible;
+  transform: scale(var(--cg-hand-hud-scale, 1));
+  transform-origin: bottom left;
+}
+
+/* Player HUD — scale with hand zone */
+.game-handarea .player-hud__panel {
+  gap: calc(16px * var(--cg-hand-zone-scale, 1));
+  min-width: calc(340px * var(--cg-hand-zone-scale, 1));
+  max-width: calc(400px * var(--cg-hand-zone-scale, 1));
+  padding: calc(14px * var(--cg-hand-zone-scale, 1)) calc(18px * var(--cg-hand-zone-scale, 1))
+    calc(14px * var(--cg-hand-zone-scale, 1)) calc(16px * var(--cg-hand-zone-scale, 1));
+  border-radius: calc(8px * var(--cg-hand-zone-scale, 1));
+}
+
+.game-handarea .player-hud__info {
+  gap: calc(6px * var(--cg-hand-zone-scale, 1));
+}
+
+.game-handarea .player-hud__name {
+  font-size: calc(20px * var(--cg-hand-zone-scale, 1));
+}
+
+.game-handarea .player-hud__meta {
+  font-size: calc(14px * var(--cg-hand-zone-scale, 1));
+}
+
+.game-handarea .player-hud__hp-meta {
+  font-size: calc(13px * var(--cg-hand-zone-scale, 1));
+}
+
+.game-handarea .player-hud__hp-values {
+  font-size: calc(16px * var(--cg-hand-zone-scale, 1));
+}
+
+.game-handarea .avatar-frame {
+  width: calc(108px * var(--cg-hand-zone-scale, 1));
+  height: calc(108px * var(--cg-hand-zone-scale, 1));
+}
+
+.game-handarea .player-hud__hp-track {
+  min-width: calc(200px * var(--cg-hand-zone-scale, 1));
+  height: calc(26px * var(--cg-hand-zone-scale, 1));
 }
 
 .handarea__hud-inner {
@@ -539,19 +596,19 @@
 
 .handarea__deck-slot {
   position: absolute;
-  right: 16px;
-  bottom: 10px;
+  right: calc(16px * var(--cg-hand-zone-scale, 1));
+  bottom: calc(10px * var(--cg-hand-zone-scale, 1));
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
+  gap: calc(3px * var(--cg-hand-zone-scale, 1));
   z-index: 10;
 }
 
 .handarea__deck-stack {
   position: relative;
-  width: 87px;
-  height: 117px;
+  width: calc(87px * var(--cg-hand-zone-scale, 1));
+  height: calc(117px * var(--cg-hand-zone-scale, 1));
 }
 
 .handarea__deck-layer {
@@ -577,14 +634,14 @@
 .handarea__deck-count {
   color: #c8a040;
   font-weight: 900;
-  font-size: 28px;
+  font-size: calc(28px * var(--cg-hand-zone-scale, 1));
   font-family: ui-monospace, monospace;
 }
 
 .handarea__deck-label {
   color: #5a4a20;
-  font-size: 11px;
-  letter-spacing: 2px;
+  font-size: calc(11px * var(--cg-hand-zone-scale, 1));
+  letter-spacing: calc(2px * var(--cg-hand-zone-scale, 1));
   font-family: ui-monospace, monospace;
   margin-top: 0;
 }
@@ -675,8 +732,8 @@
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.7);
 }
 
-/* ── Hand card (copy HandCard.jsx) ── */
-.hand-card {
+/* ── Hand card ── */
+.game-handarea .hand-card {
   position: absolute;
   left: 50%;
   bottom: 0;
@@ -1120,8 +1177,9 @@
 
 /* ── TopBar (copy GamePage.jsx header) ── */
 .game-page {
-  --cg-game-skillbar-w: 150px;
-  --cg-game-scorepanel-w: 272px;
+  --cg-scorepanel-btn-h: 72px;
+  --cg-scorepanel-round-size: 36px;
+  --cg-scorepanel-arcade-size: 28px;
   background: radial-gradient(ellipse 80% 70% at 50% 30%, #1a1608, #080604);
   font-size: 12px;
   z-index: 50;
@@ -1129,8 +1187,8 @@
 
 .game-topbar {
   --game-topbar-btn-size: 72px;
-  min-height: 72px;
-  height: auto;
+  height: var(--cg-game-topbar-h, 72px);
+  min-height: var(--cg-game-topbar-h, 72px);
   padding: 10px 16px;
   background: linear-gradient(180deg, #0c0a08 0%, transparent 100%);
   border-bottom: 1px solid rgba(120, 80, 20, 0.35);
@@ -1193,13 +1251,13 @@
 }
 
 .skillbar__slot {
-  width: 64px;
-  height: 64px;
+  width: var(--cg-game-skill-icon, 64px);
+  height: var(--cg-game-skill-icon, 64px);
 }
 
 .skillbar__skill-btn {
-  width: 64px;
-  height: 64px;
+  width: var(--cg-game-skill-icon, 64px);
+  height: var(--cg-game-skill-icon, 64px);
 }
 
 .skillbar__slots {
@@ -1290,4 +1348,214 @@
 
 .scorepanel__preview-compact {
   min-height: auto;
+}
+
+/* ── 1024 — compact hand cards + hover preview ── */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .game-handarea {
+    --cg-hand-card-scale: 0.6075;
+    --cg-hand-fan-spread: 1.45;
+    --cg-hand-hud-scale: 0.78;
+  }
+
+  /* ── 1024 compact chrome: overrides defaults above ── */
+  .game-page {
+    --cg-game-skillbar-w: 86px;
+    --cg-game-scorepanel-w: 128px;
+    --cg-game-topbar-h: 38px;
+    --game-topbar-btn-size: 38px;
+    --cg-game-skill-icon: 36px;
+    --cg-scorepanel-btn-h: 44px;
+    --cg-scorepanel-round-size: 20px;
+    --cg-scorepanel-arcade-size: 15px;
+    font-size: 10px;
+  }
+
+  .game-topbar {
+    --game-topbar-btn-size: 38px;
+    padding: 5px 10px;
+    gap: 6px;
+  }
+
+  .game-topbar__brand {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+  }
+
+  .game-topbar__stats {
+    gap: 4px 10px;
+  }
+
+  .game-topbar__stat-inline {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+  }
+
+  .game-topbar__actions {
+    gap: 8px;
+  }
+
+  /* Score panel */
+  .scorepanel__section {
+    padding: 8px 10px;
+  }
+
+  .scorepanel__label {
+    font-size: 8px;
+    margin-bottom: 4px;
+    letter-spacing: 0.14em;
+  }
+
+  .scorepanel__arcade {
+    padding: 6px 8px;
+  }
+
+  .scorepanel__gems {
+    gap: 3px;
+  }
+
+  .scorepanel__gem {
+    font-size: 11px;
+  }
+
+  .scorepanel__selected-row {
+    margin-top: 5px;
+    gap: 5px;
+  }
+
+  .scorepanel__selected-count {
+    font-size: 10px;
+  }
+
+  .scorepanel__hand-card {
+    padding: 5px 6px;
+    overflow: hidden;
+  }
+
+  .scorepanel__hand-name {
+    font-size: 9px;
+    line-height: 1.25;
+    letter-spacing: 0.02em;
+    margin-bottom: 4px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .scorepanel__hand-name--empty {
+    font-size: 8px;
+    line-height: 1.3;
+    letter-spacing: 0.01em;
+  }
+
+  .scorepanel__hand-stats {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+
+  .scorepanel__hand-stat {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 4px;
+  }
+
+  .scorepanel__hand-stat-label {
+    font-size: 6px;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+
+  .scorepanel__hand-stat-value {
+    font-size: 11px;
+    text-align: right;
+  }
+
+  .scorepanel__combat-log {
+    margin: 0 10px 6px;
+    padding: 4px 6px;
+    font-size: 8px;
+    min-height: 22px;
+  }
+
+  .scorepanel__actions {
+    padding: 2px 5px 6px;
+    gap: 5px;
+  }
+
+  .scorepanel__img-btn {
+    height: var(--cg-scorepanel-btn-h, 44px);
+  }
+
+  .scorepanel__img-btn-bg {
+    object-fit: cover;
+    object-position: center 38%;
+  }
+
+  .scorepanel__discard-badge {
+    font-size: 7px;
+    height: 11px;
+    padding: 0 3px;
+    top: 40%;
+  }
+
+  .scorepanel__phase-hint {
+    font-size: 9px;
+    padding: 0 10px 8px;
+  }
+
+  /* Skill bar */
+  .skillbar__energy-hero {
+    padding: 8px 4px 5px;
+    gap: 3px;
+  }
+
+  .skillbar__energy-big {
+    font-size: 16px;
+  }
+
+  .skillbar__energy-caption {
+    font-size: 5px;
+    letter-spacing: 1px;
+  }
+
+  .skillbar__energy-section {
+    padding: 5px 4px 2px;
+    gap: 2px;
+  }
+
+  .skillbar__energy-label {
+    font-size: 7px;
+  }
+
+  .skillbar__pip {
+    width: 7px;
+    height: 7px;
+  }
+
+  .skillbar__energy-pips {
+    gap: 3px;
+  }
+
+  .skillbar__slots {
+    gap: 5px;
+    padding-bottom: 8px;
+  }
+
+  .skillbar__slot-label {
+    font-size: 7px;
+  }
+
+  .skillbar__active-badge {
+    font-size: 8px;
+    top: 2px;
+    right: 2px;
+  }
+
+  .skillbar__cooldown-count {
+    font-size: 14px;
+  }
+
+  .skillbar__cooldown-label {
+    font-size: 7px;
+  }
 }

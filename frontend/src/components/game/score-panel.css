@@ -36,7 +36,7 @@
 
 .scorepanel__round-value {
   font-family: "Cinzel", ui-serif, Georgia, serif;
-  font-size: 36px;
+  font-size: var(--cg-scorepanel-round-size, 36px);
   font-weight: 800;
   line-height: 1;
   letter-spacing: 0.06em;
@@ -62,7 +62,7 @@
 
 .scorepanel__arcade-value {
   font-family: "Cinzel", ui-monospace, monospace;
-  font-size: 28px;
+  font-size: var(--cg-scorepanel-arcade-size, 28px);
   font-weight: 800;
   letter-spacing: 0.14em;
   color: #ffe082;
@@ -228,7 +228,7 @@
   position: relative;
   display: block;
   width: 100%;
-  height: 72px;
+  height: var(--cg-scorepanel-btn-h, 72px);
   border: none;
   background: transparent;
   padding: 0;

@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import type { Card } from '../../types/game'
 import { getCardImagePath } from '../../lib/cardImage'
 import { getCardRarity } from '../../lib/cardRarity'
@@ -8,8 +7,10 @@ interface HandCardProps {
   card: Card
   selectedIndex: number
   disabled: boolean
+  isHovered: boolean
   fanLayout: HandFanLayout
   onClick: () => void
+  onPointerEnter: () => void
 }
 
 const COLOR_THEME = {
@@ -34,12 +35,14 @@ export default function HandCard({
   card,
   selectedIndex,
   disabled,
+  isHovered,
   fanLayout,
   onClick,
+  onPointerEnter,
 }: HandCardProps) {
-  const [hovered, setHovered] = useState(false)
   const isSelected = selectedIndex >= 0
-  const isRarityActive = isSelected || (hovered && !disabled)
+  const showHover = isHovered && !disabled
+  const isRarityActive = isSelected || showHover
   const elem = card.element
   const rarity = getCardRarity(card.rank)
   const theme = COLOR_THEME[elem] ?? COLOR_THEME.WATER
@@ -47,19 +50,19 @@ export default function HandCard({
 
   let className = `hand-card hand-card--${elem} hand-card--${rarity}`
   if (isSelected) className += ' hand-card--selected'
-  if (hovered && !disabled) className += ' hand-card--hovered'
+  if (showHover) className += ' hand-card--hovered'
   if (isRarityActive) className += ' hand-card--rarity-active'
   if (disabled) className += ' hand-card--disabled'
 
-  const zIndex =
-    fanLayout.zIndex +
-    (isSelected ? 220 : hovered && !disabled ? 180 : 0)
+  const zIndex = fanLayout.zIndex + (isSelected ? 220 : showHover ? 180 : 0)
 
   return (
     <div
       className={className}
       role="button"
       tabIndex={disabled ? -1 : 0}
+      data-hand-card-id={card.id}
+      onPointerEnter={disabled ? undefined : onPointerEnter}
       onClick={disabled ? undefined : onClick}
       onKeyDown={(e) => {
         if (disabled) return
@@ -68,18 +71,16 @@ export default function HandCard({
           onClick()
         }
       }}
-      onMouseEnter={() => !disabled && setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
       style={{
         zIndex,
         transform: buildHandCardTransform(fanLayout, {
-          hovered: hovered && !disabled,
+          hovered: showHover,
           selected: isSelected,
           legendary: rarity === 'legendary',
         }),
       }}
     >
-      {hovered && !disabled && (
+      {showHover && (
         <div className="hand-card__tooltip" role="tooltip">
           {card.displayRank} {elem} (chip +{card.chipValue})
         </div>
@@ -94,7 +95,7 @@ export default function HandCard({
         />
       </div>
 
-      {hovered && !isSelected && !disabled && (
+      {showHover && !isSelected && (
         <div className="hand-card__hover-preview">
           <div className={`hand-card__hover-preview-inner hand-card__hover-preview-inner--${rarity}`}>
             <img src={imgSrc} alt="" className="hand-card__hover-preview-img" draggable={false} />

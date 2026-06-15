@@ -111,7 +111,97 @@
 }
 
 .lb-rankings-table {
+  table-layout: fixed;
+  width: 100%;
   font-size: clamp(0.74rem, 1.6vw, 0.9rem);
+}
+
+.lb-col-rank {
+  width: 6.75rem;
+}
+
+.lb-col-stat {
+  width: 5.5rem;
+}
+
+.lb-col-winrate {
+  width: 6.75rem;
+}
+
+/* player column absorbs remaining width */
+
+.lb-th-rank,
+.lb-td-rank {
+  text-align: left;
+}
+
+.lb-th-player,
+.lb-td-player {
+  text-align: left;
+}
+
+.lb-th-stat,
+.lb-td-stat {
+  text-align: center;
+}
+
+.lb-th-winrate,
+.lb-td-winrate {
+  text-align: right;
+}
+
+.lb-td-player > span {
+  width: 100%;
+}
+
+.lb-td-winrate .lb-winrate-cell {
+  display: inline-block;
+  min-width: 3.5rem;
+  text-align: right;
+}
+
+@media (min-width: 1280px) {
+  .lb-col-rank {
+    width: 7.5rem;
+  }
+
+  .lb-col-stat {
+    width: 6.25rem;
+  }
+
+  .lb-col-winrate {
+    width: 7.25rem;
+  }
+
+  .lb-rankings-table .lb-table-cell {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .lb-th-stat,
+  .lb-td-stat {
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
+  }
+
+  .lb-th-winrate,
+  .lb-td-winrate {
+    padding-right: 1.15rem;
+  }
+}
+
+@media (min-width: 1600px) {
+  .lb-col-rank {
+    width: 8rem;
+  }
+
+  .lb-col-stat {
+    width: 7rem;
+  }
+
+  .lb-col-winrate {
+    width: 8rem;
+  }
 }
 
 .lb-table-cell {
@@ -227,6 +317,14 @@
 
 .lb-rankings-mat-inner {
   -webkit-overflow-scrolling: touch;
+}
+
+.lb-dash-main-panel {
+  gap: 0;
+}
+
+.lb-dash-main-panel .lb-dash-eligibility-mat {
+  flex-shrink: 0;
 }
 
 @media (max-width: 1600px) and (min-width: 1024px) {

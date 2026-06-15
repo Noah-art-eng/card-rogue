@@ -2,8 +2,6 @@
 export const HAND_CARD_WIDTH = 192
 export const HAND_CARD_HEIGHT = 282
 
-const LAYOUT_SCALE = HAND_CARD_WIDTH / 96
-
 export interface HandFanLayout {
   translateX: number
   translateY: number
@@ -15,7 +13,11 @@ export interface HandFanLayout {
  * Compact arc fan: cards touch at the base, rotate outward, center card highest.
  * Spread stays in the original hand-zone width (not full-screen wide).
  */
-export function computeHandFanLayout(index: number, total: number): HandFanLayout {
+export function computeHandFanLayout(
+  index: number,
+  total: number,
+  spreadScale = 1,
+): HandFanLayout {
   if (total <= 0) {
     return { translateX: 0, translateY: 0, rotate: 0, zIndex: 0 }
   }
@@ -24,23 +26,24 @@ export function computeHandFanLayout(index: number, total: number): HandFanLayou
     return { translateX: 0, translateY: 0, rotate: 0, zIndex: 1 }
   }
 
+  const layoutScale = HAND_CARD_WIDTH / 96
   const center = (total - 1) / 2
   const offset = index - center
   const maxOffset = Math.max(center, 1)
   const normalized = offset / maxOffset
 
   const maxRotation = Math.min(16, 5 + total * 1.5)
-  const targetSpread = Math.min(500, 360 + total * 22) * LAYOUT_SCALE
+  const targetSpread = Math.min(500, 360 + total * 22) * layoutScale
   const spreadStep = (targetSpread - HAND_CARD_WIDTH) / (total - 1)
   const cardStep = Math.min(
     HAND_CARD_WIDTH * 0.58,
     Math.max(HAND_CARD_WIDTH * 0.5, spreadStep),
   )
 
-  const arcDepth = 18 * LAYOUT_SCALE
+  const arcDepth = 18 * layoutScale
 
   return {
-    translateX: offset * cardStep,
+    translateX: offset * cardStep * spreadScale,
     translateY: Math.pow(Math.abs(normalized), 1.75) * arcDepth,
     rotate: normalized * maxRotation,
     zIndex: index + 1,

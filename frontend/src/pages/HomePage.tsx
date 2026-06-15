@@ -20,23 +20,26 @@ const SHOWCASE = {
 };
 
 // ─── Hero fan — 3 large cards, individually placed, diagonal portrait tilt ───
-// Spacing 275px, overlap 75px: each card stays clearly readable.
+// Baseline layout at 350×490; HERO_FAN_RATIO scales visual size ~12.5% for desktop.
+const HERO_FAN_RATIO = 0.875;
+const HERO_CARD_BASE_W = 350;
+const HERO_CARD_BASE_H = 490;
+const CARD_W = Math.round(HERO_CARD_BASE_W * HERO_FAN_RATIO);
+const CARD_H = Math.round(HERO_CARD_BASE_H * HERO_FAN_RATIO);
+
+// Spacing 275px at baseline — scaled with fan ratio so overlap stays proportional.
 const HERO_CARDS = [
-  { src: '/cards/card_35.png', left: 0,   top: 55, rotate:  -8, z: 20, opacity: 0.88 },
-  { src: '/cards/card_01.png', left: 275, top: 10, rotate:   3, z: 50, opacity: 1.00 },
-  { src: '/cards/card_20.png', left: 545, top: 65, rotate:  10, z: 30, opacity: 0.88 },
+  { src: '/cards/card_35.png', left: 0, top: Math.round(55 * HERO_FAN_RATIO), rotate: -8, z: 20, opacity: 0.88 },
+  { src: '/cards/card_01.png', left: Math.round(275 * HERO_FAN_RATIO), top: Math.round(10 * HERO_FAN_RATIO), rotate: 3, z: 50, opacity: 1.00 },
+  { src: '/cards/card_20.png', left: Math.round(545 * HERO_FAN_RATIO), top: Math.round(65 * HERO_FAN_RATIO), rotate: 10, z: 30, opacity: 0.88 },
 ];
 
-// On hover: side cards push outward, centre lifts
+// On hover: side cards push outward, centre lifts (offsets scaled with fan)
 const FAN_HOVER = [
-  { dx: -22, dy:  8, dr: -4 },
-  { dx:   0, dy: -14, dr:  0 },
-  { dx:  22, dy: 10, dr:  4 },
+  { dx: Math.round(-22 * HERO_FAN_RATIO), dy: Math.round(8 * HERO_FAN_RATIO), dr: -4 },
+  { dx: 0, dy: Math.round(-14 * HERO_FAN_RATIO), dr: 0 },
+  { dx: Math.round(22 * HERO_FAN_RATIO), dy: Math.round(10 * HERO_FAN_RATIO), dr: 4 },
 ];
-
-// Large card dimensions — dominate the right half of the viewport
-const CARD_W = 350;
-const CARD_H = 490;
 
 // Ghost silhouettes — offsets from matching HERO_CARDS slot so stacks stay visually
 // glued when `.hero-fan-scale-wrapper` applies responsive scale (matches foreground fan).
@@ -125,12 +128,12 @@ function ShowcaseHeroSection({ innerKey, fanHovered, setFanHovered }: ShowcaseHe
 
         <div
           key={innerKey}
-          className="relative z-10 flex-1 flex flex-col md:flex-row items-center pl-6 pr-3 sm:pl-8 sm:pr-4 lg:pl-16 xl:pl-24 lg:pr-6 pb-8 pt-5 lg:pb-7 gap-6 md:gap-0"
+          className="relative z-10 flex-1 flex flex-col md:flex-row items-center pl-6 pr-3 sm:pl-8 sm:pr-4 lg:pl-12 xl:pl-24 lg:pr-6 pb-8 pt-5 lg:pb-7 gap-6 md:gap-0 lg:gap-8 xl:gap-0"
         >
 
-          <div className="hero-stagger-copy w-full min-w-0 md:w-[38%] flex flex-col gap-4 md:gap-5 md:pr-2 order-2 md:order-1 items-center md:items-start text-center md:text-left">
+          <div className="hero-stagger-copy w-full min-w-0 md:w-[38%] lg:w-[34%] xl:w-[38%] flex flex-col gap-4 md:gap-5 lg:gap-3 xl:gap-5 md:pr-2 lg:pr-6 xl:pr-2 order-2 md:order-1 items-center md:items-start text-center md:text-left">
             {/* Laptop: lighter type; min-[1512px]+ / 2xl: step up toward original desktop */}
-            <h1 className="hero-stagger-headline text-4xl sm:text-5xl md:text-[2.5rem] lg:text-[2.75rem] xl:text-[3rem] font-black text-white leading-[1.04] tracking-tight">
+            <h1 className="hero-stagger-headline text-4xl sm:text-5xl md:text-[2.5rem] lg:text-[2.125rem] min-[1280px]:text-[2.75rem] min-[1440px]:text-[3rem] font-black text-white leading-[1.04] tracking-tight">
               Strategic<br />Card Battles,<br />
               <span style={{
                 background: 'linear-gradient(90deg, #a78bfa 0%, #818cf8 50%, #60a5fa 100%)',
@@ -141,8 +144,8 @@ function ShowcaseHeroSection({ innerKey, fanHovered, setFanHovered }: ShowcaseHe
                 Powered by Skill
               </span>
             </h1>
-            <div className="hero-stagger-subcta flex flex-col gap-4 md:gap-5">
-            <p className="text-slate-400 text-base md:text-base lg:text-[1.05rem] leading-relaxed max-w-sm">
+            <div className="hero-stagger-subcta flex flex-col gap-4 md:gap-5 lg:gap-3 xl:gap-5">
+            <p className="text-slate-400 text-base md:text-base lg:text-[0.9rem] xl:text-[1.05rem] leading-relaxed max-w-sm lg:max-w-[15rem] xl:max-w-sm">
               A PvE card game where strategy, timing, and elemental combos decide every match.
             </p>
             {/* Single row on laptop: nowrap + tighter padding until min-[1512px] */}
@@ -150,7 +153,7 @@ function ShowcaseHeroSection({ innerKey, fanHovered, setFanHovered }: ShowcaseHe
               <Link
                 to="/login"
                 className="glow-purple shrink-0 rounded-full font-extrabold text-white tracking-wide
-                           px-5 py-2.5 text-sm md:px-6 md:py-3 md:text-base"
+                           px-5 py-2.5 text-sm md:px-6 md:py-3 md:text-base lg:px-5 lg:py-2 lg:text-sm xl:px-6 xl:py-3 xl:text-base"
                 style={{ background: 'linear-gradient(135deg, #7c3aed, #4f46e5)' }}
               >
                 Start Game
@@ -158,7 +161,7 @@ function ShowcaseHeroSection({ innerKey, fanHovered, setFanHovered }: ShowcaseHe
               <Link
                 to="/leaderboard"
                 className="glow-outline shrink-0 rounded-full font-extrabold text-white tracking-wide border-2 border-white/30 backdrop-blur-sm
-                           px-5 py-2.5 text-sm md:px-6 md:py-3 md:text-base"
+                           px-5 py-2.5 text-sm md:px-6 md:py-3 md:text-base lg:px-5 lg:py-2 lg:text-sm xl:px-6 xl:py-3 xl:text-base"
               >
                 View Leaderboard
               </Link>
@@ -166,7 +169,7 @@ function ShowcaseHeroSection({ innerKey, fanHovered, setFanHovered }: ShowcaseHe
             </div>
           </div>
 
-          <div className="hero-stagger-fan w-full min-w-0 md:w-[62%] flex items-center justify-start pl-0 lg:pl-10 xl:pl-14 order-1 md:order-2 relative">
+          <div className="hero-stagger-fan w-full min-w-0 md:w-[62%] lg:w-[58%] xl:w-[62%] flex items-center justify-start pl-0 lg:pl-2 xl:pl-8 min-[1440px]:pl-14 order-1 md:order-2 relative">
 
             <div className="pointer-events-none absolute inset-0" aria-hidden="true">
               <div className="absolute" style={{
@@ -188,13 +191,13 @@ function ShowcaseHeroSection({ innerKey, fanHovered, setFanHovered }: ShowcaseHe
 
             {/* Scale wrapper: shrinks the entire fan group on smaller laptop viewports.
                 Separate from .fan-float so the float animation's transform is unaffected. */}
-            <div className="hero-fan-scale-wrapper">
+            <div className="hero-fan-scale-wrapper hero-fan-scale-wrapper--cards">
             <div
               className="fan-float relative shrink-0"
               style={{
                 width: '100%',
-                maxWidth: 900,
-                height: 'min(590px, calc(100dvh - var(--navbar-height) - 9rem))',
+                maxWidth: Math.round(900 * HERO_FAN_RATIO),
+                height: `min(${Math.round(590 * HERO_FAN_RATIO)}px, calc(100dvh - var(--navbar-height) - 9rem))`,
               }}
             >
               {HERO_CARDS.map((card, i) => {
@@ -756,17 +759,16 @@ function HomePage() {
           animation: showcaseS3Card 0.72s cubic-bezier(0.45, 0, 0.15, 1) 0.44s both;
         }
 
-        /* Skills panel — capped at xl desktop width */
+        /* Skills / PvE panels — capped via shared token (no 1512+ jump) */
         .showcase-s4-panel-responsive {
           width: 100%;
-          max-width: min(100%, 1180px);
+          max-width: var(--cg-showcase-panel-max, min(100%, 1180px));
           min-height: clamp(328px, 56dvh, 508px);
         }
 
-        /* PvE panel — same cap as skills panel */
         .showcase-s2-panel-responsive {
           width: 100%;
-          max-width: min(100%, 1180px);
+          max-width: var(--cg-showcase-panel-max, min(100%, 1180px));
           min-height: clamp(356px, 50dvh, 488px);
         }
 
@@ -796,6 +798,19 @@ function HomePage() {
         }
         @media (max-width: 1380px) {
           .hero-fan-scale-wrapper { transform: scale(0.72); transform-origin: left center; }
+        }
+        /* 1024–1279: tighter scale so right card + rotation stays in frame (cards only; glow layer is sibling) */
+        @media (min-width: 1024px) and (max-width: 1279px) {
+          .hero-fan-scale-wrapper--cards {
+            transform: scale(0.625);
+            transform-origin: left center;
+          }
+        }
+        @media (min-width: 768px) and (max-width: 1023px) {
+          .hero-fan-scale-wrapper--cards {
+            transform: scale(0.5);
+            transform-origin: left center;
+          }
         }
       `}</style>
 
@@ -969,8 +984,8 @@ function HomePage() {
               <div
                 className="relative showcase-s4-icons-cluster"
                 style={{
-                  width: 'clamp(380px, 43vw, 980px)',
-                  height: 'clamp(295px, 33.35vw, 600px)',
+                  width: 'clamp(320px, 38vw, 720px)',
+                  height: 'clamp(248px, 29.5vw, 560px)',
                 }}
               >
                 {[
@@ -1000,8 +1015,8 @@ function HomePage() {
                         alt={tile.label}
                         className={`${tile.iconClass} showcase-s4-icon-img`}
                         style={{
-                          width: 'clamp(200px, 22vw, 460px)',
-                          height: 'clamp(200px, 22vw, 460px)',
+                          width: 'clamp(160px, 18vw, 360px)',
+                          height: 'clamp(160px, 18vw, 360px)',
                           objectFit: 'contain',
                         }}
                         draggable={false}
@@ -1333,8 +1348,8 @@ function HomePage() {
                     style={{
                       right: c.right,
                       top: c.top,
-                      width: 132,
-                      height: 185,
+                      width: 'clamp(108px, 9vw, 132px)',
+                      height: 'clamp(151px, 12.6vw, 185px)',
                       transform: `rotate(${c.rotate}deg)`,
                       transformOrigin: 'bottom center',
                       zIndex: i + 2,
@@ -1372,8 +1387,8 @@ function HomePage() {
                   right: '7%',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  width: 340,
-                  height: 340,
+                  width: 'clamp(280px, 22vw, 340px)',
+                  height: 'clamp(280px, 22vw, 340px)',
                   zIndex: 8,
                 }}
               >
