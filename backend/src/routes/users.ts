@@ -8,10 +8,11 @@ import {
 import type { AuthRequest } from '../middleware/authMiddleware.js'
 import { avatarUpload } from '../middleware/avatarUpload.js'
 import { authMiddleware } from '../middleware/authMiddleware.js'
+import { asyncHandler } from '../utils/asyncHandler.js'
 
 const router = Router()
 
-router.get('/me', authMiddleware, getMe)
+router.get('/me', authMiddleware, asyncHandler(getMe))
 router.patch('/me/avatar', authMiddleware, (req, res, next) => {
   avatarUpload.single('avatar')(req, res, (err) => {
     if (err) {

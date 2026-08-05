@@ -4,6 +4,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import { getFrontendCorsConfig } from './config/corsOrigin.js'
+import { errorHandler } from './middleware/errorHandler.js'
 import authRoutes from './routes/auth.js'
 import leaderboardRoutes from './routes/leaderboard.js'
 import matchesRoutes from './routes/matches.js'
@@ -27,5 +28,7 @@ app.use('/api/users', usersRoutes)
 app.use('/api/matches', matchesRoutes)
 app.use('/api/leaderboard', leaderboardRoutes)
 app.use('/api/rogue', rogueRoutes)
+
+app.use(errorHandler)
 
 export default app

@@ -74,6 +74,12 @@ function getRegisterErrorMessage(error: unknown): string {
   if (axios.isAxiosError(error) && typeof error.response?.data?.message === 'string') {
     return error.response.data.message
   }
+  if (axios.isAxiosError(error) && error.code === 'ECONNABORTED') {
+    return 'Registration request timed out. Check that the backend API is reachable.'
+  }
+  if (axios.isAxiosError(error) && !error.response) {
+    return 'Unable to reach the backend API. Check the deployed API URL and CORS settings.'
+  }
   if (error instanceof Error && error.message) return error.message
   return 'Registration failed. Please try again.'
 }
@@ -598,4 +604,3 @@ export default function RegisterPage() {
     </div>
   );
 }
-
