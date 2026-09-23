@@ -12,11 +12,13 @@ interface RegisterResponse {
   user: User
 }
 
+// 负责 login 的业务处理。
 export async function login(email: string, password: string): Promise<LoginResponse> {
   const response = await apiClient.post<LoginResponse>('/auth/login', { email, password })
   return response.data
 }
 
+// 执行  相关处理。
 export async function register(
   username: string,
   email: string,
@@ -30,6 +32,7 @@ export async function register(
   return response.data
 }
 
+// 负责 loginWithGoogle 的业务处理。
 export async function loginWithGoogle(credential: string): Promise<LoginResponse> {
   const response = await apiClient.post<LoginResponse>('/auth/google', { credential })
   return response.data

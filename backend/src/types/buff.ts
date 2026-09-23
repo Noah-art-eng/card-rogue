@@ -73,10 +73,12 @@ export interface Upgrade {
   buff: Buff
 }
 
+// 创建或初始化 ElementChipMult 所需的数据。
 export function createElementChipMult(element: Element, mult = 1.1): ElementChipMult {
   return { type: 'ELEMENT_CHIP_MULT', element, mult }
 }
 
+// 创建或初始化 Upgrade 所需的数据。
 export function createUpgrade(id: string, label: string, description: string, buff: Buff): Upgrade {
   return { id, label, description, buff }
 }
@@ -87,6 +89,7 @@ export const FIRST_LAYER_UPGRADES: Upgrade[] = [
   createUpgrade('grass_spec', 'Grass Spec', 'Grass cards chip ×1.1', createElementChipMult(ElementEnum.GRASS)),
 ]
 
+// 执行 PlayerBuffs 相关处理。
 export function applyPlayerBuffs(
   buffs: Buff[],
   baseMaxHp: number,
@@ -103,6 +106,7 @@ export function applyPlayerBuffs(
 
 const ELEMENT_NAMES: Record<Element, string> = { WATER: 'Water', FIRE: 'Fire', GRASS: 'Grass' }
 
+// 创建或初始化 UpgradePool 所需的数据。
 export function generateUpgradePool(
   chosenElement: Element,
   layer: number,
@@ -175,6 +179,7 @@ export function generateUpgradePool(
   return pool.slice(0, 3)
 }
 
+// 负责 buffKey 的业务处理。
 export function buffKey(b: Buff): string {
   const el = 'element' in b ? b.element : ''
   return `${b.type}:${el}`

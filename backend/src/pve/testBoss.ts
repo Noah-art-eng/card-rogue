@@ -3,6 +3,7 @@ import { Element } from '../types/card.js'
 import { BattleResult, RoundPhase, type BossState } from '../types/state.js'
 import { calculateChargeAttack } from './boss.js'
 
+// 创建或初始化 TestBoss 所需的数据。
 export function createTestBoss(overrides: Partial<BossState> = {}): BossState {
   const attackPerRound = overrides.attackPerRound ?? 3
 

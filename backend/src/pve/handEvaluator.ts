@@ -1,5 +1,6 @@
 import { HandType, type Card } from '../types/card.js'
 
+// 负责 countRanks 的业务处理。
 function countRanks(cards: Card[]): Map<number, number> {
   const counts = new Map<number, number>()
 
@@ -10,10 +11,12 @@ function countRanks(cards: Card[]): Map<number, number> {
   return counts
 }
 
+// 获取、计算或校验 SameElement。
 function isSameElement(cards: Card[]): boolean {
   return cards.every((card) => card.element === cards[0].element)
 }
 
+// 获取、计算或校验 Straight。
 function isStraight(cards: Card[]): boolean {
   if (cards.length < 5) {
     return false
@@ -30,36 +33,44 @@ function isStraight(cards: Card[]): boolean {
   return true
 }
 
+// 获取、计算或校验 Flush。
 function isFlush(cards: Card[]): boolean {
   return cards.length >= 5 && isSameElement(cards)
 }
 
+// 获取、计算或校验 StraightFlush。
 function isStraightFlush(cards: Card[]): boolean {
   return cards.length >= 5 && isSameElement(cards) && isStraight(cards)
 }
 
+// 获取、计算或校验 FourOfAKind。
 function hasFourOfAKind(rankCounts: Map<number, number>): boolean {
   return [...rankCounts.values()].some((count) => count >= 4)
 }
 
+// 获取、计算或校验 FullHouse。
 function isFullHouse(rankCounts: Map<number, number>): boolean {
   const counts = [...rankCounts.values()].sort((a, b) => b - a)
   return counts.length === 2 && counts[0] === 3 && counts[1] === 2
 }
 
+// 获取、计算或校验 ThreeOfAKind。
 function hasThreeOfAKind(rankCounts: Map<number, number>): boolean {
   return [...rankCounts.values()].some((count) => count >= 3)
 }
 
+// 获取、计算或校验 TwoPair。
 function hasTwoPair(rankCounts: Map<number, number>): boolean {
   const pairCount = [...rankCounts.values()].filter((count) => count >= 2).length
   return pairCount >= 2
 }
 
+// 获取、计算或校验 Pair。
 function hasPair(rankCounts: Map<number, number>): boolean {
   return [...rankCounts.values()].some((count) => count >= 2)
 }
 
+// 获取、计算或校验 HandType。
 export function detectHandType(cards: Card[]): HandType {
   if (cards.length === 0) {
     throw new Error('Cannot detect hand type for empty card selection')

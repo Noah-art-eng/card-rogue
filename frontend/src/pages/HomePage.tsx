@@ -384,6 +384,7 @@ function ShowcaseHeroSection({ innerKey, fanHovered, setFanHovered }: ShowcaseHe
   );
 }
 
+// 渲染 HomePage 界面组件。
 function HomePage() {
   const [fanHovered, setFanHovered] = useState(false);
 
@@ -400,12 +401,14 @@ function HomePage() {
   const [s2FanTick, setS2FanTick] = useState(0);
   const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // 执行 SlideI 相关处理。
   const setSlideI = (i: number) => {
     slideIndexRef.current = i;
     setSlideIndex(i);
   };
 
   /** After landing on slide `idx`, allow entrance CSS */
+  // 负责 markEntered 的业务处理。
   const markEntered = (idx: number) => {
     setSlideEntered((prev) => {
       const next = [...prev];
@@ -418,6 +421,7 @@ function HomePage() {
   };
 
   /** Loop jump 4→0: land on real Hero already matching clone end-state (no replay = no visible jump) */
+  // 清理或重置 LoopInstant 相关状态。
   const resetLoopInstant = () => {
     setHeroSoftLanding(true);
     setStripTransition('none');
@@ -431,6 +435,7 @@ function HomePage() {
     });
   };
 
+  // 负责 goNextSlide 的业务处理。
   const goNextSlide = () => {
     const i = slideIndexRef.current;
     if (i === 0) setHeroSoftLanding(false);
@@ -467,6 +472,7 @@ function HomePage() {
     };
   }, [slideEntered, slideIndex]);
 
+  // 处理 StripTransitionEnd 事件。
   const onStripTransitionEnd = (e: TransitionEvent<HTMLDivElement>) => {
     if (e.propertyName !== 'transform') return;
     /* Child hover transitions (fan cards, section 3 faces, etc.) bubble — ignore anything but the strip */

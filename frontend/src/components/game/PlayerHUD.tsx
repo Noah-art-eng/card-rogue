@@ -19,6 +19,7 @@ interface PlayerHUDProps {
   playerRankTitle?: string
 }
 
+// 渲染 PlayerHUD 界面组件。
 export default function PlayerHUD({
   hp,
   maxHp,

@@ -9,6 +9,7 @@ const BASE = process.env.BASE_URL ?? 'http://localhost:5173'
 
 mkdirSync(OUT, { recursive: true })
 
+// 执行 registerAndEnterGame 对应的浏览器测试辅助操作。
 async function registerAndEnterGame(page) {
   const ts = Date.now()
   const email = `p0b${ts}@test.local`
@@ -36,11 +37,13 @@ async function registerAndEnterGame(page) {
   await page.waitForTimeout(2000)
 }
 
+// 执行 enterPlayPhase 对应的浏览器测试辅助操作。
 async function enterPlayPhase(page) {
   await page.getByRole('button', { name: 'Play & Attack' }).click()
   await page.waitForTimeout(600)
 }
 
+// 执行 selectCardsByClass 对应的浏览器测试辅助操作。
 async function selectCardsByClass(page, classFragment, max = 5) {
   const cards = page.locator(`.hand-card${classFragment}`)
   const count = Math.min(await cards.count(), max)
@@ -51,11 +54,13 @@ async function selectCardsByClass(page, classFragment, max = 5) {
   return count
 }
 
+// 执行 confirmPlayAttack 对应的浏览器测试辅助操作。
 async function confirmPlayAttack(page) {
   await page.getByRole('button', { name: 'Play & Attack' }).click()
   await page.waitForTimeout(750)
 }
 
+// 执行 waitForNextSkillPhase 对应的浏览器测试辅助操作。
 async function waitForNextSkillPhase(page, timeoutMs = 22000) {
   await page.waitForFunction(
     () => {
@@ -74,6 +79,7 @@ async function waitForNextSkillPhase(page, timeoutMs = 22000) {
   await page.waitForTimeout(800)
 }
 
+// 执行截图脚本的入口流程。
 async function main() {
   const browser = await chromium.launch({ headless: true })
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } })

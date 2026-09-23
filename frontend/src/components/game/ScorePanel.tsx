@@ -33,6 +33,7 @@ interface ScorePanelProps {
   onDiscardDraw: () => void
 }
 
+// 渲染 ScorePanel 界面组件。
 export default function ScorePanel({
   phase,
   round,

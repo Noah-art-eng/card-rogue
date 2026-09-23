@@ -9,6 +9,7 @@ const BASE = process.env.BASE_URL ?? 'http://localhost:5173'
 
 mkdirSync(OUT, { recursive: true })
 
+// 执行截图脚本的入口流程。
 async function main() {
   const prefix = process.argv[2] ?? 'current'
   const browser = await chromium.launch({ headless: true })

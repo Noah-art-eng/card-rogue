@@ -25,19 +25,23 @@ export const BOSS_BY_LAYER: Record<number, BossDefinition> = Object.fromEntries(
   ALL_BOSSES.map((boss) => [boss.layer, boss]),
 )
 
+// 获取、计算或校验 BossForLayer。
 export function getBossForLayer(layer: number): BossDefinition | undefined {
   const normalized = Math.max(1, Math.floor(layer))
   return BOSS_BY_LAYER[normalized]
 }
 
+// 获取、计算或校验 BossShortNameForLayer。
 export function getBossShortNameForLayer(layer: number): string | undefined {
   return getBossForLayer(layer)?.name
 }
 
+// 获取、计算或校验 BossLookup。
 function normalizeBossLookup(value: string): string {
   return value.trim().toLowerCase()
 }
 
+// 获取、计算或校验 BossFromMatch。
 export function resolveBossFromMatch(match: {
   layer?: number
   bossName?: string | null
@@ -59,6 +63,7 @@ export function resolveBossFromMatch(match: {
   )
 }
 
+// 获取、计算或校验 BossDisplayName。
 export function resolveBossDisplayName(params: {
   layer?: number
   bossName?: string | null
@@ -69,6 +74,7 @@ export function resolveBossDisplayName(params: {
   return fallback || 'Unknown Boss'
 }
 
+// 获取、计算或校验 MatchOpponentLabel。
 export function formatMatchOpponentLabel(match: {
   mode?: string
   layer?: number

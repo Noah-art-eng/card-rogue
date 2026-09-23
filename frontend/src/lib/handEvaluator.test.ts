@@ -7,6 +7,7 @@ import assert from 'node:assert/strict'
 import type { Card, Element, HandType } from '../types/game'
 import { detectHandType, evaluateHand } from './handEvaluator'
 
+// 负责 card 的业务处理。
 function card(element: Element, rank: number): Card {
   return {
     id: `${element}_${rank}`,
@@ -17,6 +18,7 @@ function card(element: Element, rank: number): Card {
   }
 }
 
+// 负责 assertHandType 的业务处理。
 function assertHandType(cards: Card[], expected: HandType, label: string) {
   assert.equal(detectHandType(cards), expected, label)
 }

@@ -50,6 +50,7 @@ export function computeHandFanLayout(
   }
 }
 
+// 创建或初始化 HandCardTransform 所需的数据。
 export function buildHandCardTransform(
   layout: HandFanLayout,
   options: { hovered: boolean; selected: boolean; legendary?: boolean },

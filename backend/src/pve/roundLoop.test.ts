@@ -13,6 +13,7 @@ import { Element } from '../types/card.js'
 import type { GameContext } from '../types/state.js'
 import { createTestBoss, defaultTestBattle, defaultTestBossRound, defaultRoundState } from './testBoss.js'
 
+// 创建或初始化 RoundLoopContext 所需的数据。
 function createRoundLoopContext(overrides: Partial<GameContext> = {}): GameContext {
   const deckState = initDeckState()
   drawCards(deckState, 7)

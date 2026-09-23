@@ -7,6 +7,7 @@ import {
   type GameContext,
 } from '../types/state.js'
 
+// 获取、计算或校验 NextPhase。
 function getNextPhase(current: RoundPhase): RoundPhase {
   const currentIndex = ROUND_PHASE_ORDER.indexOf(current)
 
@@ -17,6 +18,7 @@ function getNextPhase(current: RoundPhase): RoundPhase {
   return ROUND_PHASE_ORDER[currentIndex + 1]
 }
 
+// 处理 StartRound 事件。
 function handleStartRound(ctx: GameContext): GameContext {
   return {
     ...ctx,
@@ -26,6 +28,7 @@ function handleStartRound(ctx: GameContext): GameContext {
   }
 }
 
+// 处理 AdvancePhase 事件。
 function handleAdvancePhase(ctx: GameContext): GameContext {
   return {
     ...ctx,
@@ -33,6 +36,7 @@ function handleAdvancePhase(ctx: GameContext): GameContext {
   }
 }
 
+// 处理 SetBattleResult 事件。
 function handleSetBattleResult(
   ctx: GameContext,
   result: BattleResult,
@@ -43,6 +47,7 @@ function handleSetBattleResult(
   }
 }
 
+// 根据合法游戏事件驱动 PvE 回合状态机转换。
 export function transition(ctx: GameContext, event: GameEvent): GameContext {
   assertCanAcceptEvent(ctx, event)
 

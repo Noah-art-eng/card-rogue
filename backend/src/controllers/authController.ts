@@ -9,6 +9,7 @@ import { validateRegisterInput } from '../validators/registerValidator.js'
 
 const BCRYPT_SALT_ROUNDS = 10
 
+// 校验注册数据、创建本地账号并签发访问令牌。
 export async function register(req: Request, res: Response): Promise<void> {
   const validation = validateRegisterInput(req.body)
 
@@ -46,6 +47,7 @@ export async function register(req: Request, res: Response): Promise<void> {
   })
 }
 
+// 校验账号密码并为合法用户签发访问令牌。
 export async function login(req: Request, res: Response): Promise<void> {
   const validation = validateLoginInput(req.body)
 

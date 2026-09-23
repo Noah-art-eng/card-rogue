@@ -3,10 +3,12 @@ import path from 'node:path'
 
 import { AVATAR_UPLOAD_DIR } from '../middleware/avatarUpload.js'
 
+// 获取、计算或校验 ManagedLocalAvatar。
 export function isManagedLocalAvatar(avatar: string | undefined | null): boolean {
   return Boolean(avatar && avatar.startsWith('/uploads/avatars/'))
 }
 
+// 执行 LocalAvatarIfManaged 相关处理。
 export function deleteLocalAvatarIfManaged(avatar: string | undefined | null): void {
   if (!isManagedLocalAvatar(avatar)) return
 

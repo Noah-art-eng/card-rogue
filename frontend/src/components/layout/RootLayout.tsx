@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import PageTransition from '../common/PageTransition'
 import Navbar from './Navbar'
 
+// 渲染 RootLayout 界面组件。
 export default function RootLayout() {
   const { pathname } = useLocation()
   const immersiveRoute = pathname === '/game' || pathname === '/rogue'

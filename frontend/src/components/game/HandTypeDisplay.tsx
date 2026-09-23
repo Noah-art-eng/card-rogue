@@ -17,6 +17,7 @@ interface HandTypeDisplayProps {
   evaluation: EvaluatorResult
 }
 
+// 渲染 HandTypeDisplay 界面组件。
 export default function HandTypeDisplay({ evaluation }: HandTypeDisplayProps) {
   const { handType, chips, cardChips, mult, total, isDefendReduced } = evaluation
 

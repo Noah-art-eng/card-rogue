@@ -7,6 +7,7 @@ export function xpRequiredToAdvance(level: number): number {
   return Math.floor(500 * L ** 1.35)
 }
 
+// 获取、计算或校验 TotalXp。
 export function computeTotalXp(input: {
   totalGames?: number
   totalWins?: number
@@ -24,6 +25,7 @@ export function computeTotalXp(input: {
   return Math.max(0, Math.floor(base + winRateBonus))
 }
 
+// 负责 xpProgressFromTotal 的业务处理。
 export function xpProgressFromTotal(totalXp: number) {
   const xp = Math.max(0, Math.floor(Number(totalXp) || 0))
   let level = 1
@@ -49,6 +51,7 @@ export function xpProgressFromTotal(totalXp: number) {
   }
 }
 
+// 负责 rankTitleForLevel 的业务处理。
 export function rankTitleForLevel(level: number): string {
   const L = Math.max(1, Math.floor(Number(level)) || 1)
   if (L <= 4) return 'Wanderer'
@@ -60,10 +63,12 @@ export function rankTitleForLevel(level: number): string {
   return 'Eternal Sovereign'
 }
 
+// 获取、计算或校验 XpWithCommas。
 export function formatXpWithCommas(n: number): string {
   return Math.max(0, Math.floor(Number(n) || 0)).toLocaleString('en-US')
 }
 
+// 获取、计算或校验 LobbyXpProgress。
 export function computeLobbyXpProgress(statsInput: {
   totalGames?: number
   totalWins?: number
@@ -78,6 +83,7 @@ export function computeLobbyXpProgress(statsInput: {
   }
 }
 
+// 负责 lobbyXpFallback 的业务处理。
 export function lobbyXpFallback() {
   const nextLevelXp = xpRequiredToAdvance(1)
   return {
@@ -106,6 +112,7 @@ export function computeMatchXpReward(input: {
   return Math.floor(40 + layer * 15 + dmg * 0.12)
 }
 
+// 获取、计算或校验 LobbyXpForUser。
 export function getLobbyXpForUser(
   userId: string | undefined,
   statsInput: {

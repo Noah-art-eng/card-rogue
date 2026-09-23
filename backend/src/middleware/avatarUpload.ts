@@ -24,9 +24,11 @@ if (!fs.existsSync(AVATAR_UPLOAD_DIR)) {
 }
 
 const storage = multer.diskStorage({
+  // 负责 destination 的业务处理。
   destination: (_req, _file, cb) => {
     cb(null, AVATAR_UPLOAD_DIR)
   },
+  // 负责 filename 的业务处理。
   filename: (req, file, cb) => {
     const authReq = req as AuthRequest
     const userId = authReq.auth?.userId ?? 'anonymous'
@@ -35,6 +37,7 @@ const storage = multer.diskStorage({
   },
 })
 
+// 负责 fileFilter 的业务处理。
 function fileFilter(
   _req: Request,
   file: Express.Multer.File,

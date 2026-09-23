@@ -19,6 +19,7 @@ import { Element } from '../types/card.js'
 import type { GameContext } from '../types/state.js'
 import { createTestBoss, defaultTestBattle, defaultTestBossRound, defaultRoundState } from './testBoss.js'
 
+// 创建或初始化 BossContext 所需的数据。
 function createBossContext(overrides: Partial<GameContext> = {}): GameContext {
   return {
     ...defaultTestBattle,

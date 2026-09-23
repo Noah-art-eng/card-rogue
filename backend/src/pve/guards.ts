@@ -16,19 +16,23 @@ const PHASE_ALLOWED_EVENTS: Record<RoundPhase, GameEventType[]> = {
   ],
 }
 
+// 获取、计算或校验 Phase。
 export function isPhase(ctx: GameContext, phase: RoundPhase): boolean {
   return ctx.phase === phase
 }
 
+// 获取、计算或校验 AllowedEvents。
 export function getAllowedEvents(phase: RoundPhase): GameEventType[] {
   return PHASE_ALLOWED_EVENTS[phase]
 }
 
+// 获取、计算或校验 AcceptEvent。
 export function canAcceptEvent(ctx: GameContext, event: GameEvent): boolean {
   const allowedEvents = getAllowedEvents(ctx.phase)
   return allowedEvents.includes(event.type)
 }
 
+// 负责 assertCanAcceptEvent 的业务处理。
 export function assertCanAcceptEvent(ctx: GameContext, event: GameEvent): void {
   if (!canAcceptEvent(ctx, event)) {
     throw new Error(`Event ${event.type} is not allowed in phase ${ctx.phase}`)

@@ -13,6 +13,7 @@ import { createTestBoss, defaultTestBattle, defaultTestBossRound, defaultRoundSt
 import { initDeckState, drawCards } from './deck.js'
 import type { GameContext } from '../types/state.js'
 
+// 创建或初始化 ShuffleContext 所需的数据。
 function createShuffleContext(overrides: Partial<GameContext> = {}): GameContext {
   const deckState = initDeckState()
   drawCards(deckState, HAND_SIZE)

@@ -8,6 +8,7 @@ import { detectHandType } from './handEvaluator.js'
 import { createTestBoss, defaultTestBattle, defaultTestBossRound, defaultRoundState } from './testBoss.js'
 import type { GameContext } from '../types/state.js'
 
+// 创建或初始化 ChangeColorContext 所需的数据。
 function createChangeColorContext(overrides: Partial<GameContext> = {}): GameContext {
   return {
     ...defaultTestBattle,

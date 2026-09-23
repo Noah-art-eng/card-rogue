@@ -7,6 +7,7 @@ interface BattlefieldVideoBackgroundProps {
   bossPhaseActive?: boolean
 }
 
+// 渲染 BattlefieldVideoBackground 界面组件。
 export default function BattlefieldVideoBackground({
   bossPhaseActive = false,
 }: BattlefieldVideoBackgroundProps) {

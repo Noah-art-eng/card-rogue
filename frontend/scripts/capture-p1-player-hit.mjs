@@ -9,6 +9,7 @@ const BASE = process.env.BASE_URL ?? 'http://localhost:5173'
 
 mkdirSync(OUT, { recursive: true })
 
+// 执行 registerAndEnterGame 对应的浏览器测试辅助操作。
 async function registerAndEnterGame(page) {
   const ts = Date.now()
   const email = `p1${ts}@test.local`
@@ -36,11 +37,13 @@ async function registerAndEnterGame(page) {
   await page.waitForTimeout(1500)
 }
 
+// 执行 enterPlayPhase 对应的浏览器测试辅助操作。
 async function enterPlayPhase(page) {
   await page.getByRole('button', { name: 'Play & Attack' }).click()
   await page.waitForTimeout(500)
 }
 
+// 执行 playMinimalAttack 对应的浏览器测试辅助操作。
 async function playMinimalAttack(page) {
   await enterPlayPhase(page)
   await page.locator('.hand-card').first().click()
@@ -48,6 +51,7 @@ async function playMinimalAttack(page) {
   await page.getByRole('button', { name: 'Play & Attack' }).click()
 }
 
+// 执行 waitForPhase 对应的浏览器测试辅助操作。
 async function waitForPhase(page, phase, timeoutMs = 25000) {
   await page.waitForFunction(
     (expected) => {
@@ -64,6 +68,7 @@ async function waitForPhase(page, phase, timeoutMs = 25000) {
   ).catch(() => {})
 }
 
+// 执行 capturePlayerHit 对应的浏览器测试辅助操作。
 async function capturePlayerHit(page) {
   await playMinimalAttack(page)
   await waitForPhase(page, 'BOSS_ATTACK')
@@ -79,6 +84,7 @@ async function capturePlayerHit(page) {
   })
 }
 
+// 执行 captureShieldAbsorb 对应的浏览器测试辅助操作。
 async function captureShieldAbsorb(page) {
   await page.locator('img.skillbar__skill-icon[alt="Shield"]').click()
   await page.waitForTimeout(400)
@@ -97,6 +103,7 @@ async function captureShieldAbsorb(page) {
   })
 }
 
+// 执行截图脚本的入口流程。
 async function main() {
   const browser = await chromium.launch({ headless: true })
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } })

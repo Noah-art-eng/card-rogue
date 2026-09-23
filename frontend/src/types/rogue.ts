@@ -20,6 +20,7 @@ export interface RogueSnapshot {
   stats?: { totalRounds?: number }
 }
 
+// 获取、计算或校验 ResumableRogueRun。
 export function isResumableRogueRun(snapshot: RogueSnapshot): boolean {
   const layer = snapshot.layer ?? 1
   const buffCount = snapshot.enhancements?.length ?? 0

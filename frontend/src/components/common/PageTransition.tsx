@@ -4,6 +4,7 @@ interface PageTransitionProps {
   children: React.ReactNode
 }
 
+// 渲染 PageTransition 界面组件。
 export default function PageTransition({ children }: PageTransitionProps) {
   const { pathname } = useLocation()
   const isGameRoute = pathname === '/game' || pathname === '/rogue'

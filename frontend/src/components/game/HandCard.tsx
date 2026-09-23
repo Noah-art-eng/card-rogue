@@ -31,6 +31,7 @@ const COLOR_THEME = {
   },
 } as const
 
+// 渲染 HandCard 界面组件。
 export default function HandCard({
   card,
   selectedIndex,

@@ -15,10 +15,12 @@ import { Element as ElementEnum } from '../types/card.js'
 
 const router = Router()
 
+// 获取、计算或校验 UserId。
 function getUserId(req: AuthRequest): string | undefined {
   return req.auth?.userId
 }
 
+// 查询指定层数可选的肉鸽强化项。
 router.get('/upgrades', async (req, res, next) => {
   try {
     const layer = Math.max(1, parseInt(String(req.query.layer), 10) || 1)
@@ -42,6 +44,7 @@ router.get('/upgrades', async (req, res, next) => {
 
 router.use(authMiddleware)
 
+// 创建用户的肉鸽存档并初始化第一层快照。
 router.post('/start', async (req: AuthRequest, res: Response, next) => {
   try {
     const userId = getUserId(req)
@@ -71,6 +74,7 @@ router.post('/start', async (req: AuthRequest, res: Response, next) => {
   }
 })
 
+// 读取当前用户仍处于进行中的肉鸽存档。
 router.get('/current', async (req: AuthRequest, res: Response, next) => {
   try {
     const userId = getUserId(req)
@@ -92,6 +96,7 @@ router.get('/current', async (req: AuthRequest, res: Response, next) => {
   }
 })
 
+// 持久化当前肉鸽层的客户端战斗快照。
 router.put('/save', async (req: AuthRequest, res: Response, next) => {
   try {
     const userId = getUserId(req)
@@ -138,6 +143,7 @@ router.put('/save', async (req: AuthRequest, res: Response, next) => {
   }
 })
 
+// 在通关一层后保存下一层的初始检查点。
 router.post('/floor-won', async (req: AuthRequest, res: Response, next) => {
   try {
     const userId = getUserId(req)
@@ -185,6 +191,7 @@ router.post('/floor-won', async (req: AuthRequest, res: Response, next) => {
   }
 })
 
+// 在失败后返回可恢复检查点，或结束没有检查点的肉鸽流程。
 router.post('/floor-lost', async (req: AuthRequest, res: Response, next) => {
   try {
     const userId = getUserId(req)
@@ -231,6 +238,7 @@ router.post('/floor-lost', async (req: AuthRequest, res: Response, next) => {
   }
 })
 
+// 校验并保存玩家选择的肉鸽强化项。
 router.post('/choose-enhancement', async (req: AuthRequest, res: Response, next) => {
   try {
     const userId = getUserId(req)
@@ -281,6 +289,7 @@ router.post('/choose-enhancement', async (req: AuthRequest, res: Response, next)
   }
 })
 
+// 清除已完成肉鸽流程的持久化存档。
 router.post('/won', async (req: AuthRequest, res: Response, next) => {
   try {
     const userId = getUserId(req)
@@ -296,6 +305,7 @@ router.post('/won', async (req: AuthRequest, res: Response, next) => {
   }
 })
 
+// 清除用户主动放弃的肉鸽存档。
 router.post('/abandon', async (req: AuthRequest, res: Response, next) => {
   try {
     const userId = getUserId(req)

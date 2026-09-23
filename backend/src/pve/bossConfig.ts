@@ -87,6 +87,7 @@ export const BOSS_LAYER_CONFIGS: Record<number, BossLayerConfig> = {
   },
 }
 
+// 创建或初始化 BossForLayer 所需的数据。
 export function createBossForLayer(layer: number): BossState {
   const rounded = Math.max(1, Math.floor(layer))
 

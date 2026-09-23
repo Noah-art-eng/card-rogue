@@ -5,6 +5,7 @@ interface RecentMatchesResponse {
   matches: MatchSummary[]
 }
 
+// 获取、计算或校验 RecentMatches。
 export async function getRecentMatches(): Promise<RecentMatchesResponse> {
   const response = await apiClient.get<RecentMatchesResponse>('/matches/recent')
   return response.data

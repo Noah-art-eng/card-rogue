@@ -14,6 +14,7 @@ export interface DeckState {
   hand: Card[]
 }
 
+// 创建或初始化 Card 所需的数据。
 export function createCard(element: Element, rank: number): Card {
   return {
     id: `${element}_${rank}`,
@@ -24,6 +25,7 @@ export function createCard(element: Element, rank: number): Card {
   }
 }
 
+// 负责 changeCardElement 的业务处理。
 export function changeCardElement(card: Card, targetElement: Element): Card {
   return {
     ...card,
@@ -31,6 +33,7 @@ export function changeCardElement(card: Card, targetElement: Element): Card {
   }
 }
 
+// 负责 changeCardRank 的业务处理。
 export function changeCardRank(card: Card, targetRank: number): Card {
   return {
     ...card,
@@ -40,6 +43,7 @@ export function changeCardRank(card: Card, targetRank: number): Card {
   }
 }
 
+// 创建或初始化 FullDeck 所需的数据。
 export function createFullDeck(): Card[] {
   const deck: Card[] = []
 
@@ -52,6 +56,7 @@ export function createFullDeck(): Card[] {
   return deck
 }
 
+// 使用 Fisher-Yates 算法返回不修改原数组的随机牌序。
 export function shuffle<T>(items: T[]): T[] {
   const shuffled = [...items]
 
@@ -63,6 +68,7 @@ export function shuffle<T>(items: T[]): T[] {
   return shuffled
 }
 
+// 创建或初始化 DeckState 所需的数据。
 export function initDeckState(): DeckState {
   const deck = shuffle(createFullDeck())
 
@@ -73,6 +79,7 @@ export function initDeckState(): DeckState {
   }
 }
 
+// 负责 recycleDiscardPile 的业务处理。
 function recycleDiscardPile(state: DeckState): void {
   if (state.discardPile.length === 0) {
     return
@@ -82,6 +89,7 @@ function recycleDiscardPile(state: DeckState): void {
   state.discardPile = []
 }
 
+// 从牌堆抽取指定数量的卡牌，必要时回收弃牌堆。
 export function drawCards(state: DeckState, count: number): void {
   for (let index = 0; index < count; index += 1) {
     if (state.deck.length === 0) {
@@ -97,6 +105,7 @@ export function drawCards(state: DeckState, count: number): void {
   }
 }
 
+// 执行 HandCards 相关处理。
 export function shuffleHandCards(state: DeckState, cardsToShuffle: Card[]): void {
   const shuffleIds = new Set(cardsToShuffle.map((card) => card.id))
 
@@ -105,6 +114,7 @@ export function shuffleHandCards(state: DeckState, cardsToShuffle: Card[]): void
   drawCards(state, cardsToShuffle.length)
 }
 
+// 将打出的卡牌移出手牌并放入弃牌堆。
 export function playCards(state: DeckState, cardsToPlay: Card[]): void {
   const playIds = new Set(cardsToPlay.map((card) => card.id))
 

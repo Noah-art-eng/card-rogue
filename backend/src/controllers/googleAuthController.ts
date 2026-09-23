@@ -10,10 +10,12 @@ import { toPublicUser } from '../utils/user.js'
 
 const BCRYPT_SALT_ROUNDS = 10
 
+// 获取、计算或校验 GoogleClientId。
 function getGoogleClientId(): string | undefined {
   return process.env.GOOGLE_CLIENT_ID?.trim() || undefined
 }
 
+// 负责 googleLogin 的业务处理。
 export async function googleLogin(req: Request, res: Response): Promise<void> {
   const clientId = getGoogleClientId()
   if (!clientId) {

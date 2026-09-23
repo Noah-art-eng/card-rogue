@@ -6,6 +6,7 @@ export interface RegisterInput {
   password: string
 }
 
+// 获取、计算或校验 RegisterInput。
 export function validateRegisterInput(
   body: unknown,
 ): { valid: true; data: RegisterInput } | { valid: false; message: string } {

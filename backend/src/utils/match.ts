@@ -11,6 +11,7 @@ export interface PublicMatch {
   endedAt: string
 }
 
+// 负责 toPublicMatch 的业务处理。
 export function toPublicMatch(match: IMatch): PublicMatch {
   return {
     id: match._id.toString(),

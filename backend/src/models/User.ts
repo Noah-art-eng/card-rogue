@@ -37,6 +37,7 @@ const userSchema = new Schema<IUser>(
     avatar: { type: String, default: '' },
     provider: { type: String, enum: ['local', 'google'], default: 'local' },
     googleId: { type: String, sparse: true, unique: true },
+    // 负责 default 的业务处理。
     stats: { type: statsSchema, default: () => ({}) },
   },
   { timestamps: true },

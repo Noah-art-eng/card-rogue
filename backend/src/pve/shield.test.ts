@@ -9,6 +9,7 @@ import { initDeckState, drawCards } from './deck.js'
 
 const HAND_SIZE = 7
 
+// 创建或初始化 ShieldContext 所需的数据。
 function createShieldContext(overrides: Partial<GameContext> = {}): GameContext {
   return {
     ...defaultTestBattle,
@@ -28,6 +29,7 @@ function createShieldContext(overrides: Partial<GameContext> = {}): GameContext 
   }
 }
 
+// 负责 makeRoundEndContext 的业务处理。
 function makeRoundEndContext(overrides: Partial<GameContext> = {}): GameContext {
   const ds = initDeckState()
   drawCards(ds, HAND_SIZE)

@@ -23,6 +23,7 @@ interface BossVideoDisplayProps {
   onDefeatedAnimationEnd?: () => void
 }
 
+// 渲染 BossVideoDisplay 界面组件。
 export default function BossVideoDisplay({
   mode,
   alt = 'Boss',
@@ -43,6 +44,7 @@ export default function BossVideoDisplay({
     defeatedEndNotifiedRef.current = false
   }, [mode])
 
+  // 处理 Ended 事件。
   function handleEnded() {
     if (mode === 'attack') {
       queueMicrotask(() => onAttackEndedRef.current?.())

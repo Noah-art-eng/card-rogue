@@ -19,6 +19,7 @@ import {
   shouldArchiveMatch,
 } from './matchArchive.js'
 
+// 创建或初始化 EndedContext 所需的数据。
 function createEndedContext(overrides: Partial<GameContext> = {}): GameContext {
   return {
     ...defaultTestBattle,
@@ -39,6 +40,7 @@ function createEndedContext(overrides: Partial<GameContext> = {}): GameContext {
   }
 }
 
+// 创建或初始化 TestUser 所需的数据。
 async function createTestUser(userId: string) {
   return User.create({
     _id: userId,
@@ -48,6 +50,7 @@ async function createTestUser(userId: string) {
   })
 }
 
+// 负责 runTests 的业务处理。
 async function runTests(): Promise<void> {
   const mongod = await MongoMemoryServer.create()
   await mongoose.connect(mongod.getUri())

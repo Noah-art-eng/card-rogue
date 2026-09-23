@@ -5,6 +5,7 @@ interface LeaderboardApiPayload {
   data: LeaderboardResponse
 }
 
+// 获取、计算或校验 Leaderboard。
 export async function getLeaderboard(
   sort: 'winRate' | 'totalWins' = 'winRate',
   page = 1,

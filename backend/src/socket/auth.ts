@@ -6,6 +6,7 @@ export interface AuthenticatedSocketData {
   user: AccessTokenPayload
 }
 
+// 负责 socketAuthMiddleware 的业务处理。
 export function socketAuthMiddleware(
   socket: Socket,
   next: (error?: Error) => void,

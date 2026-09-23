@@ -8,6 +8,7 @@ interface XpRecord {
   awardedKeys: string[]
 }
 
+// 获取、计算或校验 Record。
 function readRecord(userId: string): XpRecord {
   try {
     const raw = localStorage.getItem(`${KEY_PREFIX}${userId}`)
@@ -22,6 +23,7 @@ function readRecord(userId: string): XpRecord {
   }
 }
 
+// 负责 writeRecord 的业务处理。
 function writeRecord(userId: string, record: XpRecord): void {
   localStorage.setItem(
     `${KEY_PREFIX}${userId}`,
@@ -32,6 +34,7 @@ function writeRecord(userId: string, record: XpRecord): void {
   )
 }
 
+// 获取、计算或校验 SyncedTotalXp。
 export function getSyncedTotalXp(
   userId: string,
   stats: {
@@ -68,6 +71,7 @@ export function awardMatchXp(userId: string, matchKey: string, amount: number): 
   return gain
 }
 
+// 清理或重置 UserXp 相关状态。
 export function clearUserXp(userId: string): void {
   localStorage.removeItem(`${KEY_PREFIX}${userId}`)
 }

@@ -4,10 +4,12 @@ import { Element, HandType } from '../types/card.js'
 import { createCard } from './deck.js'
 import { detectHandType } from './handEvaluator.js'
 
+// 负责 card 的业务处理。
 function card(element: Element, rank: number) {
   return createCard(element, rank)
 }
 
+// 负责 assertHandType 的业务处理。
 function assertHandType(cards: ReturnType<typeof card>[], expected: HandType, label: string) {
   const actual = detectHandType(cards)
   assert.equal(actual, expected, label)

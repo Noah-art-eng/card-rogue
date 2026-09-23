@@ -7,6 +7,7 @@ import { User } from '../models/User.js'
 import { deleteLocalAvatarIfManaged } from '../utils/avatarFiles.js'
 import { toPublicUser } from '../utils/user.js'
 
+// 获取、计算或校验 Me。
 export async function getMe(req: AuthRequest, res: Response): Promise<void> {
   const userId = req.auth?.userId
 
@@ -27,6 +28,7 @@ export async function getMe(req: AuthRequest, res: Response): Promise<void> {
   })
 }
 
+// 负责 uploadAvatar 的业务处理。
 export async function uploadAvatar(req: AuthRequest, res: Response): Promise<void> {
   const userId = req.auth?.userId
 
@@ -61,6 +63,7 @@ export async function uploadAvatar(req: AuthRequest, res: Response): Promise<voi
   })
 }
 
+// 处理 AvatarUploadError 事件。
 export function handleAvatarUploadError(
   err: unknown,
   _req: AuthRequest,

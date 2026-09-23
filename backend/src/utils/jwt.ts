@@ -8,6 +8,7 @@ export interface AccessTokenPayload {
 
 const JWT_EXPIRES_IN = '7d'
 
+// 执行 AccessToken 相关处理。
 export function signAccessToken(payload: AccessTokenPayload): string {
   const secret = process.env.JWT_SECRET
 
@@ -18,6 +19,7 @@ export function signAccessToken(payload: AccessTokenPayload): string {
   return jwt.sign(payload, secret, { expiresIn: JWT_EXPIRES_IN })
 }
 
+// 执行 AccessToken 相关处理。
 export function verifyAccessToken(token: string): AccessTokenPayload {
   const secret = process.env.JWT_SECRET
 

@@ -11,6 +11,7 @@ import RegisterPage from './pages/RegisterPage'
 import RogueGamePage from './pages/RogueGamePage'
 import { AuthProvider } from './stores/AuthContext'
 
+// 渲染 App 界面组件。
 function App() {
   return (
     <AuthProvider>

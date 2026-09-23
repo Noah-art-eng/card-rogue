@@ -45,6 +45,7 @@ const RANK_ROW_STYLES: Record<
   },
 }
 
+// 渲染 SidebarIconBack 界面组件。
 function SidebarIconBack({ iconClass }: { iconClass?: string }) {
   const wrap = iconClass ?? 'h-[1.125rem] w-[1.125rem] shrink-0'
   return (
@@ -63,6 +64,7 @@ function SidebarIconBack({ iconClass }: { iconClass?: string }) {
   )
 }
 
+// 渲染 LeaderboardClockGlyph 界面组件。
 function LeaderboardClockGlyph({
   className,
   style,
@@ -88,11 +90,13 @@ function LeaderboardClockGlyph({
   )
 }
 
+// 获取、计算或校验 WinRate。
 function formatWinRate(winRate: number | undefined): string {
   if (typeof winRate !== 'number' || Number.isNaN(winRate)) return '—'
   return `${(winRate * 100).toFixed(1)}%`
 }
 
+// 获取、计算或校验 MyRank。
 function resolveMyRank(
   userId: string | undefined,
   rankings: LeaderboardEntry[],
@@ -126,6 +130,7 @@ function resolveMyRank(
   }
 }
 
+// 渲染 LeaderboardPage 界面组件。
 export default function LeaderboardPage() {
   const { user, isLoading: authLoading } = useAuth()
   const navigate = useNavigate()
@@ -136,6 +141,7 @@ export default function LeaderboardPage() {
   const [leaderboardError, setLeaderboardError] = useState<string | null>(null)
   const [myRank, setMyRank] = useState<MyRankState>({ kind: 'loading' })
 
+  // 获取、计算或校验 Leaderboard。
   const loadLeaderboard = useCallback(async () => {
     setLeaderboardLoading(true)
     setLeaderboardError(null)

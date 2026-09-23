@@ -35,6 +35,7 @@ import { playerHpForLayer } from './layerConfig.js'
 
 const MAX_SELECTED_CARDS = 5
 
+// 执行 DeckState 相关处理。
 function syncDeckState(context: GameContext, deckState: DeckState): GameContext {
   return {
     ...context,
@@ -44,6 +45,7 @@ function syncDeckState(context: GameContext, deckState: DeckState): GameContext 
   }
 }
 
+// 负责 toDeckState 的业务处理。
 function toDeckState(context: GameContext): DeckState {
   return {
     deck: context.deck,
@@ -52,10 +54,12 @@ function toDeckState(context: GameContext): DeckState {
   }
 }
 
+// 获取、计算或校验 PlayerBuffs。
 function getPlayerBuffs(context: GameContext): Buff[] {
   return context.player.buffs ?? []
 }
 
+// 获取、计算或校验 PreviewScore。
 function getPreviewScore(context: GameContext, selectedCards: GameContext['hand']): number {
   if (selectedCards.length === 0) {
     return 0
@@ -72,6 +76,7 @@ function getPreviewScore(context: GameContext, selectedCards: GameContext['hand'
   return rawDamage
 }
 
+// 执行 PlayPreview 相关处理。
 function updatePlayPreview(context: GameContext, selectedCards: GameContext['hand']): GameContext {
   if (selectedCards.length === 0) {
     return {
@@ -97,6 +102,7 @@ function updatePlayPreview(context: GameContext, selectedCards: GameContext['han
   }
 }
 
+// 初始化一局 PvE 的牌堆、手牌、首回合与首个 Boss 意图。
 export function startPveGameSetup(context: GameContext): GameContext {
   const deckState = initDeckState()
   drawCards(deckState, HAND_SIZE)
@@ -113,6 +119,7 @@ export function startPveGameSetup(context: GameContext): GameContext {
   )
 }
 
+// 执行 SelectedCards 相关处理。
 function toggleSelectedCards(
   context: GameContext,
   cardId: string,
@@ -138,6 +145,7 @@ function toggleSelectedCards(
   return selectedCards
 }
 
+// 切换指定手牌的选中状态，并刷新出牌预览。
 export function selectCard(context: GameContext, cardId: string): GameContext {
   if (context.phase !== RoundPhase.PLAY && context.phase !== RoundPhase.SHUFFLE) {
     throw new Error('Can only select cards during PLAY or SHUFFLE phase')
@@ -159,6 +167,7 @@ export function selectCard(context: GameContext, cardId: string): GameContext {
   return updatePlayPreview(context, selectedCards)
 }
 
+// 根据当前选牌生成待结算的战斗结果并进入结算阶段。
 export function playConfirm(context: GameContext): GameContext {
   const selectedCards = context.play.selectedCards
   const handType = detectHandType(selectedCards)
@@ -184,6 +193,7 @@ export function playConfirm(context: GameContext): GameContext {
   }
 }
 
+// 获取、计算或校验 Complete。
 export function resolveComplete(context: GameContext): GameContext {
   if (context.phase !== RoundPhase.RESOLVE) {
     throw new Error('Can only resolve after entering RESOLVE phase')
@@ -238,6 +248,7 @@ export function resolveComplete(context: GameContext): GameContext {
   }
 }
 
+// 确认出牌、推进状态机并处理肉鸽通关分支。
 export function confirmPlay(context: GameContext): GameContext {
   if (context.roguePhase === 'UPGRADE') {
     throw new Error('Cannot play cards during upgrade phase')
@@ -259,6 +270,7 @@ export function confirmPlay(context: GameContext): GameContext {
   return resolveComplete(resolvedContext)
 }
 
+// 结算 Boss 攻击、护盾吸收与败负结果。
 export function doBossAttackComplete(context: GameContext): GameContext {
   if (context.phase !== RoundPhase.BOSS_ATTACK) {
     throw new Error('Boss attack can only complete during BOSS_ATTACK phase')
@@ -340,6 +352,7 @@ export function doBossAttackComplete(context: GameContext): GameContext {
   }
 }
 
+// 在一轮结束后抽牌并创建下一回合状态。
 export function advanceRound(context: GameContext): GameContext {
   if (context.phase !== RoundPhase.ROUND_END) {
     throw new Error(`Cannot advance round from phase ${context.phase}`)
@@ -376,6 +389,7 @@ export function advanceRound(context: GameContext): GameContext {
   )
 }
 
+// 仅在 Boss 攻击动画完成时推进下一阶段。
 export function resolveAnimationComplete(context: GameContext): GameContext | null {
   if (context.phase !== RoundPhase.BOSS_ATTACK) {
     return null
@@ -390,6 +404,7 @@ export function resolveAnimationComplete(context: GameContext): GameContext | nu
   return advanceRound(afterAttack)
 }
 
+// 执行 SkillEnergy 相关处理。
 function spendSkillEnergy(context: GameContext): GameContext['roundState']['skills']['energy'] {
   if (context.roundState.skills.energy.energy < 1) {
     throw new Error('Not enough energy')
@@ -400,14 +415,17 @@ function spendSkillEnergy(context: GameContext): GameContext['roundState']['skil
   }
 }
 
+// 获取、计算或校验 ValidTargetElement。
 function isValidTargetElement(element: unknown): element is Element {
   return element === Element.WATER || element === Element.FIRE || element === Element.GRASS
 }
 
+// 获取、计算或校验 ValidTargetRank。
 function isValidTargetRank(rank: unknown): rank is number {
   return typeof rank === 'number' && Number.isInteger(rank) && rank >= 1 && rank <= 13
 }
 
+// 校验技能参数、消耗能量并将对应卡牌或护盾效果写入状态。
 export function useSkill(
   context: GameContext,
   skillId: SkillId,
@@ -512,6 +530,7 @@ export function useSkill(
   throw new Error(`Unknown skill: ${skillId}`)
 }
 
+// 执行 Shuffle 相关处理。
 export function enterShuffle(context: GameContext): GameContext {
   if (context.phase !== RoundPhase.SKILL) {
     throw new Error('Can only enter shuffle from SKILL phase')
@@ -532,6 +551,7 @@ export function enterShuffle(context: GameContext): GameContext {
   }
 }
 
+// 执行 Cards 相关处理。
 export function shuffleCards(context: GameContext): GameContext {
   if (context.phase !== RoundPhase.SHUFFLE) {
     throw new Error('Can only shuffle cards during SHUFFLE phase')
@@ -564,6 +584,7 @@ export function shuffleCards(context: GameContext): GameContext {
   }
 }
 
+// 执行 Play 相关处理。
 export function enterPlay(context: GameContext): GameContext {
   if (context.phase !== RoundPhase.SKILL && context.phase !== RoundPhase.SHUFFLE) {
     throw new Error('Can only enter play from SKILL or SHUFFLE phase')
@@ -580,6 +601,7 @@ export function enterPlay(context: GameContext): GameContext {
   }
 }
 
+// 执行 Buffs 相关处理。
 function mergeBuffs(existing: Buff[], incoming: Buff[]): Buff[] {
   const merged = [...existing]
   for (const buff of incoming) {
@@ -594,6 +616,7 @@ function mergeBuffs(existing: Buff[], incoming: Buff[]): Buff[] {
   return merged
 }
 
+// 叠加新强化并创建下一肉鸽层的完整战斗状态。
 export function advanceRogueLayer(context: GameContext, incomingBuffs: Buff[] = []): GameContext {
   if (!context.rogueMode) {
     throw new Error('Not a rogue session')
@@ -630,6 +653,7 @@ export function advanceRogueLayer(context: GameContext, incomingBuffs: Buff[] = 
   return startPveGameSetup(nextContext)
 }
 
+// 从服务端保存的肉鸽检查点恢复玩家、Boss 和牌堆状态。
 export function restoreRogueCheckpoint(
   context: GameContext,
   payload: {

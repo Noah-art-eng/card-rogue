@@ -5,6 +5,7 @@ import { advanceRound, useSkill } from './actions.js'
 import { createTestBoss, defaultTestBattle, defaultTestBossRound, defaultRoundState } from './testBoss.js'
 import type { GameContext } from '../types/state.js'
 
+// 创建或初始化 SkillContext 所需的数据。
 function createSkillContext(overrides: Partial<GameContext> = {}): GameContext {
   return {
     ...defaultTestBattle,

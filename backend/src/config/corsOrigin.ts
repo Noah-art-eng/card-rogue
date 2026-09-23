@@ -1,3 +1,4 @@
+// 获取、计算或校验 FrontendCorsConfig。
 export function getFrontendCorsConfig():
   | { origin: string; credentials: true }
   | { origin: true; credentials: true } {

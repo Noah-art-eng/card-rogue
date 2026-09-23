@@ -2,6 +2,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { useAuth } from '../../stores/AuthContext'
 
+// 渲染 Navbar 界面组件。
 export default function Navbar() {
   const { isAuthenticated, logout } = useAuth()
   const navigate = useNavigate()
@@ -11,6 +12,7 @@ export default function Navbar() {
   const hideCenterNav = isAuthenticated && dashboardShell
   const showHomeLink = !isAuthenticated || !dashboardShell
 
+  // 处理 Logout 事件。
   function handleLogout() {
     logout()
     navigate('/', { replace: true })

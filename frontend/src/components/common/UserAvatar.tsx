@@ -9,6 +9,7 @@ interface UserAvatarProps {
   alt?: string
 }
 
+// 渲染 UserAvatar 界面组件。
 export default function UserAvatar({
   username,
   avatar,

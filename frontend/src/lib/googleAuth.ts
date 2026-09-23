@@ -12,6 +12,7 @@ declare global {
 
 let scriptPromise: Promise<void> | null = null
 
+// 获取、计算或校验 GoogleIdentityScript。
 export function loadGoogleIdentityScript(): Promise<void> {
   if (typeof window === 'undefined') {
     return Promise.resolve()
@@ -49,10 +50,12 @@ export function loadGoogleIdentityScript(): Promise<void> {
   return scriptPromise
 }
 
+// 获取、计算或校验 GoogleClientId。
 export function getGoogleClientId(): string {
   return import.meta.env.VITE_GOOGLE_CLIENT_ID?.trim() ?? ''
 }
 
+// 获取、计算或校验 GoogleLoginConfigured。
 export function isGoogleLoginConfigured(): boolean {
   return Boolean(getGoogleClientId())
 }

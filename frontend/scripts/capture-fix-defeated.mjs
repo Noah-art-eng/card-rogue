@@ -9,6 +9,7 @@ const BASE = process.env.BASE_URL ?? 'http://localhost:5173'
 
 mkdirSync(OUT, { recursive: true })
 
+// 执行 registerAndEnterGame 对应的浏览器测试辅助操作。
 async function registerAndEnterGame(page) {
   const ts = Date.now()
   const email = `win${ts}@test.local`
@@ -36,6 +37,7 @@ async function registerAndEnterGame(page) {
   await page.waitForTimeout(2000)
 }
 
+// 执行 readGameState 对应的浏览器测试辅助操作。
 async function readGameState(page) {
   return page.evaluate(() => {
     const pre = document.querySelector('.game-debug pre')
@@ -48,6 +50,7 @@ async function readGameState(page) {
   })
 }
 
+// 执行 tryUseShield 对应的浏览器测试辅助操作。
 async function tryUseShield(page) {
   const slot = page.locator('.skillbar__slot').filter({ hasText: 'Shield' })
   const disabled = await slot.evaluate((el) => el.classList.contains('skillbar__slot--disabled')).catch(() => true)
@@ -57,6 +60,7 @@ async function tryUseShield(page) {
   }
 }
 
+// 执行 playRound 对应的浏览器测试辅助操作。
 async function playRound(page) {
   const state = await readGameState(page)
   if (!state || state.battleResult !== 'ONGOING') return state
@@ -97,6 +101,7 @@ async function playRound(page) {
   return readGameState(page)
 }
 
+// 执行截图脚本的入口流程。
 async function main() {
   const browser = await chromium.launch({
     headless: true,

@@ -17,10 +17,12 @@ const ELEMENT_OFFSETS: Record<Element, number> = {
   GRASS: 26,
 }
 
+// 负责 cardExtension 的业务处理。
 function cardExtension(index: number): 'jpg' | 'png' {
   return index >= 14 && index <= 17 ? 'jpg' : 'png'
 }
 
+// 获取、计算或校验 CardImagePath。
 export function getCardImagePath(element: Element, rank: number): string {
   const offset = ELEMENT_OFFSETS[element]
   const index = offset + rank

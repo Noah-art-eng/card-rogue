@@ -8,6 +8,7 @@ import { initSocket } from './socket/index.js'
 
 const PORT = Number(process.env.PORT) || 5000
 
+// 创建或初始化 Server 所需的数据。
 async function startServer(): Promise<void> {
   try {
     await connectMongoDB()

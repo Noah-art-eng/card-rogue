@@ -21,6 +21,7 @@ export const WEIGHTS_LATE: BossIntentWeights = {
   DEFEND: 25,
 }
 
+// 获取、计算或校验 Layer。
 export function normalizeLayer(layer?: number): number {
   if (layer === undefined || layer === null || Number.isNaN(layer)) {
     return MIN_LAYER
@@ -39,6 +40,7 @@ export function normalizeLayer(layer?: number): number {
   return rounded
 }
 
+// 执行 erHpForLayer 相关处理。
 export function playerHpForLayer(layer: number): number {
   const rounded = Math.max(1, Math.floor(layer))
 
@@ -62,6 +64,7 @@ export function playerHpForLayer(layer: number): number {
   return 120
 }
 
+// 负责 intentWeightsForLayer 的业务处理。
 export function intentWeightsForLayer(layer: number): BossIntentWeights {
   const normalized = normalizeLayer(layer)
 

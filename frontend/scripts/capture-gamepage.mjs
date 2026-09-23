@@ -12,6 +12,7 @@ const EMAIL = process.env.TEST_EMAIL ?? `ui-check-${Date.now()}@test.local`
 const PASSWORD = process.env.TEST_PASSWORD ?? 'test123456'
 const USERNAME = process.env.TEST_USERNAME ?? `ui${Date.now().toString().slice(-6)}`
 
+// 执行截图脚本的入口流程。
 async function main() {
   const browser = await chromium.launch({ headless: true })
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } })

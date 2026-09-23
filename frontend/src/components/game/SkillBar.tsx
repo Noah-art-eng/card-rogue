@@ -47,6 +47,7 @@ const DISPLAY_RANK: Record<number, string> = { 1: 'A', 11: 'J', 12: 'Q', 13: 'K'
 const ALL_RANKS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 const MAX_ENERGY = 3
 
+// 渲染 SkillBar 界面组件。
 export default function SkillBar({
   phase,
   hand,
@@ -73,23 +74,27 @@ export default function SkillBar({
     ? hand.find((c) => c.id === targetCardId) ?? null
     : null
 
+  // 负责 closePanel 的业务处理。
   function closePanel() {
     setPanel(null)
     setTargetCardId(null)
   }
 
+  // 负责 openColorSkill 的业务处理。
   function openColorSkill() {
     if (locked) return
     setPanel(panel === 'color' ? null : 'color')
     setTargetCardId(null)
   }
 
+  // 负责 openRankSkill 的业务处理。
   function openRankSkill() {
     if (locked) return
     setPanel(panel === 'rank' ? null : 'rank')
     setTargetCardId(null)
   }
 
+  // 负责 openShieldSkill 的业务处理。
   function openShieldSkill() {
     if (energy <= 0 || shield.onCooldown || shield.active) return
     onUseShield()
@@ -97,12 +102,14 @@ export default function SkillBar({
     window.setTimeout(() => setPanel(null), 1500)
   }
 
+  // 执行 Color 相关处理。
   function applyColor(next: Element) {
     if (!targetCardId) return
     onUseChangeColor(targetCardId, next)
     closePanel()
   }
 
+  // 执行 Rank 相关处理。
   function applyRank(nextRank: number) {
     if (!targetCardId) return
     onUseChangeRank(targetCardId, nextRank)
@@ -291,6 +298,7 @@ export default function SkillBar({
   )
 }
 
+// 渲染 RefSkillSlot 界面组件。
 function RefSkillSlot({
   label,
   iconSrc,
@@ -344,6 +352,7 @@ function RefSkillSlot({
   )
 }
 
+// 渲染 SkillPanel 界面组件。
 function SkillPanel({
   title,
   children,
@@ -366,6 +375,7 @@ function SkillPanel({
   )
 }
 
+// 渲染 MiniCardRow 界面组件。
 function MiniCardRow({ card, onClick }: { card: Card; onClick: () => void }) {
   const dot = ELEMENT_DOT[card.element] ?? '#888'
   const name = `${ELEMENT_SHORT[card.element]}-${card.displayRank}`

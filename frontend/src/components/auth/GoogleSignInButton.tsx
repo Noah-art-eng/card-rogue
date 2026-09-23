@@ -12,6 +12,7 @@ interface GoogleSignInButtonProps {
   className?: string
 }
 
+// 渲染 GoogleLogo 界面组件。
 function GoogleLogo() {
   return (
     <svg width="20" height="20" viewBox="0 0 18 18" aria-hidden="true" className="shrink-0">
@@ -35,6 +36,7 @@ function GoogleLogo() {
   )
 }
 
+// 渲染 GoogleSignInButton 界面组件。
 export default function GoogleSignInButton({
   variant = 'login',
   className = '',

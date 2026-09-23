@@ -2,6 +2,7 @@ import type { Card } from '../types/game'
 
 export type AttackEffectMode = 'fire' | 'water' | 'nature' | 'normal'
 
+// 获取、计算或校验 AttackEffectModeFromCards。
 export function inferAttackEffectModeFromCards(cards: Card[]): AttackEffectMode {
   if (!Array.isArray(cards) || cards.length === 0) return 'normal'
 

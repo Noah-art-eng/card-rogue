@@ -10,11 +10,13 @@ interface UploadAvatarResponse {
   user: User
 }
 
+// 获取、计算或校验 Me。
 export async function getMe(): Promise<MeResponse> {
   const response = await apiClient.get<MeResponse>('/users/me')
   return response.data
 }
 
+// 负责 uploadAvatar 的业务处理。
 export async function uploadAvatar(file: File): Promise<UploadAvatarResponse> {
   const formData = new FormData()
   formData.append('avatar', file)

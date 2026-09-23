@@ -3,6 +3,7 @@ import { User } from '../models/User.js'
 import { BattleResult, type GameContext } from '../types/state.js'
 import { toPublicMatch, type PublicMatch } from '../utils/match.js'
 
+// 判断对局是否已结束且尚未写入历史记录。
 export function shouldArchiveMatch(context: GameContext): boolean {
   if (context.matchArchived) {
     return false
@@ -16,6 +17,7 @@ export function shouldArchiveMatch(context: GameContext): boolean {
     || context.battleResult === BattleResult.LOSE
 }
 
+// 从已结束游戏上下文构造 MongoDB 对局历史文档。
 export function buildMatchPayload(context: GameContext) {
   return {
     userId: context.userId,
@@ -29,6 +31,7 @@ export function buildMatchPayload(context: GameContext) {
   }
 }
 
+// 原子更新用户的总局数、胜场、胜率与最高伤害统计。
 async function updateUserStats(
   userId: string,
   isWin: boolean,
@@ -73,6 +76,7 @@ async function updateUserStats(
   }
 }
 
+// 在对局结束时保存战绩并返回带归档标记的上下文。
 export async function archiveGameIfEnded(context: GameContext): Promise<GameContext> {
   if (!shouldArchiveMatch(context)) {
     return context
@@ -88,6 +92,7 @@ export async function archiveGameIfEnded(context: GameContext): Promise<GameCont
   }
 }
 
+// 从 MongoDB 查询用户最近的对局历史。
 export async function getRecentMatchesForUser(
   userId: string,
   limit = 10,

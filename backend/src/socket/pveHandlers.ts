@@ -27,6 +27,7 @@ import type { Element } from '../types/card.js'
 import { Element as ElementEnum } from '../types/card.js'
 import type { AccessTokenPayload } from '../utils/jwt.js'
 
+// 将服务端游戏上下文裁剪为可通过 Socket.IO 同步给客户端的状态。
 function toGameState(context: GameContext) {
   return {
     roomId: context.roomId,
@@ -50,23 +51,28 @@ function toGameState(context: GameContext) {
   }
 }
 
+// 向当前 Socket 客户端发送最新游戏状态。
 function emitGameState(socket: Socket, context: GameContext): void {
   socket.emit('gameState', toGameState(context))
 }
 
+// 获取、计算或校验 UserRoomId。
 function getUserRoomId(userId: string): string {
   return `pve-${userId}`
 }
 
+// 处理 SocketError 事件。
 function handleSocketError(socket: Socket, error: unknown): void {
   const message = error instanceof Error ? error.message : 'PvE action failed'
   socket.emit('gameError', { message })
 }
 
+// 注册 PvE/肉鸽模式的 Socket.IO 事件处理器。
 export function registerPveHandlers(_io: Server, socket: Socket): void {
   const user = socket.data.user as AccessTokenPayload
   const roomId = getUserRoomId(user.userId)
 
+  // 处理 startPveGame 事件：重建 PvE 房间并同步初始游戏状态。
   socket.on('startPveGame', (payload?: { layer?: number }) => {
     try {
       if (getRoom(roomId)) {
@@ -85,6 +91,7 @@ export function registerPveHandlers(_io: Server, socket: Socket): void {
     }
   })
 
+  // 处理 startRogueGame 事件：创建新的肉鸽模式房间并同步状态。
   socket.on('startRogueGame', () => {
     try {
       if (getRoom(roomId)) {
@@ -102,6 +109,7 @@ export function registerPveHandlers(_io: Server, socket: Socket): void {
     }
   })
 
+  // 处理 selectCard 事件：更新玩家本回合选择并向客户端同步状态。
   socket.on('selectCard', (payload: { cardId?: string }) => {
     try {
       const context = getRoom(roomId)
@@ -121,7 +129,9 @@ export function registerPveHandlers(_io: Server, socket: Socket): void {
     }
   })
 
+  // 处理 confirmPlay 事件：结算出牌，并在需要时归档已结束对局。
   socket.on('confirmPlay', () => {
+    // 异步完成出牌结算、战绩持久化与胜利事件同步。
     void (async () => {
       try {
         const context = getRoom(roomId)
@@ -156,7 +166,9 @@ export function registerPveHandlers(_io: Server, socket: Socket): void {
     })()
   })
 
+  // 处理 resolveAnimationComplete 事件：在攻击动画完成后推进回合状态。
   socket.on('resolveAnimationComplete', () => {
+    // 异步完成动画结算、战绩持久化与失败事件同步。
     void (async () => {
       try {
         const context = getRoom(roomId)
@@ -187,6 +199,7 @@ export function registerPveHandlers(_io: Server, socket: Socket): void {
     })()
   })
 
+  // 处理 useSkill 事件：校验技能参数、应用技能效果并同步状态。
   socket.on('useSkill', (payload: UseSkillOptions & { skillId?: SkillId }) => {
     try {
       const context = getRoom(roomId)
@@ -207,6 +220,7 @@ export function registerPveHandlers(_io: Server, socket: Socket): void {
     }
   })
 
+  // 处理 enterShuffle 事件：进入洗牌阶段并同步状态。
   socket.on('enterShuffle', () => {
     try {
       const context = getRoom(roomId)
@@ -222,6 +236,7 @@ export function registerPveHandlers(_io: Server, socket: Socket): void {
     }
   })
 
+  // 处理 shuffleCards 事件：执行洗牌操作并同步状态。
   socket.on('shuffleCards', () => {
     try {
       const context = getRoom(roomId)
@@ -237,6 +252,7 @@ export function registerPveHandlers(_io: Server, socket: Socket): void {
     }
   })
 
+  // 处理 enterPlay 事件：进入出牌阶段并同步状态。
   socket.on('enterPlay', () => {
     try {
       const context = getRoom(roomId)
@@ -252,6 +268,7 @@ export function registerPveHandlers(_io: Server, socket: Socket): void {
     }
   })
 
+  // 处理 upgradePhaseReady 事件：生成当前肉鸽层可选强化项。
   socket.on('upgradePhaseReady', () => {
     try {
       const context = getRoom(roomId)
@@ -283,6 +300,7 @@ export function registerPveHandlers(_io: Server, socket: Socket): void {
     }
   })
 
+  // 处理 advanceLayer 事件：应用强化并初始化下一肉鸽层。
   socket.on('advanceLayer', (payload?: { shuffleCount?: number; buffs?: Buff[] }) => {
     try {
       const context = getRoom(roomId)
@@ -302,6 +320,7 @@ export function registerPveHandlers(_io: Server, socket: Socket): void {
     }
   })
 
+  // 处理 restoreFromCheckpoint 事件：从肉鸽存档检查点恢复战斗状态。
   socket.on(
     'restoreFromCheckpoint',
     (payload: {
@@ -330,6 +349,7 @@ export function registerPveHandlers(_io: Server, socket: Socket): void {
     },
   )
 
+  // 处理 disconnect 事件：将断开的客户端离开其游戏房间。
   socket.on('disconnect', () => {
     if (socket.rooms.has(roomId)) {
       void socket.leave(roomId)

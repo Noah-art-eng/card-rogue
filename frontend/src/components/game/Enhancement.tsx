@@ -49,6 +49,7 @@ const BONUS_ICON_MAP: Record<string, string> = {
   ALL_CHIPS_BONUS: '/images/icon-chip+2.png',
 }
 
+// 渲染 Enhancement 界面组件。
 export default function Enhancement({ options, floor, onConfirm }: EnhancementProps) {
   if (!options.length) return null
 

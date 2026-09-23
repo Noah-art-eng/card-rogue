@@ -26,6 +26,7 @@ interface BattlefieldProps {
   onBossDefeatedAnimationEnd?: () => void
 }
 
+// 渲染 DamageFloat 界面组件。
 function DamageFloat({ value }: { value: number }) {
   return (
     <div className="battlefield__damage-float">
@@ -34,12 +35,14 @@ function DamageFloat({ value }: { value: number }) {
   )
 }
 
+// 获取、计算或校验 BossHp。
 function formatBossHp(hp: number): string {
   if (hp > 9999) return `${Math.round(hp / 1000)}k`
   if (hp > 999) return `${(hp / 1000).toFixed(1)}k`
   return String(hp)
 }
 
+// 渲染 IntentIcon 界面组件。
 function IntentIcon({ intent, attackValue }: { intent: string; attackValue: number }) {
   const isAttack = intent === 'ATTACK'
   const mod =
@@ -65,6 +68,7 @@ function IntentIcon({ intent, attackValue }: { intent: string; attackValue: numb
   )
 }
 
+// 渲染 BattlePhaseBanner 界面组件。
 function BattlePhaseBanner({ battlePhase }: { battlePhase: PresentationBattlePhase }) {
   if (!battlePhase) return null
 
@@ -83,6 +87,7 @@ function BattlePhaseBanner({ battlePhase }: { battlePhase: PresentationBattlePha
   )
 }
 
+// 渲染 Battlefield 界面组件。
 export default function Battlefield({
   phase,
   boss,
