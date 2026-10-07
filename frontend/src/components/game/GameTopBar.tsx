@@ -10,7 +10,6 @@ interface GameTopBarProps {
   onToggleMute?: () => void
 }
 
-// 渲染 GameTopBar 界面组件。
 export default function GameTopBar({
   connected,
   layer,

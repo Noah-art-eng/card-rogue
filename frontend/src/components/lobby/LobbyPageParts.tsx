@@ -1,7 +1,6 @@
 const iconSm = 'h-[1.125rem] w-[1.125rem] shrink-0'
 const iconHeader = 'h-[1.35rem] w-[1.35rem] shrink-0 text-violet-50 sm:h-[1.5rem] sm:w-[1.5rem]'
 
-// 渲染 LobbyIconHome 界面组件。
 export function LobbyIconHome({ active, iconClass }: { active?: boolean; iconClass?: string }) {
   const c = iconClass ?? iconSm
   if (active) {
@@ -30,7 +29,6 @@ export function LobbyIconHome({ active, iconClass }: { active?: boolean; iconCla
   )
 }
 
-// 渲染 LobbyIconLeaderboard 界面组件。
 export function LobbyIconLeaderboard({ iconClass }: { iconClass?: string }) {
   const c = iconClass ?? iconSm
   return (
@@ -52,7 +50,6 @@ export function LobbyIconLeaderboard({ iconClass }: { iconClass?: string }) {
   )
 }
 
-// 渲染 LobbyIconProfile 界面组件。
 export function LobbyIconProfile({ iconClass }: { iconClass?: string }) {
   const c = iconClass ?? iconSm
   return (
@@ -72,7 +69,6 @@ export function LobbyIconProfile({ iconClass }: { iconClass?: string }) {
   )
 }
 
-// 渲染 LobbyIconAchievements 界面组件。
 export function LobbyIconAchievements({ iconClass }: { iconClass?: string }) {
   const c = iconClass ?? iconSm
   return (
@@ -92,7 +88,6 @@ export function LobbyIconAchievements({ iconClass }: { iconClass?: string }) {
   )
 }
 
-// 渲染 LobbyIconSettings 界面组件。
 export function LobbyIconSettings({ iconClass }: { iconClass?: string }) {
   const c = iconClass ?? iconSm
   return (
@@ -112,7 +107,6 @@ export function LobbyIconSettings({ iconClass }: { iconClass?: string }) {
   )
 }
 
-// 渲染 LobbyIconLogout 界面组件。
 export function LobbyIconLogout({ iconClass }: { iconClass?: string }) {
   const c = iconClass ?? iconSm
   return (
@@ -133,7 +127,6 @@ export function LobbyIconLogout({ iconClass }: { iconClass?: string }) {
   )
 }
 
-// 渲染 LobbyIconBell 界面组件。
 export function LobbyIconBell({ iconClass }: { iconClass?: string }) {
   const c = iconClass ?? iconHeader
   return (
@@ -153,7 +146,6 @@ export function LobbyIconBell({ iconClass }: { iconClass?: string }) {
   )
 }
 
-// 渲染 LobbyIconBrightness 界面组件。
 export function LobbyIconBrightness({ iconClass }: { iconClass?: string }) {
   const c = iconClass ?? iconHeader
   return (
@@ -173,7 +165,6 @@ export function LobbyIconBrightness({ iconClass }: { iconClass?: string }) {
   )
 }
 
-// 渲染 LobbyPremiumCta 界面组件。
 export function LobbyPremiumCta({
   label,
   variant = 'solo',

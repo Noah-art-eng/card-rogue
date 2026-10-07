@@ -8,9 +8,9 @@ import { createInitialBossRound } from './boss.js'
 import { playerHpForLayer } from './layerConfig.js'
 import { createInitialRoundState } from './roundState.js'
 
+// Live combat contexts stay process-local; durable saves and archives live in MongoDB instead.
 const rooms = new Map<string, GameContext>()
 
-// 创建包含玩家、Boss、牌堆与回合状态的初始游戏上下文。
 function createInitialContext(roomId: string, userId: string, layer = 1, rogueMode = false): GameContext {
   const roundedLayer = Math.max(1, Math.floor(layer))
   const playerHp = playerHpForLayer(roundedLayer)
@@ -61,7 +61,6 @@ export function createRoom(
   return context
 }
 
-// 获取、计算或校验 RogueRoom。
 export function isRogueRoom(roomId: string): boolean {
   return rooms.get(roomId)?.rogueMode ?? false
 }
@@ -81,7 +80,6 @@ export function removeRoom(roomId: string): boolean {
   return rooms.delete(roomId)
 }
 
-// 获取、计算或校验 RoomCount。
 export function getRoomCount(): number {
   return rooms.size
 }

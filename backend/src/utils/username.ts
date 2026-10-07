@@ -1,6 +1,5 @@
 import { User } from '../models/User.js'
 
-// 获取、计算或校验 UsernameBase。
 function sanitizeUsernameBase(raw: string): string {
   const cleaned = raw
     .trim()
@@ -18,7 +17,6 @@ function sanitizeUsernameBase(raw: string): string {
   return fallback.length >= 3 ? fallback : 'player'
 }
 
-// 创建或初始化 UniqueUsername 所需的数据。
 export async function generateUniqueUsername(name: string, email: string): Promise<string> {
   const base = sanitizeUsernameBase(name || email.split('@')[0] || 'player')
   let candidate = base

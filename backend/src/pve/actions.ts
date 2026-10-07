@@ -13,7 +13,6 @@ import {
   type UseSkillOptions,
 } from '../types/state.js'
 import {
-  applyDefendDamageReduction,
   generateBossTelegraph,
   getBossAttackDamage,
 } from './boss.js'
@@ -35,7 +34,6 @@ import { playerHpForLayer } from './layerConfig.js'
 
 const MAX_SELECTED_CARDS = 5
 
-// 执行 DeckState 相关处理。
 function syncDeckState(context: GameContext, deckState: DeckState): GameContext {
   return {
     ...context,
@@ -45,7 +43,6 @@ function syncDeckState(context: GameContext, deckState: DeckState): GameContext 
   }
 }
 
-// 负责 toDeckState 的业务处理。
 function toDeckState(context: GameContext): DeckState {
   return {
     deck: context.deck,
@@ -54,12 +51,10 @@ function toDeckState(context: GameContext): DeckState {
   }
 }
 
-// 获取、计算或校验 PlayerBuffs。
 function getPlayerBuffs(context: GameContext): Buff[] {
   return context.player.buffs ?? []
 }
 
-// 获取、计算或校验 PreviewScore。
 function getPreviewScore(context: GameContext, selectedCards: GameContext['hand']): number {
   if (selectedCards.length === 0) {
     return 0
@@ -76,7 +71,6 @@ function getPreviewScore(context: GameContext, selectedCards: GameContext['hand'
   return rawDamage
 }
 
-// 执行 PlayPreview 相关处理。
 function updatePlayPreview(context: GameContext, selectedCards: GameContext['hand']): GameContext {
   if (selectedCards.length === 0) {
     return {
@@ -102,7 +96,6 @@ function updatePlayPreview(context: GameContext, selectedCards: GameContext['han
   }
 }
 
-// 初始化一局 PvE 的牌堆、手牌、首回合与首个 Boss 意图。
 export function startPveGameSetup(context: GameContext): GameContext {
   const deckState = initDeckState()
   drawCards(deckState, HAND_SIZE)
@@ -119,7 +112,6 @@ export function startPveGameSetup(context: GameContext): GameContext {
   )
 }
 
-// 执行 SelectedCards 相关处理。
 function toggleSelectedCards(
   context: GameContext,
   cardId: string,
@@ -193,16 +185,13 @@ export function playConfirm(context: GameContext): GameContext {
   }
 }
 
-// 获取、计算或校验 Complete。
 export function resolveComplete(context: GameContext): GameContext {
   if (context.phase !== RoundPhase.RESOLVE) {
     throw new Error('Can only resolve after entering RESOLVE phase')
   }
 
-  const damage = applyDefendDamageReduction(
-    context.play.score,
-    context.bossRound.isDefending,
-  )
+  // play.score is finalized by playConfirm; resolve must not apply DEFEND or other modifiers again.
+  const damage = context.play.score
   const totalDamageDealt = context.totalDamageDealt + damage
 
   const bossHp = Math.max(0, context.boss.hp - damage)
@@ -404,7 +393,6 @@ export function resolveAnimationComplete(context: GameContext): GameContext | nu
   return advanceRound(afterAttack)
 }
 
-// 执行 SkillEnergy 相关处理。
 function spendSkillEnergy(context: GameContext): GameContext['roundState']['skills']['energy'] {
   if (context.roundState.skills.energy.energy < 1) {
     throw new Error('Not enough energy')
@@ -415,12 +403,10 @@ function spendSkillEnergy(context: GameContext): GameContext['roundState']['skil
   }
 }
 
-// 获取、计算或校验 ValidTargetElement。
 function isValidTargetElement(element: unknown): element is Element {
   return element === Element.WATER || element === Element.FIRE || element === Element.GRASS
 }
 
-// 获取、计算或校验 ValidTargetRank。
 function isValidTargetRank(rank: unknown): rank is number {
   return typeof rank === 'number' && Number.isInteger(rank) && rank >= 1 && rank <= 13
 }
@@ -530,7 +516,6 @@ export function useSkill(
   throw new Error(`Unknown skill: ${skillId}`)
 }
 
-// 执行 Shuffle 相关处理。
 export function enterShuffle(context: GameContext): GameContext {
   if (context.phase !== RoundPhase.SKILL) {
     throw new Error('Can only enter shuffle from SKILL phase')
@@ -551,7 +536,6 @@ export function enterShuffle(context: GameContext): GameContext {
   }
 }
 
-// 执行 Cards 相关处理。
 export function shuffleCards(context: GameContext): GameContext {
   if (context.phase !== RoundPhase.SHUFFLE) {
     throw new Error('Can only shuffle cards during SHUFFLE phase')
@@ -584,7 +568,6 @@ export function shuffleCards(context: GameContext): GameContext {
   }
 }
 
-// 执行 Play 相关处理。
 export function enterPlay(context: GameContext): GameContext {
   if (context.phase !== RoundPhase.SKILL && context.phase !== RoundPhase.SHUFFLE) {
     throw new Error('Can only enter play from SKILL or SHUFFLE phase')
@@ -601,7 +584,6 @@ export function enterPlay(context: GameContext): GameContext {
   }
 }
 
-// 执行 Buffs 相关处理。
 function mergeBuffs(existing: Buff[], incoming: Buff[]): Buff[] {
   const merged = [...existing]
   for (const buff of incoming) {

@@ -36,7 +36,6 @@ const LOSE_OVERLAY_DELAY_MS = 400
 const SHIELD_PULSE_MS = 1500
 const MAX_SELECT = 5
 
-// 渲染 GamePage 界面组件。
 export default function GamePage() {
   const navigate = useNavigate()
   const { user, fetchMe } = useAuth()
@@ -95,7 +94,6 @@ export default function GamePage() {
   } = useGameAudio()
   const audioUnlockedRef = useRef(false)
 
-  // 负责 ensureAudioUnlocked 的业务处理。
   const ensureAudioUnlocked = useCallback(() => {
     if (audioUnlockedRef.current) return
     audioUnlockedRef.current = true
@@ -216,7 +214,6 @@ export default function GamePage() {
   useEffect(() => {
     const gameSocket = createGameSocket()
 
-    // 清理或重置 SessionPresentation 相关状态。
     function resetSessionPresentation() {
       setTotalScore(0)
       setLastPlayScore(0)
@@ -354,7 +351,6 @@ export default function GamePage() {
     }
   }
 
-  // 清理或重置 HitFallbackTimer 相关状态。
   function clearHitFallbackTimer() {
     if (hitFallbackTimerRef.current) {
       clearTimeout(hitFallbackTimerRef.current)
@@ -362,7 +358,6 @@ export default function GamePage() {
     }
   }
 
-  // 清理或重置 PostPlayerAttackTimer 相关状态。
   function clearPostPlayerAttackTimer() {
     if (postPlayerAttackTimerRef.current) {
       clearTimeout(postPlayerAttackTimerRef.current)
@@ -370,7 +365,6 @@ export default function GamePage() {
     }
   }
 
-  // 清理或重置 WinRevealFallback 相关状态。
   function clearWinRevealFallback() {
     if (winRevealFallbackRef.current) {
       clearTimeout(winRevealFallbackRef.current)
@@ -378,7 +372,6 @@ export default function GamePage() {
     }
   }
 
-  // 清理或重置 BattleBannerTimer 相关状态。
   function clearBattleBannerTimer() {
     if (battleBannerTimerRef.current) {
       clearTimeout(battleBannerTimerRef.current)
@@ -386,7 +379,6 @@ export default function GamePage() {
     }
   }
 
-  // 清理或重置 AttackEffectTimer 相关状态。
   function clearAttackEffectTimer() {
     if (attackEffectTimerRef.current) {
       clearTimeout(attackEffectTimerRef.current)
@@ -394,7 +386,6 @@ export default function GamePage() {
     }
   }
 
-  // 清理或重置 PlayerDamageFloatTimer 相关状态。
   function clearPlayerDamageFloatTimer() {
     if (playerDamageFloatTimerRef.current) {
       clearTimeout(playerDamageFloatTimerRef.current)
@@ -402,7 +393,6 @@ export default function GamePage() {
     }
   }
 
-  // 清理或重置 BossAttackUxFlushRetry 相关状态。
   function clearBossAttackUxFlushRetry() {
     if (bossAttackUxFlushRetryRef.current) {
       clearTimeout(bossAttackUxFlushRetryRef.current)
@@ -410,7 +400,6 @@ export default function GamePage() {
     }
   }
 
-  // 清理或重置 ShieldPulseTimer 相关状态。
   function clearShieldPulseTimer() {
     if (shieldPulseTimerRef.current) {
       clearTimeout(shieldPulseTimerRef.current)
@@ -418,7 +407,6 @@ export default function GamePage() {
     }
   }
 
-  // 负责 beginBossAttackHpHold 的业务处理。
   function beginBossAttackHpHold() {
     bossAttackUxFlushedRef.current = false
     holdHpSyncDuringBossAttackRef.current = true
@@ -427,7 +415,6 @@ export default function GamePage() {
     setLoseOverlayUnlocked(false)
   }
 
-  // 负责 flushBossAttackPresentation 的业务处理。
   function flushBossAttackPresentation() {
     if (bossAttackUxFlushedRef.current) return
     bossAttackUxFlushedRef.current = true
@@ -462,7 +449,6 @@ export default function GamePage() {
     }
   }
 
-  // 负责 tryFlushBossAttackUx 的业务处理。
   function tryFlushBossAttackUx(): boolean {
     if (bossAttackUxFlushedRef.current) return true
     if (!holdHpSyncDuringBossAttackRef.current) return false
@@ -485,7 +471,6 @@ export default function GamePage() {
     return true
   }
 
-  // 负责 requestBossAttackUxFlush 的业务处理。
   function requestBossAttackUxFlush() {
     if (tryFlushBossAttackUx()) return
 
@@ -500,7 +485,6 @@ export default function GamePage() {
     }, 80)
   }
 
-  // 负责 schedulePostPlayerAttackPresentation 的业务处理。
   function schedulePostPlayerAttackPresentation() {
     clearPostPlayerAttackTimer()
     postPlayerAttackFlushedRef.current = false
@@ -531,12 +515,10 @@ export default function GamePage() {
     }, ATTACK_EFFECT_VISIBLE_MS)
   }
 
-  // 负责 snapshotPlayedCards 的业务处理。
   function snapshotPlayedCards(cards: Card[]) {
     lastPlayedCardsRef.current = [...cards]
   }
 
-  // 负责 triggerPlayerAttackPresentation 的业务处理。
   function triggerPlayerAttackPresentation(round: number, score: number) {
     const effectKey = `r${round}-fx-${score}`
     if (attackEffectShownRef.current.has(effectKey)) return
@@ -560,7 +542,6 @@ export default function GamePage() {
     }, ATTACK_EFFECT_VISIBLE_MS)
   }
 
-  // 负责 showBattleBanner 的业务处理。
   function showBattleBanner(next: PresentationBattlePhase) {
     setBattlePhase(next)
     clearBattleBannerTimer()
@@ -570,12 +551,10 @@ export default function GamePage() {
     }, BATTLE_BANNER_MS)
   }
 
-  // 获取、计算或校验 BossAttackKey。
   function getBossAttackKey(state: GameState): string {
     return `${state.round}:BOSS_ATTACK`
   }
 
-  // 执行 ResolveAnimationComplete 相关处理。
   function emitResolveAnimationComplete() {
     const gs = gameStateRef.current
     if (!socket || !gs) return
@@ -588,7 +567,6 @@ export default function GamePage() {
     socket.emit('resolveAnimationComplete')
   }
 
-  // 负责 scheduleBossAttackResolveFallback 的业务处理。
   function scheduleBossAttackResolveFallback() {
     const gs = gameStateRef.current
     if (!gs || gs.phase !== 'BOSS_ATTACK' || gs.battleResult !== 'ONGOING') return
@@ -603,7 +581,6 @@ export default function GamePage() {
     }, BOSS_ATTACK_VIDEO_FALLBACK_MS)
   }
 
-  // 负责 beginBossAttackPresentation 的业务处理。
   function beginBossAttackPresentation() {
     const gs = gameStateRef.current
     if (!gs) return
@@ -619,7 +596,6 @@ export default function GamePage() {
     scheduleBossAttackResolveFallback()
   }
 
-  // 处理 BossAttackEnded 事件。
   function handleBossAttackEnded() {
     clearResolveTimer()
     emitResolveAnimationComplete()
@@ -627,7 +603,6 @@ export default function GamePage() {
     requestBossAttackUxFlush()
   }
 
-  // 处理 BossDefeatedAnimationEnd 事件。
   function handleBossDefeatedAnimationEnd() {
     clearWinRevealFallback()
     setWinRevealUnlocked(true)
@@ -792,7 +767,6 @@ export default function GamePage() {
     const { phase, roundState, play } = gameState
     if (roundState.shuffle.remaining <= 0) return
 
-    // 执行 ShuffleWithSelection 相关处理。
     function emitShuffleWithSelection() {
       const serverIds = new Set(play.selectedCards.map((c) => c.id))
       const localIds = new Set(selectedCardIds)
@@ -828,7 +802,6 @@ export default function GamePage() {
     }
   }
 
-  // 处理 UseShield 事件。
   function handleUseShield() {
     if (!socket || gameState?.phase !== 'SKILL') return
     ensureAudioUnlocked()
@@ -836,7 +809,6 @@ export default function GamePage() {
     socket.emit('useSkill', { skillId: 'shield' })
   }
 
-  // 处理 UseChangeColor 事件。
   function handleUseChangeColor(cardId: string, targetElement: Element) {
     if (!socket || gameState?.phase !== 'SKILL' || !cardId) return
     ensureAudioUnlocked()
@@ -845,7 +817,6 @@ export default function GamePage() {
     socket.emit('useSkill', { skillId: 'changeColor', cardId, targetElement })
   }
 
-  // 处理 UseChangeRank 事件。
   function handleUseChangeRank(cardId: string, targetRank: number) {
     if (!socket || gameState?.phase !== 'SKILL' || !cardId) return
     if (targetRank < 1 || targetRank > 13) return
@@ -855,12 +826,10 @@ export default function GamePage() {
     socket.emit('useSkill', { skillId: 'changeRank', cardId, targetRank })
   }
 
-  // 处理 RestartGame 事件。
   function handleRestartGame() {
     setRestartNonce((value) => value + 1)
   }
 
-  // 处理 ExitToLobby 事件。
   async function handleExitToLobby() {
     await fetchMe()
     navigate('/lobby')

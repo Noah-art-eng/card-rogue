@@ -1,6 +1,5 @@
 import type { IUser } from '../models/User.js'
 
-// 负责 toPublicUser 的业务处理。
 export function toPublicUser(user: IUser) {
   return {
     id: user._id,

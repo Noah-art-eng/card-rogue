@@ -84,7 +84,6 @@ const CHARACTER_SLOT_NUDGE_Y: Readonly<
   4: { active: 'clamp(1.5rem, 3.5dvh, 2.75rem)' },
 };
 
-// 负责 characterSlotNudgeY 的业务处理。
 function characterSlotNudgeY(
   index: number,
   slot: 'active' | 'prev' | 'next' | 'hidden',
@@ -93,7 +92,6 @@ function characterSlotNudgeY(
   return CHARACTER_SLOT_NUDGE_Y[index]?.[slot] ?? '0';
 }
 
-// 获取、计算或校验 。
 function validate(email: string, password: string): string | null {
   if (!email.trim()) return 'Email is required.'
   if (!EMAIL_REGEX.test(email)) return 'Enter a valid email address.'
@@ -101,7 +99,6 @@ function validate(email: string, password: string): string | null {
   return null
 }
 
-// 获取、计算或校验 LoginErrorMessage。
 function getLoginErrorMessage(error: unknown): string {
   if (axios.isAxiosError(error) && typeof error.response?.data?.message === 'string') {
     return error.response.data.message
@@ -179,7 +176,6 @@ function getCarouselLayout(index: number, activeIndex: number, total: number): {
   };
 }
 
-// 渲染 LoginPage 界面组件。
 export default function LoginPage() {
   const { isAuthenticated, setAuth } = useAuth()
   const navigate = useNavigate()
@@ -191,17 +187,14 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [activeIndex, setActiveIndex] = useState(0)
 
-  // 负责 goTo 的业务处理。
   const goTo = useCallback((idx: number) => {
     setActiveIndex(((idx % CAROUSEL_TOTAL) + CAROUSEL_TOTAL) % CAROUSEL_TOTAL)
   }, [])
 
-  // 负责 goPrev 的业务处理。
   const goPrev = useCallback(() => {
     setActiveIndex((i) => (i - 1 + CAROUSEL_TOTAL) % CAROUSEL_TOTAL)
   }, [])
 
-  // 负责 goNext 的业务处理。
   const goNext = useCallback(() => {
     setActiveIndex((i) => (i + 1) % CAROUSEL_TOTAL)
   }, [])
@@ -234,7 +227,6 @@ export default function LoginPage() {
     return <Navigate to="/lobby" replace />
   }
 
-  // 处理 Submit 事件。
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
 

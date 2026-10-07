@@ -10,7 +10,6 @@ const PREFIX = 'p0a-bossvideo'
 
 mkdirSync(OUT, { recursive: true })
 
-// 执行 registerAndEnterGame 对应的浏览器测试辅助操作。
 async function registerAndEnterGame(page) {
   const ts = Date.now()
   const email = `p0a${ts}@test.local`
@@ -40,7 +39,6 @@ async function registerAndEnterGame(page) {
   })
 }
 
-// 执行截图脚本的入口流程。
 async function main() {
   const browser = await chromium.launch({ headless: true })
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } })

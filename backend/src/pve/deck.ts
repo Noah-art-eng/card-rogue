@@ -14,7 +14,6 @@ export interface DeckState {
   hand: Card[]
 }
 
-// 创建或初始化 Card 所需的数据。
 export function createCard(element: Element, rank: number): Card {
   return {
     id: `${element}_${rank}`,
@@ -25,7 +24,7 @@ export function createCard(element: Element, rank: number): Card {
   }
 }
 
-// 负责 changeCardElement 的业务处理。
+// id is a stable card instance identity used by selection and Socket synchronization; transforms keep it unchanged.
 export function changeCardElement(card: Card, targetElement: Element): Card {
   return {
     ...card,
@@ -33,7 +32,6 @@ export function changeCardElement(card: Card, targetElement: Element): Card {
   }
 }
 
-// 负责 changeCardRank 的业务处理。
 export function changeCardRank(card: Card, targetRank: number): Card {
   return {
     ...card,
@@ -43,7 +41,6 @@ export function changeCardRank(card: Card, targetRank: number): Card {
   }
 }
 
-// 创建或初始化 FullDeck 所需的数据。
 export function createFullDeck(): Card[] {
   const deck: Card[] = []
 
@@ -68,7 +65,6 @@ export function shuffle<T>(items: T[]): T[] {
   return shuffled
 }
 
-// 创建或初始化 DeckState 所需的数据。
 export function initDeckState(): DeckState {
   const deck = shuffle(createFullDeck())
 
@@ -79,7 +75,6 @@ export function initDeckState(): DeckState {
   }
 }
 
-// 负责 recycleDiscardPile 的业务处理。
 function recycleDiscardPile(state: DeckState): void {
   if (state.discardPile.length === 0) {
     return
@@ -105,7 +100,6 @@ export function drawCards(state: DeckState, count: number): void {
   }
 }
 
-// 执行 HandCards 相关处理。
 export function shuffleHandCards(state: DeckState, cardsToShuffle: Card[]): void {
   const shuffleIds = new Set(cardsToShuffle.map((card) => card.id))
 

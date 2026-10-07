@@ -9,7 +9,6 @@ const BASE = process.env.BASE_URL ?? 'http://localhost:5173'
 
 mkdirSync(OUT, { recursive: true })
 
-// 执行 registerAndEnterGame 对应的浏览器测试辅助操作。
 async function registerAndEnterGame(page) {
   const ts = Date.now()
   const email = `fix${ts}@test.local`
@@ -38,7 +37,6 @@ async function registerAndEnterGame(page) {
   await page.waitForTimeout(2500)
 }
 
-// 执行 readGameState 对应的浏览器测试辅助操作。
 async function readGameState(page) {
   return page.evaluate(() => {
     const pre = document.querySelector('.game-debug pre')
@@ -51,7 +49,6 @@ async function readGameState(page) {
   })
 }
 
-// 执行 getBossVideoSrc 对应的浏览器测试辅助操作。
 async function getBossVideoSrc(page) {
   return page.evaluate(() => {
     const v = document.querySelector('.boss-video-display__video')
@@ -60,7 +57,6 @@ async function getBossVideoSrc(page) {
   })
 }
 
-// 执行 tryUseShield 对应的浏览器测试辅助操作。
 async function tryUseShield(page) {
   const slot = page.locator('.skillbar__slot').filter({ hasText: 'Shield' })
   const disabled = await slot.evaluate((el) => el.classList.contains('skillbar__slot--disabled')).catch(() => true)
@@ -70,13 +66,11 @@ async function tryUseShield(page) {
   }
 }
 
-// 执行 enterPlayPhase 对应的浏览器测试辅助操作。
 async function enterPlayPhase(page) {
   await page.getByRole('button', { name: 'Play & Attack' }).click()
   await page.waitForTimeout(600)
 }
 
-// 执行 selectMaxCards 对应的浏览器测试辅助操作。
 async function selectMaxCards(page, max = 5) {
   const cards = page.locator('.hand-card:not(.hand-card--disabled)')
   const count = Math.min(await cards.count(), max)
@@ -87,12 +81,10 @@ async function selectMaxCards(page, max = 5) {
   return count
 }
 
-// 执行 confirmPlayAttack 对应的浏览器测试辅助操作。
 async function confirmPlayAttack(page) {
   await page.getByRole('button', { name: 'Play & Attack' }).click()
 }
 
-// 执行 waitForSkillPhase 对应的浏览器测试辅助操作。
 async function waitForSkillPhase(page, timeoutMs = 28000) {
   await page
     .waitForFunction(
@@ -113,7 +105,6 @@ async function waitForSkillPhase(page, timeoutMs = 28000) {
   await page.waitForTimeout(700)
 }
 
-// 执行 playOneRound 对应的浏览器测试辅助操作。
 async function playOneRound(page) {
   const state = await readGameState(page)
   if (!state || state.battleResult !== 'ONGOING') return state
@@ -151,7 +142,6 @@ async function playOneRound(page) {
   return readGameState(page)
 }
 
-// 执行 playUntilWin 对应的浏览器测试辅助操作。
 async function playUntilWin(page, maxRounds = 60) {
   for (let i = 0; i < maxRounds; i++) {
     const state = await readGameState(page)
@@ -162,7 +152,6 @@ async function playUntilWin(page, maxRounds = 60) {
   return (await readGameState(page))?.battleResult === 'WIN'
 }
 
-// 执行截图脚本的入口流程。
 async function main() {
   const browser = await chromium.launch({
     headless: true,

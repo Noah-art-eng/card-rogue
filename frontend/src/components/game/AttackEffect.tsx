@@ -42,7 +42,6 @@ const SPRITE_EFFECTS: Record<
   },
 }
 
-// 渲染 SpriteSheetEffect 界面组件。
 function SpriteSheetEffect({ mode }: { mode: AttackEffectMode }) {
   const sprite = SPRITE_EFFECTS[mode] ?? SPRITE_EFFECTS.normal
   const [frame, setFrame] = useState(0)
@@ -89,7 +88,6 @@ interface AttackEffectProps {
   visible: boolean
 }
 
-// 渲染 AttackEffect 界面组件。
 export default function AttackEffect({ mode, visible }: AttackEffectProps) {
   if (!visible) return null
 

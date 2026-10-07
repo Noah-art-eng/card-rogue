@@ -15,7 +15,6 @@ const STORAGE_MUTED_SCHEMA = 'cg-game-audio-muted-schema'
 const MUTED_SCHEMA_VERSION = '2'
 const MIN_SFX_INTERVAL_MS = 45
 
-// 负责 migrateMutedPreference 的业务处理。
 function migrateMutedPreference(): void {
   try {
     if (localStorage.getItem(STORAGE_MUTED_SCHEMA) === MUTED_SCHEMA_VERSION) return
@@ -27,7 +26,6 @@ function migrateMutedPreference(): void {
   }
 }
 
-// 获取、计算或校验 MutedPreference。
 function readMutedPreference(): boolean {
   try {
     migrateMutedPreference()
@@ -37,7 +35,6 @@ function readMutedPreference(): boolean {
   }
 }
 
-// 获取、计算或校验 VolumePreference。
 function readVolumePreference(): number {
   try {
     const raw = localStorage.getItem(STORAGE_VOLUME)
@@ -49,7 +46,6 @@ function readVolumePreference(): number {
   }
 }
 
-// 负责 persistUserMutedPreference 的业务处理。
 function persistUserMutedPreference(muted: boolean): void {
   try {
     if (muted) {
@@ -88,7 +84,6 @@ class GameAudioManager {
     this.bgm.volume = this.bgmVolume
   }
 
-  // 负责 subscribe 的业务处理。
   subscribe(listener: (muted: boolean) => void): () => void {
     this.listeners.add(listener)
     return () => {
@@ -96,29 +91,24 @@ class GameAudioManager {
     }
   }
 
-  // 负责 notifyMutedChange 的业务处理。
   private notifyMutedChange(): void {
     for (const listener of this.listeners) {
       listener(this.muted)
     }
   }
 
-  // 获取、计算或校验 Muted。
   isMuted(): boolean {
     return this.muted
   }
 
-  // 获取、计算或校验 Unlocked。
   isUnlocked(): boolean {
     return this.unlocked
   }
 
-  // 获取、计算或校验 Volume。
   getVolume(): number {
     return this.sfxVolume
   }
 
-  // 执行 Volume 相关处理。
   setVolume(volume: number): void {
     this.sfxVolume = Math.min(1, Math.max(0, volume))
     try {
@@ -145,13 +135,11 @@ class GameAudioManager {
     persistUserMutedPreference(muted)
   }
 
-  // 执行 Muted 相关处理。
   toggleMuted(): boolean {
     this.setMuted(!this.muted)
     return this.muted
   }
 
-  // 负责 unlock 的业务处理。
   async unlock(): Promise<void> {
     if (this.unlocked) {
       if (!this.muted) {
@@ -177,7 +165,6 @@ class GameAudioManager {
     }
   }
 
-  // 执行 Sfx 相关处理。
   private playSfx(key: SfxKey): void {
     if (this.muted) return
 
@@ -192,32 +179,26 @@ class GameAudioManager {
     void audio.play().catch(() => {})
   }
 
-  // 执行 Select 相关处理。
   playSelect(): void {
     this.playSfx('select')
   }
 
-  // 执行 Discard 相关处理。
   playDiscard(): void {
     this.playSfx('discard')
   }
 
-  // 执行 Play 相关处理。
   playPlay(): void {
     this.playSfx('play')
   }
 
-  // 执行 SkillShield 相关处理。
   playSkillShield(): void {
     this.playSfx('skillShield')
   }
 
-  // 执行 SkillChange 相关处理。
   playSkillChange(): void {
     this.playSfx('skillChange')
   }
 
-  // 执行 Bgm 相关处理。
   playBgm(): Promise<void> {
     if (this.muted || !this.unlocked) {
       return Promise.resolve()
@@ -231,7 +212,6 @@ class GameAudioManager {
     return this.bgm.play().catch(() => {})
   }
 
-  // 负责 stopBgm 的业务处理。
   stopBgm(): void {
     this.bgm.pause()
     this.bgm.currentTime = 0

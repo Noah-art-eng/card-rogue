@@ -5,7 +5,6 @@ export interface LoginInput {
   password: string
 }
 
-// 获取、计算或校验 LoginInput。
 export function validateLoginInput(
   body: unknown,
 ): { valid: true; data: LoginInput } | { valid: false; message: string } {

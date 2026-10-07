@@ -8,7 +8,6 @@ import { detectHandType } from './handEvaluator.js'
 import { createTestBoss, defaultTestBattle, defaultTestBossRound, defaultRoundState } from './testBoss.js'
 import type { GameContext } from '../types/state.js'
 
-// 创建或初始化 ChangeColorContext 所需的数据。
 function createChangeColorContext(overrides: Partial<GameContext> = {}): GameContext {
   return {
     ...defaultTestBattle,
@@ -44,8 +43,11 @@ const changed = useSkill(createChangeColorContext(), 'changeColor', {
 assert.equal(changed.roundState.skills.energy.energy, 2, 'changeColor should cost 1 energy')
 
 const changedCard = changed.hand.find((card) => card.rank === 11)
-assert.equal(changedCard?.element, Element.WATER, 'card element should change to WATER')
-assert.equal(changedCard?.id, 'WATER_11', 'card id should be regenerated to match new element')
+assert.equal(changedCard?.id, 'FIRE_11', 'changeColor should preserve the stable card instance id')
+assert.equal(changedCard?.element, Element.WATER, 'changeColor should update the card element')
+assert.equal(changedCard?.rank, 11, 'changeColor should preserve rank')
+assert.equal(changedCard?.displayRank, 'J', 'changeColor should preserve display rank')
+assert.equal(changedCard?.chipValue, 11, 'changeColor should preserve chip value')
 
 const flushCards = changed.hand.filter((card) =>
   [2, 5, 7, 9, 11].includes(card.rank),

@@ -31,17 +31,12 @@ export function buildMatchPayload(context: GameContext) {
   }
 }
 
-// 原子更新用户的总局数、胜场、胜率与最高伤害统计。
+// Derive winRate in the same update as its counters so concurrent archival cannot use stale totals.
 async function updateUserStats(
   userId: string,
   isWin: boolean,
   totalDamageDealt: number,
 ): Promise<void> {
-  const inc: Record<string, number> = { 'stats.totalGames': 1 }
-  if (isWin) {
-    inc['stats.totalWins'] = 1
-  }
-
   const updated = await User.findByIdAndUpdate(
     userId,
     [

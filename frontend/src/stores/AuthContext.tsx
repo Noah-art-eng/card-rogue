@@ -26,7 +26,6 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | null>(null)
 
-// 渲染 AuthProvider 界面组件。
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setTokenState] = useState<string | null>(() => getToken())
   const [user, setUser] = useState<User | null>(null)
@@ -35,7 +34,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   userRef.current = user
 
-  // 负责 logout 的业务处理。
   const logout = useCallback(() => {
     clearToken()
     setTokenState(null)
@@ -43,7 +41,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(false)
   }, [])
 
-  // 负责 setAuth 的业务处理。
   const setAuth = useCallback((nextToken: string, nextUser: User) => {
     setToken(nextToken)
     setTokenState(nextToken)
@@ -51,12 +48,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(false)
   }, [])
 
-  // 负责 updateUser 的业务处理。
   const updateUser = useCallback((nextUser: User) => {
     setUser(nextUser)
   }, [])
 
-  // 负责 fetchMe 的业务处理。
   const fetchMe = useCallback(async () => {
     const storedToken = getToken()
 
@@ -110,7 +105,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
-// 管理 Auth 相关的自定义 Hook 状态与副作用。
 export function useAuth(): AuthContextValue {
   const context = useContext(AuthContext)
 

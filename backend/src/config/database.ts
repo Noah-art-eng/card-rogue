@@ -2,7 +2,6 @@ import mongoose from 'mongoose'
 
 import { User } from '../models/User.js'
 
-// 负责 repairGoogleIdIndex 的业务处理。
 async function repairGoogleIdIndex(): Promise<void> {
   try {
     await User.collection.dropIndex('googleId_1')

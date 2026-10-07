@@ -2,7 +2,6 @@ import { io, type Socket } from 'socket.io-client'
 
 import { getToken } from '../stores/authStorage'
 
-// 创建或初始化 GameSocket 所需的数据。
 export function createGameSocket(): Socket {
   const socketOptions = {
     auth: {

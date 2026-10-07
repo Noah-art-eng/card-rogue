@@ -3,7 +3,6 @@ interface LoadingScreenProps {
   fullScreen?: boolean
 }
 
-// 渲染 LoadingScreen 界面组件。
 export default function LoadingScreen({
   message = 'Preparing battle…',
   fullScreen = true,

@@ -23,7 +23,6 @@ const LOBBY_SEASON_ICON_URL = '/lobby/season-icon.PNG'
 const LOBBY_BACKGROUND_VIDEO_URL = '/lobby/lobbyBackground.mp4'
 const SEASON_END_MS = new Date('2026-09-01T00:00:00Z').getTime()
 
-// 获取、计算或校验 SeasonCountdown。
 function formatSeasonCountdown(msRemaining: number): string | null {
   if (msRemaining <= 0) return null
   const totalMinutes = Math.floor(msRemaining / 60_000)
@@ -42,7 +41,6 @@ interface RecentMatchRow {
   isWin: boolean
 }
 
-// 获取、计算或校验 MatchEndedRelative。
 function formatMatchEndedRelative(endedAtInput: string | null | undefined): string {
   if (endedAtInput == null || endedAtInput === '') return ''
   const d = new Date(endedAtInput)
@@ -59,7 +57,6 @@ function formatMatchEndedRelative(endedAtInput: string | null | undefined): stri
   const hr = Math.floor(min / 60)
   if (hr < 24) return hr === 1 ? '1 hour ago' : `${hr} hours ago`
 
-  // 负责 sod 的业务处理。
   const sod = (t: Date) => new Date(t.getFullYear(), t.getMonth(), t.getDate()).getTime()
   const calendarDays = Math.round((sod(now) - sod(d)) / 86_400_000)
   if (calendarDays === 1) return 'Yesterday'
@@ -67,7 +64,6 @@ function formatMatchEndedRelative(endedAtInput: string | null | undefined): stri
   return `${Math.max(1, Math.floor(hr / 24))} days ago`
 }
 
-// 渲染 LobbyPage 界面组件。
 export default function LobbyPage() {
   const { user, updateUser } = useAuth()
   const navigate = useNavigate()
@@ -88,13 +84,11 @@ export default function LobbyPage() {
   const displayNameCaps = displayName.toUpperCase()
   const hasAvatarImage = hasCustomAvatar(user?.avatar)
 
-  // 处理 AvatarPick 事件。
   const handleAvatarPick = useCallback(() => {
     if (avatarUploading) return
     avatarInputRef.current?.click()
   }, [avatarUploading])
 
-  // 处理 AvatarChange 事件。
   const handleAvatarChange = useCallback(
     async (event: ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0]
@@ -136,7 +130,6 @@ export default function LobbyPage() {
   useEffect(() => {
     let timer: ReturnType<typeof setInterval> | null = null
 
-    // 负责 tick 的业务处理。
     function tick() {
       const next = formatSeasonCountdown(SEASON_END_MS - Date.now())
       if (next === null) {
@@ -160,7 +153,6 @@ export default function LobbyPage() {
   useEffect(() => {
     let cancelled = false
 
-    // 获取、计算或校验 Recent。
     async function loadRecent() {
       if (!user) {
         if (!cancelled) {
@@ -215,7 +207,6 @@ export default function LobbyPage() {
   const soloCardGlow =
     'shadow-[0_0_36px_rgba(139,92,246,0.32),0_10px_36px_rgba(0,0,0,0.45)]'
 
-  // 处理 StartSolo 事件。
   const handleStartSolo = useCallback(async () => {
     if (startingGame) return
     setStartingGame(true)

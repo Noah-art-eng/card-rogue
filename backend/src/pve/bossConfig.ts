@@ -87,7 +87,6 @@ export const BOSS_LAYER_CONFIGS: Record<number, BossLayerConfig> = {
   },
 }
 
-// 创建或初始化 BossForLayer 所需的数据。
 export function createBossForLayer(layer: number): BossState {
   const rounded = Math.max(1, Math.floor(layer))
 
@@ -107,6 +106,7 @@ export function createBossForLayer(layer: number): BossState {
     }
   }
 
+  // MAX_LAYER bounds static configs only; Rogue progression continues with procedurally scaled bosses.
   const hp = Math.round(1760 * Math.pow(1.06, rounded - 10))
   const atk = 23 + (rounded - 10)
   const elements = [Element.WATER, Element.FIRE, Element.GRASS] as const

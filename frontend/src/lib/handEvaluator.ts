@@ -42,12 +42,10 @@ function countRanks(cards: Card[]): Map<number, number> {
   return counts
 }
 
-// 获取、计算或校验 SameElement。
 function isSameElement(cards: Card[]): boolean {
   return cards.every((c) => c.element === cards[0].element)
 }
 
-// 获取、计算或校验 Straight。
 function isStraight(cards: Card[]): boolean {
   if (cards.length < 5) return false
   const ranks = [...new Set(cards.map((c) => c.rank))].sort((a, b) => a - b)
@@ -57,7 +55,6 @@ function isStraight(cards: Card[]): boolean {
   return true
 }
 
-// 获取、计算或校验 HandType。
 export function detectHandType(cards: Card[]): HandType {
   if (cards.length === 0) return 'HIGH_CARD'
 

@@ -9,7 +9,6 @@ interface GameOverlayProps {
   onExitToLobby: () => void
 }
 
-// 渲染 GameOverlay 界面组件。
 export default function GameOverlay({
   battleResult,
   layer,

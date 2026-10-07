@@ -79,9 +79,16 @@ assert.equal(l10.attackPerRound, 23)
 assert.equal(l10.chargeAttack, 50)        // floor(23 * 2.2)
 assert.deepEqual(l10.intentWeights, WEIGHTS_LATE)
 
-// ---- Clamp overflow ----
-const overflow = createBossForLayer(99)
-assert.equal(overflow.id, 'boss-layer-10', 'layer > 10 should clamp to layer 10')
+// ---- Procedural bosses beyond the static layer-10 configuration ----
+const l11 = createBossForLayer(11)
+assert.equal(l11.id, 'boss-layer-11')
+assert.equal(l11.name, 'World Ender 11')
+assert.equal(l11.maxHp, 1866)
+assert.equal(l11.attackPerRound, 24)
+
+const l99 = createBossForLayer(99)
+assert.equal(l99.id, 'boss-layer-99')
+assert.notEqual(l99.id, 'boss-layer-10', 'procedural layers should not clamp to static layer 10')
 
 // ---- pickBossIntent boundary checks for WEIGHTS_EARLY (80/15/5, total 100) ----
 const w = WEIGHTS_EARLY

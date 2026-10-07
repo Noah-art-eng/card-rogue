@@ -14,7 +14,6 @@ const EPIC_HANDS: HandType[] = [
   HandType.STRAIGHT_FLUSH,
 ]
 
-// 获取、计算或校验 HandTier。
 function getHandTier(handType: HandType): 'common' | 'rare' | 'epic' {
   if (EPIC_HANDS.includes(handType)) return 'epic'
   if (RARE_HANDS.includes(handType)) return 'rare'

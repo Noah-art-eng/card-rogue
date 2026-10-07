@@ -15,11 +15,11 @@ import {
   generateBossTelegraph,
 } from './boss.js'
 import { createCard } from './deck.js'
-import { Element } from '../types/card.js'
+import { Element, HandType } from '../types/card.js'
 import type { GameContext } from '../types/state.js'
 import { createTestBoss, defaultTestBattle, defaultTestBossRound, defaultRoundState } from './testBoss.js'
+import { calculateDamage } from './damage.js'
 
-// 创建或初始化 BossContext 所需的数据。
 function createBossContext(overrides: Partial<GameContext> = {}): GameContext {
   return {
     ...defaultTestBattle,
@@ -57,18 +57,23 @@ const defendSkill = createBossContext({
   bossRound: defendTelegraph,
 })
 const defendPlay = enterPlay(defendSkill)
+const defendCards = [
+  createCard(Element.FIRE, 13),
+  createCard(Element.WATER, 13),
+]
+const rawDefendDamage = calculateDamage(HandType.PAIR, defendCards)
+assert.equal(rawDefendDamage, 72, 'PAIR should deal 72 damage before DEFEND')
+
 const defendConfirm = confirmPlay({
   ...defendPlay,
   play: {
-    selectedCards: [
-      createCard(Element.FIRE, 13),
-      createCard(Element.WATER, 13),
-    ],
+    selectedCards: defendCards,
     handType: null,
     score: 0,
   },
 })
 
+assert.equal(defendConfirm.play.score, 36, 'DEFEND should halve raw damage before it is committed')
 assert.equal(defendConfirm.boss.hp, 464, 'DEFEND same round confirmPlay should halve damage')
 assert.equal(defendConfirm.bossRound.isDefending, true, 'isDefending should remain true until round end')
 
@@ -95,12 +100,12 @@ const defendedResolve = resolveComplete({
     play: {
       selectedCards: [],
       handType: null,
-      score: 72,
+      score: 36,
     },
   }),
 })
 
-assert.equal(defendedResolve.boss.hp, 464, 'DEFEND should halve player damage to boss')
+assert.equal(defendedResolve.boss.hp, 464, 'resolveComplete should use the already-settled play score')
 assert.equal(defendedResolve.bossRound.isDefending, true, 'resolveComplete should not clear isDefending')
 
 const chargeBossAttack = doBossAttackComplete(

@@ -41,7 +41,6 @@ export const HAND_SCORES: Record<HandType, HandScore> = {
   [HandType.HIGH_CARD]: { chips: 5, mult: 1 },
 }
 
-// 负责 rankToDisplayRank 的业务处理。
 export function rankToDisplayRank(rank: number): string {
   switch (rank) {
     case 1:

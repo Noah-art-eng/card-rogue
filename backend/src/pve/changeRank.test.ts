@@ -8,7 +8,6 @@ import { detectHandType } from './handEvaluator.js'
 import { createTestBoss, defaultTestBattle, defaultTestBossRound, defaultRoundState } from './testBoss.js'
 import type { GameContext } from '../types/state.js'
 
-// 创建或初始化 ChangeRankContext 所需的数据。
 function createChangeRankContext(overrides: Partial<GameContext> = {}): GameContext {
   return {
     ...defaultTestBattle,
@@ -45,9 +44,11 @@ assert.equal(changed.roundState.skills.energy.energy, 2, 'changeRank should cost
 
 const changedCard = changed.hand.find((card) => card.element === Element.FIRE && card.rank === 5)
 assert.ok(changedCard, 'card rank should change to 5')
-assert.equal(changedCard?.displayRank, '5', 'displayRank should sync with rank')
-assert.equal(changedCard?.chipValue, 5, 'chipValue should sync with rank')
-assert.equal(changedCard?.id, 'FIRE_5', 'card id should be regenerated to match new rank')
+assert.equal(changedCard?.id, 'FIRE_7', 'changeRank should preserve the stable card instance id')
+assert.equal(changedCard?.element, Element.FIRE, 'changeRank should preserve element')
+assert.equal(changedCard?.rank, 5, 'changeRank should update rank')
+assert.equal(changedCard?.displayRank, '5', 'changeRank should update display rank')
+assert.equal(changedCard?.chipValue, 5, 'changeRank should update chip value')
 
 const pairCards = changed.hand.filter((card) => card.rank === 5)
 assert.equal(detectHandType(pairCards), HandType.PAIR, 'changeRank should enable PAIR detection')

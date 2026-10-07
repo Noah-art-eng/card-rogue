@@ -27,17 +27,14 @@ export function pickBossIntent(
   return BossIntent.DEFEND
 }
 
-// 获取、计算或校验 BossIntent。
 export function rollBossIntent(weights: BossIntentWeights): BossIntent {
   return pickBossIntent(weights, Math.random())
 }
 
-// 获取、计算或校验 ChargeAttack。
 export function calculateChargeAttack(attackPerRound: number): number {
   return Math.floor(attackPerRound * CHARGE_ATTACK_MULTIPLIER)
 }
 
-// 创建或初始化 InitialBossRound 所需的数据。
 export function createInitialBossRound(): BossRoundState {
   return {
     intent: null,
@@ -46,7 +43,6 @@ export function createInitialBossRound(): BossRoundState {
   }
 }
 
-// 创建或初始化 BossRoundState 所需的数据。
 export function buildBossRoundState(intent: BossIntent): BossRoundState {
   return {
     intent,
@@ -55,7 +51,6 @@ export function buildBossRoundState(intent: BossIntent): BossRoundState {
   }
 }
 
-// 创建或初始化 BossTelegraph 所需的数据。
 export function generateBossTelegraph(
   context: GameContext,
   forcedIntent?: BossIntent,
@@ -71,18 +66,6 @@ export function generateBossTelegraph(
   return buildBossRoundState(
     forcedIntent ?? rollBossIntent(context.boss.intentWeights),
   )
-}
-
-// 执行 DefendDamageReduction 相关处理。
-export function applyDefendDamageReduction(
-  rawDamage: number,
-  isDefending: boolean,
-): number {
-  if (!isDefending) {
-    return rawDamage
-  }
-
-  return Math.floor(rawDamage * 0.5)
 }
 
 // 计算当前 Boss 回合实际造成的攻击伤害。

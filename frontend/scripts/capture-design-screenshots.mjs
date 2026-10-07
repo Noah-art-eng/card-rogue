@@ -5,7 +5,6 @@ import { chromium } from 'playwright'
 const BASE = process.env.PLAYWRIGHT_BASE_URL ?? 'http://localhost:5173'
 const OUT = join(process.cwd(), 'design-screenshots')
 
-// 执行截图脚本的入口流程。
 async function main() {
   await mkdir(OUT, { recursive: true })
 

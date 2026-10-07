@@ -35,7 +35,6 @@ const ELEMENT_ORDER: Record<Element, number> = {
   GRASS: 2,
 }
 
-// 获取、计算或校验 HandFanSpread。
 function readHandFanSpread(): number {
   if (typeof document === 'undefined') return 1
   const root = document.querySelector('.game-handarea')
@@ -45,11 +44,9 @@ function readHandFanSpread(): number {
   return Number.isFinite(parsed) && parsed > 0 ? parsed : 1
 }
 
-// 管理 HandFanSpread 相关的自定义 Hook 状态与副作用。
 function useHandFanSpread(): number {
   const [spread, setSpread] = useState(1)
   useEffect(() => {
-    // 执行  相关处理。
     const update = () => setSpread(readHandFanSpread())
     update()
     window.addEventListener('resize', update)
@@ -58,7 +55,6 @@ function useHandFanSpread(): number {
   return spread
 }
 
-// 负责 sortHandCards 的业务处理。
 function sortHandCards(cards: Card[]): Card[] {
   return [...cards].sort(
     (a, b) =>
@@ -114,12 +110,10 @@ function findNearestCardId(
   return bestId
 }
 
-// 渲染 PlayerDamageFloat 界面组件。
 function PlayerDamageFloat({ value }: { value: number }) {
   return <div className="handarea__player-damage-float">-{value.toLocaleString()}</div>
 }
 
-// 负责 buffAccentColor 的业务处理。
 function buffAccentColor(element?: string): string {
   if (element === 'WATER') return '#4ea8ff'
   if (element === 'FIRE') return '#ff6644'
@@ -127,7 +121,6 @@ function buffAccentColor(element?: string): string {
   return '#f0d060'
 }
 
-// 渲染 BuffTag 界面组件。
 function BuffTag({ buff, onClick }: { buff: EnhancementOption; onClick?: (b: EnhancementOption) => void }) {
   const [showTooltip, setShowTooltip] = useState(false)
   const label = buff.label ?? buff.id
@@ -159,7 +152,6 @@ function BuffTag({ buff, onClick }: { buff: EnhancementOption; onClick?: (b: Enh
   )
 }
 
-// 渲染 BuffPanel 界面组件。
 function BuffPanel({ buffs, onBuffClick }: { buffs: EnhancementOption[]; onBuffClick?: (b: EnhancementOption) => void }) {
   const [open, setOpen] = useState(false)
   return (
@@ -184,7 +176,6 @@ function BuffPanel({ buffs, onBuffClick }: { buffs: EnhancementOption[]; onBuffC
   )
 }
 
-// 渲染 HandArea 界面组件。
 export default function HandArea({
   phase,
   displayedPlayerHp,
@@ -212,7 +203,6 @@ export default function HandArea({
   const currentIdRef = useRef<string | null>(null)
   const [hoveredCardId, setHoveredCardId] = useState<string | null>(null)
 
-  // 负责 updateHover 的业务处理。
   const updateHover = useCallback((id: string | null) => {
     currentIdRef.current = id
     setHoveredCardId((prev) => (prev === id ? prev : id))
@@ -239,7 +229,6 @@ export default function HandArea({
     const pivot = fanPivotRef.current
     if (!pivot) return
 
-    // 处理 Move 事件。
     const onMove = (e: PointerEvent) => {
       const id = findNearestCardId(pivot, e.clientX, e.clientY, currentIdRef.current)
       updateHover(id)

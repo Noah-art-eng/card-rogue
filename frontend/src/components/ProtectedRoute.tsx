@@ -8,7 +8,6 @@ interface ProtectedRouteProps {
   children: React.ReactNode
 }
 
-// 渲染 ProtectedRoute 界面组件。
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const { token, user, isLoading, fetchMe } = useAuth()
 

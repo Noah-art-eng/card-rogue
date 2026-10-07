@@ -28,7 +28,6 @@ function IconUserMini() {
   );
 }
 
-// 渲染 IconMailMini 界面组件。
 function IconMailMini() {
   return (
     <svg className="h-[1.125rem] w-[1.125rem] text-violet-300/90 sm:h-5 sm:w-5" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -43,7 +42,6 @@ function IconMailMini() {
   );
 }
 
-// 渲染 IconLockMini 界面组件。
 function IconLockMini() {
   return (
     <svg className="h-[1.125rem] w-[1.125rem] text-violet-300/90 sm:h-5 sm:w-5" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -59,7 +57,6 @@ function IconLockMini() {
   );
 }
 
-// 获取、计算或校验 。
 function validate(username: string, email: string, password: string): string | null {
   const trimmedUsername = username.trim()
   if (!trimmedUsername) return 'Username is required.'
@@ -73,7 +70,6 @@ function validate(username: string, email: string, password: string): string | n
   return null
 }
 
-// 获取、计算或校验 RegisterErrorMessage。
 function getRegisterErrorMessage(error: unknown): string {
   if (axios.isAxiosError(error) && typeof error.response?.data?.message === 'string') {
     return error.response.data.message
@@ -112,7 +108,6 @@ const BENEFITS = [
   },
 ];
 
-// 渲染 RegisterPage 界面组件。
 export default function RegisterPage() {
   const { isAuthenticated, setAuth } = useAuth()
   const navigate = useNavigate()
@@ -127,7 +122,6 @@ export default function RegisterPage() {
     return <Navigate to="/lobby" replace />
   }
 
-  // 处理 Submit 事件。
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
