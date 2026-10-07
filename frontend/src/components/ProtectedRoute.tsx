@@ -8,6 +8,7 @@ interface ProtectedRouteProps {
   children: React.ReactNode
 }
 
+// 在渲染受保护页面前检查登录状态，未认证时跳转到登录页。
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const { token, user, isLoading, fetchMe } = useAuth()
 
@@ -21,7 +22,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     return <Navigate to="/login" replace />
   }
 
-  // Once we have a user, keep the page mounted even during silent background refresh.
+  // token 已存在但资料尚未恢复时继续显示加载页，避免静默刷新造成页面闪回登录页。
   if (!user) {
     return <LoadingScreen message="Verifying session…" />
   }

@@ -45,6 +45,7 @@ const RANK_ROW_STYLES: Record<
   },
 }
 
+// 排行榜侧栏复用的返回箭头图标。
 function SidebarIconBack({ iconClass }: { iconClass?: string }) {
   const wrap = iconClass ?? 'h-[1.125rem] w-[1.125rem] shrink-0'
   return (
@@ -63,6 +64,7 @@ function SidebarIconBack({ iconClass }: { iconClass?: string }) {
   )
 }
 
+// 排行榜赛季信息旁的时钟图标。
 function LeaderboardClockGlyph({
   className,
   style,
@@ -88,11 +90,13 @@ function LeaderboardClockGlyph({
   )
 }
 
+// 将服务端返回的小数胜率转换为排行榜展示的百分比。
 function formatWinRate(winRate: number | undefined): string {
   if (typeof winRate !== 'number' || Number.isNaN(winRate)) return '—'
   return `${(winRate * 100).toFixed(1)}%`
 }
 
+// 优先使用排行榜中的实际名次；未上榜时用汇总数据保留当前用户的参考名次。
 function resolveMyRank(
   userId: string | undefined,
   rankings: LeaderboardEntry[],
@@ -126,6 +130,7 @@ function resolveMyRank(
   }
 }
 
+// 排行榜页面，加载玩家排名并在列表中突出当前登录用户。
 export default function LeaderboardPage() {
   const { user, isLoading: authLoading } = useAuth()
   const navigate = useNavigate()
@@ -136,6 +141,7 @@ export default function LeaderboardPage() {
   const [leaderboardError, setLeaderboardError] = useState<string | null>(null)
   const [myRank, setMyRank] = useState<MyRankState>({ kind: 'loading' })
 
+  // 按当前登录用户重新拉取榜单，避免旧缓存掩盖最新名次。
   const loadLeaderboard = useCallback(async () => {
     setLeaderboardLoading(true)
     setLeaderboardError(null)

@@ -34,6 +34,7 @@ import { playerHpForLayer } from './layerConfig.js'
 
 const MAX_SELECTED_CARDS = 5
 
+// 把牌堆操作后的手牌、弃牌堆同步回游戏状态。
 function syncDeckState(context: GameContext, deckState: DeckState): GameContext {
   return {
     ...context,
@@ -55,6 +56,7 @@ function getPlayerBuffs(context: GameContext): Buff[] {
   return context.player.buffs ?? []
 }
 
+// 用当前选牌生成给客户端展示的伤害预览。
 function getPreviewScore(context: GameContext, selectedCards: GameContext['hand']): number {
   if (selectedCards.length === 0) {
     return 0
@@ -71,6 +73,7 @@ function getPreviewScore(context: GameContext, selectedCards: GameContext['hand'
   return rawDamage
 }
 
+// 选牌变化时同步刷新回合预览，让客户端能在确认出牌前看到服务端同口径的结果。
 function updatePlayPreview(context: GameContext, selectedCards: GameContext['hand']): GameContext {
   if (selectedCards.length === 0) {
     return {
@@ -96,6 +99,7 @@ function updatePlayPreview(context: GameContext, selectedCards: GameContext['han
   }
 }
 
+// 初始化牌堆、手牌和首回合 Boss 预告。
 export function startPveGameSetup(context: GameContext): GameContext {
   const deckState = initDeckState()
   drawCards(deckState, HAND_SIZE)
@@ -112,6 +116,7 @@ export function startPveGameSetup(context: GameContext): GameContext {
   )
 }
 
+// 在手牌选择和取消选择之间切换指定卡牌。
 function toggleSelectedCards(
   context: GameContext,
   cardId: string,
@@ -185,12 +190,13 @@ export function playConfirm(context: GameContext): GameContext {
   }
 }
 
+// 消费已结算的出牌伤害并更新 Boss 血量和战斗阶段。
 export function resolveComplete(context: GameContext): GameContext {
   if (context.phase !== RoundPhase.RESOLVE) {
     throw new Error('Can only resolve after entering RESOLVE phase')
   }
 
-  // play.score is finalized by playConfirm; resolve must not apply DEFEND or other modifiers again.
+  // play.score 在确认出牌时已是最终伤害，这里再算 DEFEND 会造成双重减伤。
   const damage = context.play.score
   const totalDamageDealt = context.totalDamageDealt + damage
 
@@ -393,6 +399,7 @@ export function resolveAnimationComplete(context: GameContext): GameContext | nu
   return advanceRound(afterAttack)
 }
 
+// 确认能量足够后扣除一次技能消耗。
 function spendSkillEnergy(context: GameContext): GameContext['roundState']['skills']['energy'] {
   if (context.roundState.skills.energy.energy < 1) {
     throw new Error('Not enough energy')
@@ -516,6 +523,7 @@ export function useSkill(
   throw new Error(`Unknown skill: ${skillId}`)
 }
 
+// 把回合切到洗牌阶段并清空旧的出牌预览。
 export function enterShuffle(context: GameContext): GameContext {
   if (context.phase !== RoundPhase.SKILL) {
     throw new Error('Can only enter shuffle from SKILL phase')
@@ -536,6 +544,7 @@ export function enterShuffle(context: GameContext): GameContext {
   }
 }
 
+// 将选中手牌弃置后补牌，并扣除本回合洗牌次数。
 export function shuffleCards(context: GameContext): GameContext {
   if (context.phase !== RoundPhase.SHUFFLE) {
     throw new Error('Can only shuffle cards during SHUFFLE phase')
@@ -568,6 +577,7 @@ export function shuffleCards(context: GameContext): GameContext {
   }
 }
 
+// 进入出牌阶段前清空旧选牌，避免跨阶段残留。
 export function enterPlay(context: GameContext): GameContext {
   if (context.phase !== RoundPhase.SKILL && context.phase !== RoundPhase.SHUFFLE) {
     throw new Error('Can only enter play from SKILL or SHUFFLE phase')
@@ -584,6 +594,7 @@ export function enterPlay(context: GameContext): GameContext {
   }
 }
 
+// 按强化类型合并新旧强化，避免同类强化重复堆叠。
 function mergeBuffs(existing: Buff[], incoming: Buff[]): Buff[] {
   const merged = [...existing]
   for (const buff of incoming) {

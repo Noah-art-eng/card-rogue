@@ -6,6 +6,7 @@ export interface RegisterInput {
   password: string
 }
 
+// 在创建账号前检查用户名、邮箱和密码格式。
 export function validateRegisterInput(
   body: unknown,
 ): { valid: true; data: RegisterInput } | { valid: false; message: string } {

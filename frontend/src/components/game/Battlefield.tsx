@@ -26,6 +26,7 @@ interface BattlefieldProps {
   onBossDefeatedAnimationEnd?: () => void
 }
 
+// 在 Boss 受击时显示本次伤害浮字。
 function DamageFloat({ value }: { value: number }) {
   return (
     <div className="battlefield__damage-float">
@@ -34,12 +35,14 @@ function DamageFloat({ value }: { value: number }) {
   )
 }
 
+// 将 Boss 血量格式化为更易阅读的紧凑数字。
 function formatBossHp(hp: number): string {
   if (hp > 9999) return `${Math.round(hp / 1000)}k`
   if (hp > 999) return `${(hp / 1000).toFixed(1)}k`
   return String(hp)
 }
 
+// 按 Boss 本回合意图显示攻击、防御或蓄力提示。
 function IntentIcon({ intent, attackValue }: { intent: string; attackValue: number }) {
   const isAttack = intent === 'ATTACK'
   const mod =
@@ -65,6 +68,7 @@ function IntentIcon({ intent, attackValue }: { intent: string; attackValue: numb
   )
 }
 
+// 在玩家攻击或 Boss 行动切换时展示短暂的阶段横幅。
 function BattlePhaseBanner({ battlePhase }: { battlePhase: PresentationBattlePhase }) {
   if (!battlePhase) return null
 
@@ -83,6 +87,7 @@ function BattlePhaseBanner({ battlePhase }: { battlePhase: PresentationBattlePha
   )
 }
 
+// 组合 Boss、玩家和战斗提示，呈现当前 PvE 回合状态。
 export default function Battlefield({
   phase,
   boss,

@@ -21,6 +21,7 @@ export const WEIGHTS_LATE: BossIntentWeights = {
   DEFEND: 25,
 }
 
+// 把普通 PvE 外部传入的层数限制在静态关卡范围内。
 export function normalizeLayer(layer?: number): number {
   if (layer === undefined || layer === null || Number.isNaN(layer)) {
     return MIN_LAYER
@@ -39,6 +40,7 @@ export function normalizeLayer(layer?: number): number {
   return rounded
 }
 
+// 根据层数返回玩家进入战斗时的基础生命值。
 export function playerHpForLayer(layer: number): number {
   const rounded = Math.max(1, Math.floor(layer))
 
@@ -62,6 +64,7 @@ export function playerHpForLayer(layer: number): number {
   return 120
 }
 
+// 根据层数切换 Boss 行动的权重档位。
 export function intentWeightsForLayer(layer: number): BossIntentWeights {
   const normalized = normalizeLayer(layer)
 

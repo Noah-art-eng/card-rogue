@@ -1,12 +1,13 @@
 import { getSyncedTotalXp } from './xpStorage'
 
-/** Lobby XP / level — stats baseline + frontend match awards (localStorage). */
 
+// 返回升到下一等级所需的经验值。
 export function xpRequiredToAdvance(level: number): number {
   const L = Math.max(1, Math.floor(Number(level)) || 1)
   return Math.floor(500 * L ** 1.35)
 }
 
+// 把等级和当前进度转换为累计经验，便于统一计算奖励。
 export function computeTotalXp(input: {
   totalGames?: number
   totalWins?: number
@@ -24,6 +25,7 @@ export function computeTotalXp(input: {
   return Math.max(0, Math.floor(base + winRateBonus))
 }
 
+// 将累计经验拆分为当前等级、段内经验和进度比例。
 export function xpProgressFromTotal(totalXp: number) {
   const xp = Math.max(0, Math.floor(Number(totalXp) || 0))
   let level = 1
@@ -49,6 +51,7 @@ export function xpProgressFromTotal(totalXp: number) {
   }
 }
 
+// 根据等级返回大厅展示的称号。
 export function rankTitleForLevel(level: number): string {
   const L = Math.max(1, Math.floor(Number(level)) || 1)
   if (L <= 4) return 'Wanderer'
@@ -60,10 +63,12 @@ export function rankTitleForLevel(level: number): string {
   return 'Eternal Sovereign'
 }
 
+// 为经验数字添加千位分隔，提升大厅展示可读性。
 export function formatXpWithCommas(n: number): string {
   return Math.max(0, Math.floor(Number(n) || 0)).toLocaleString('en-US')
 }
 
+// 将用户统计数据转换为大厅经验条需要的完整进度信息。
 export function computeLobbyXpProgress(statsInput: {
   totalGames?: number
   totalWins?: number
@@ -78,6 +83,7 @@ export function computeLobbyXpProgress(statsInput: {
   }
 }
 
+// 在用户统计尚未加载时提供稳定的经验展示占位值。
 export function lobbyXpFallback() {
   const nextLevelXp = xpRequiredToAdvance(1)
   return {
@@ -90,7 +96,7 @@ export function lobbyXpFallback() {
   }
 }
 
-/** XP earned for a single finished match (frontend-only ledger). */
+// 按对局结果和难度计算前端本地展示用的经验奖励。
 export function computeMatchXpReward(input: {
   isWin: boolean
   layer?: number
@@ -106,6 +112,7 @@ export function computeMatchXpReward(input: {
   return Math.floor(40 + layer * 15 + dmg * 0.12)
 }
 
+// 读取指定用户的大厅经验数据，并与本地结算缓存合并。
 export function getLobbyXpForUser(
   userId: string | undefined,
   statsInput: {

@@ -87,6 +87,7 @@ export const BOSS_LAYER_CONFIGS: Record<number, BossLayerConfig> = {
   },
 }
 
+// 根据当前层数生成 Boss，静态配置结束后继续按公式成长。
 export function createBossForLayer(layer: number): BossState {
   const rounded = Math.max(1, Math.floor(layer))
 
@@ -106,7 +107,7 @@ export function createBossForLayer(layer: number): BossState {
     }
   }
 
-  // MAX_LAYER bounds static configs only; Rogue progression continues with procedurally scaled bosses.
+  // 10 层只是静态配置边界，肉鸽继续推进时按公式生成更高层 Boss。
   const hp = Math.round(1760 * Math.pow(1.06, rounded - 10))
   const atk = 23 + (rounded - 10)
   const elements = [Element.WATER, Element.FIRE, Element.GRASS] as const

@@ -1,5 +1,6 @@
 import { User } from '../models/User.js'
 
+// 清理第三方名称中的不合法字符。
 function sanitizeUsernameBase(raw: string): string {
   const cleaned = raw
     .trim()
@@ -17,6 +18,7 @@ function sanitizeUsernameBase(raw: string): string {
   return fallback.length >= 3 ? fallback : 'player'
 }
 
+// 在重名时追加后缀，生成可保存的唯一用户名。
 export async function generateUniqueUsername(name: string, email: string): Promise<string> {
   const base = sanitizeUsernameBase(name || email.split('@')[0] || 'player')
   let candidate = base

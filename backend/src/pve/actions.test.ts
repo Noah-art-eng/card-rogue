@@ -89,7 +89,6 @@ const fullConfirmContext = confirmPlay({
 
 assert.equal(fullConfirmContext.phase, RoundPhase.BOSS_ATTACK, 'confirmPlay: boss alive should end at BOSS_ATTACK')
 
-// ---- P1-T5: confirmPlay rejects > 5 selected cards ----
 
 assert.throws(
   () => confirmPlay({
@@ -112,11 +111,9 @@ assert.throws(
   'confirmPlay should reject > 5 selected cards',
 )
 
-// ---- P1-T4: skillWarning — invalid skill params do NOT deduct energy ----
 
 const skillCtx = createTestContext({ phase: RoundPhase.SKILL })
 
-// changeColor: missing cardId — should throw, energy must be unchanged
 assert.throws(
   () => useSkill(skillCtx, 'changeColor', { targetElement: Element.FIRE }),
   /cardId/i,
@@ -124,7 +121,6 @@ assert.throws(
 )
 assert.equal(skillCtx.roundState.skills.energy.energy, 3, 'changeColor: energy unchanged after invalid call')
 
-// changeColor: invalid targetElement — should throw, energy must be unchanged
 assert.throws(
   () => useSkill(skillCtx, 'changeColor', { cardId: 'FIRE_13', targetElement: 'INVALID' as Element }),
   /targetElement/i,
@@ -132,7 +128,6 @@ assert.throws(
 )
 assert.equal(skillCtx.roundState.skills.energy.energy, 3, 'changeColor: energy unchanged after invalid element')
 
-// changeRank: missing cardId — should throw
 assert.throws(
   () => useSkill(skillCtx, 'changeRank', { targetRank: 7 }),
   /cardId/i,
@@ -140,7 +135,6 @@ assert.throws(
 )
 assert.equal(skillCtx.roundState.skills.energy.energy, 3, 'changeRank: energy unchanged after missing cardId')
 
-// changeRank: out-of-range rank — should throw
 assert.throws(
   () => useSkill(skillCtx, 'changeRank', { cardId: 'FIRE_13', targetRank: 14 }),
   /targetRank/i,

@@ -1,4 +1,3 @@
-/** Hand card size: 1.5× the original 128×188 baseline. */
 export const HAND_CARD_WIDTH = 192
 export const HAND_CARD_HEIGHT = 282
 
@@ -9,10 +8,7 @@ export interface HandFanLayout {
   zIndex: number
 }
 
-/**
- * Compact arc fan: cards touch at the base, rotate outward, center card highest.
- * Spread stays in the original hand-zone width (not full-screen wide).
- */
+// 计算每张手牌在扇形中的位置和旋转角度。
 export function computeHandFanLayout(
   index: number,
   total: number,
@@ -50,6 +46,7 @@ export function computeHandFanLayout(
   }
 }
 
+// 将手牌布局参数拼成 CSS transform，供单牌渲染使用。
 export function buildHandCardTransform(
   layout: HandFanLayout,
   options: { hovered: boolean; selected: boolean; legendary?: boolean },

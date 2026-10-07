@@ -27,14 +27,17 @@ export function pickBossIntent(
   return BossIntent.DEFEND
 }
 
+// 按权重随机决定 Boss 下一回合的攻击、蓄力或防御意图。
 export function rollBossIntent(weights: BossIntentWeights): BossIntent {
   return pickBossIntent(weights, Math.random())
 }
 
+// 按基础攻击力计算 Boss 蓄力攻击伤害。
 export function calculateChargeAttack(attackPerRound: number): number {
   return Math.floor(attackPerRound * CHARGE_ATTACK_MULTIPLIER)
 }
 
+// 创建尚未预告 Boss 行动的初始回合状态。
 export function createInitialBossRound(): BossRoundState {
   return {
     intent: null,
@@ -43,6 +46,7 @@ export function createInitialBossRound(): BossRoundState {
   }
 }
 
+// 根据意图生成回合状态，让防御和蓄力标记集中维护。
 export function buildBossRoundState(intent: BossIntent): BossRoundState {
   return {
     intent,
@@ -51,6 +55,7 @@ export function buildBossRoundState(intent: BossIntent): BossRoundState {
   }
 }
 
+// 蓄力完成时强制释放攻击，否则按权重生成新的行动预告。
 export function generateBossTelegraph(
   context: GameContext,
   forcedIntent?: BossIntent,

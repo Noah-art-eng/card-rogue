@@ -7,6 +7,7 @@ import { User } from '../models/User.js'
 import { deleteLocalAvatarIfManaged } from '../utils/avatarFiles.js'
 import { toPublicUser } from '../utils/user.js'
 
+// 返回当前令牌对应的公开用户资料。
 export async function getMe(req: AuthRequest, res: Response): Promise<void> {
   const userId = req.auth?.userId
 
@@ -27,6 +28,7 @@ export async function getMe(req: AuthRequest, res: Response): Promise<void> {
   })
 }
 
+// 保存新头像并清理服务托管的旧头像文件。
 export async function uploadAvatar(req: AuthRequest, res: Response): Promise<void> {
   const userId = req.auth?.userId
 

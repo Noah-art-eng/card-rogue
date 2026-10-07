@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { gameAudioManager } from '../utils/audioManager'
 
+// 向页面提供统一的音效播放、静音和音量控制入口。
 export function useGameAudio() {
   const [muted, setMuted] = useState(() => gameAudioManager.isMuted())
 
@@ -15,10 +16,12 @@ export function useGameAudio() {
     }
   }, [])
 
+  // 在用户手势触发后恢复音频上下文，解除浏览器自动播放限制。
   const unlock = useCallback(() => {
     void gameAudioManager.unlock()
   }, [])
 
+  // 切换全局静音状态，并同步保存用户偏好。
   const toggleMute = useCallback(() => {
     if (!gameAudioManager.isUnlocked()) {
       void gameAudioManager.unlock()
@@ -27,10 +30,12 @@ export function useGameAudio() {
     gameAudioManager.toggleMuted()
   }, [])
 
+// 将滑块值交给全局音频管理器，让所有后续音效使用同一音量设置。
   const setVolume = useCallback((volume: number) => {
     gameAudioManager.setVolume(volume)
   }, [])
 
+  // 将指定静音状态写入音频管理器和本地偏好。
   const setAudioMuted = useCallback((nextMuted: boolean) => {
     void gameAudioManager.unlock()
     gameAudioManager.setMuted(nextMuted)

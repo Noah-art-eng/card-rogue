@@ -10,10 +10,12 @@ import { toPublicUser } from '../utils/user.js'
 
 const BCRYPT_SALT_ROUNDS = 10
 
+// 读取服务端配置的 Google 客户端标识。
 function getGoogleClientId(): string | undefined {
   return process.env.GOOGLE_CLIENT_ID?.trim() || undefined
 }
 
+// 验证 Google 凭据并映射为本站登录用户。
 export async function googleLogin(req: Request, res: Response): Promise<void> {
   const clientId = getGoogleClientId()
   if (!clientId) {

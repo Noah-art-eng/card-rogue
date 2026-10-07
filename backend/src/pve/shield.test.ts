@@ -42,7 +42,6 @@ function makeRoundEndContext(overrides: Partial<GameContext> = {}): GameContext 
   }
 }
 
-// ---- 1. useSkill('shield') activates shield ----
 
 const activated = useSkill(
   createShieldContext({
@@ -62,7 +61,6 @@ assert.equal(activated.roundState.skills.shield.active, true, 'shield should be 
 assert.equal(activated.roundState.skills.shield.onCooldown, false, 'not yet on cooldown before blocking')
 assert.equal(activated.roundState.skills.energy.energy, 2, 'useSkill shield costs 1 energy')
 
-// ---- 2. Shield blocks a normal ATTACK, enters cooldown ----
 
 const blockedNormal = doBossAttackComplete(
   createShieldContext({
@@ -88,7 +86,6 @@ assert.equal(
 )
 assert.equal(blockedNormal.phase, RoundPhase.ROUND_END, 'blocked ATTACK still reaches ROUND_END')
 
-// ---- 3. Shield blocks a charge ATTACK, charge state clears ----
 
 const blockedCharge = doBossAttackComplete(
   createShieldContext({
@@ -113,7 +110,6 @@ assert.equal(
   'chargeStored cleared even when attack is blocked',
 )
 
-// ---- 4. Cannot re-activate shield while onCooldown ----
 
 const cooldownContext = createShieldContext({
   phase: RoundPhase.SKILL,
@@ -132,9 +128,7 @@ assert.throws(
   'useSkill shield should throw when onCooldown',
 )
 
-// ---- 5. Cooldown ticks down over 3 rounds, available on round 4 ----
 
-// After block: cooldownRounds = 3
 let ctx = makeRoundEndContext({
   roundState: {
     ...defaultRoundState,
@@ -145,26 +139,22 @@ let ctx = makeRoundEndContext({
   },
 })
 
-// Round 1 of cooldown
 ctx = advanceRound(ctx)
 assert.equal(ctx.roundState.skills.shield.onCooldown, true, 'round 1 of cooldown: still on cooldown')
 assert.equal(ctx.roundState.skills.shield.cooldownRounds, 2, 'round 1: 2 rounds remain')
 assert.throws(() => useSkill(ctx, 'shield'), /cooldown/i, 'round 1: shield still blocked')
 
-// Round 2 of cooldown
 ctx = makeRoundEndContext({ roundState: ctx.roundState })
 ctx = advanceRound(ctx)
 assert.equal(ctx.roundState.skills.shield.onCooldown, true, 'round 2 of cooldown: still on cooldown')
 assert.equal(ctx.roundState.skills.shield.cooldownRounds, 1, 'round 2: 1 round remains')
 assert.throws(() => useSkill(ctx, 'shield'), /cooldown/i, 'round 2: shield still blocked')
 
-// Round 3 of cooldown — becomes available
 ctx = makeRoundEndContext({ roundState: ctx.roundState })
 ctx = advanceRound(ctx)
 assert.equal(ctx.roundState.skills.shield.onCooldown, false, 'round 3 complete: cooldown lifted')
 assert.equal(ctx.roundState.skills.shield.cooldownRounds, 0, 'round 3: 0 rounds remain')
 
-// Shield can be used again on round 4
 const reactivated = useSkill(
   {
     ...ctx,
@@ -181,7 +171,6 @@ const reactivated = useSkill(
 )
 assert.equal(reactivated.roundState.skills.shield.active, true, 'shield reactivated on round 4')
 
-// ---- 6. DEFEND intent does not block or trigger cooldown ----
 
 const defendCtx = doBossAttackComplete(
   createShieldContext({
@@ -201,7 +190,6 @@ assert.equal(defendCtx.player.hp, 100, 'DEFEND: no damage')
 assert.equal(defendCtx.roundState.skills.shield.active, true, 'DEFEND: shield stays active')
 assert.equal(defendCtx.roundState.skills.shield.onCooldown, false, 'DEFEND: no cooldown triggered')
 
-// ---- 7. voidShield on WIN: shield cleared when boss is killed ----
 
 const shieldActiveBeforeKill = createShieldContext({
   phase: RoundPhase.RESOLVE,
@@ -223,7 +211,6 @@ assert.equal(afterWin.roundState.skills.shield.active, false, 'voidShield: activ
 assert.equal(afterWin.roundState.skills.shield.onCooldown, false, 'voidShield: onCooldown cleared on WIN')
 assert.equal(afterWin.roundState.skills.shield.cooldownRounds, 0, 'voidShield: cooldownRounds cleared on WIN')
 
-// voidShield also applies when shield is on cooldown at WIN moment
 const shieldOnCooldownBeforeKill = createShieldContext({
   phase: RoundPhase.RESOLVE,
   boss: createTestBoss({ hp: 1 }),

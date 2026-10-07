@@ -7,6 +7,7 @@ interface BattlefieldVideoBackgroundProps {
   bossPhaseActive?: boolean
 }
 
+// 为战斗场景提供循环视频背景，并在不可播放时保持静态布局。
 export default function BattlefieldVideoBackground({
   bossPhaseActive = false,
 }: BattlefieldVideoBackgroundProps) {

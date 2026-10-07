@@ -15,6 +15,7 @@ import { Element as ElementEnum } from '../types/card.js'
 
 const router = Router()
 
+// 从认证中间件写入的请求身份取得用户 ID。
 function getUserId(req: AuthRequest): string | undefined {
   return req.auth?.userId
 }

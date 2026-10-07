@@ -61,7 +61,6 @@ async function runTests(): Promise<void> {
     await createTestUser(userA)
     await createTestUser(userB)
 
-    // ---- Match archiving ----
 
     const winContext = createEndedContext({
       userId: userA,
@@ -82,7 +81,6 @@ async function runTests(): Promise<void> {
     assert.equal(winMatches[0]?.roundsPlayed, 4)
     assert.equal(winMatches[0]?.totalDamageDealt, 543)
 
-    // ---- User.stats after WIN ----
 
     const afterWin = await User.findById(userA)
     assert.ok(afterWin, 'user A should exist')
@@ -91,7 +89,6 @@ async function runTests(): Promise<void> {
     assert.equal(afterWin.stats.maxDamage, 543, 'WIN: maxDamage should be 543')
     assert.equal(afterWin.stats.winRate, 1, 'WIN: winRate should be 1.0')
 
-    // ---- LOSE ----
 
     const loseContext = createEndedContext({
       userId: userA,
@@ -104,7 +101,6 @@ async function runTests(): Promise<void> {
     const archivedLose = await archiveGameIfEnded(loseContext)
     assert.equal(archivedLose.matchArchived, true)
 
-    // ---- User.stats after LOSE ----
 
     const afterLose = await User.findById(userA)
     assert.ok(afterLose)
@@ -113,7 +109,6 @@ async function runTests(): Promise<void> {
     assert.equal(afterLose.stats.maxDamage, 543, 'LOSE: maxDamage still 543 (higher of 543/210)')
     assert.equal(afterLose.stats.winRate, 0.5, 'LOSE: winRate should be 0.5')
 
-    // ---- maxDamage updates when new record set ----
 
     const bigDmgContext = createEndedContext({
       userId: userA,
@@ -133,14 +128,12 @@ async function runTests(): Promise<void> {
       `winRate should be ~0.667, got ${afterBigDmg.stats.winRate}`,
     )
 
-    // ---- No-duplicate guard ----
 
     const duplicateAttempt = await archiveGameIfEnded(archivedWin)
     assert.equal(duplicateAttempt.matchArchived, true)
     const afterDuplicate = await Match.find({ userId: userA })
     assert.equal(afterDuplicate.length, 3, 'duplicate archiveGameIfEnded should not create new Match')
 
-    // ---- User isolation ----
 
     await Match.create({
       userId: userB,
@@ -160,7 +153,6 @@ async function runTests(): Promise<void> {
     const recentForUserA = await getRecentMatchesForUser(userA, 10)
     assert.equal(recentForUserA.length, 3, 'userA should only see own matches')
 
-    // ---- Sort order (endedAt desc) ----
 
     await Match.create({
       userId: userA,
@@ -190,7 +182,6 @@ async function runTests(): Promise<void> {
       'matches should be sorted by endedAt descending',
     )
 
-    // ---- ONGOING should not archive ----
 
     const ongoingContext = createEndedContext({
       battleResult: BattleResult.ONGOING,

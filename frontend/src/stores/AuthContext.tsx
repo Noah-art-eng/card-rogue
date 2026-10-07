@@ -26,6 +26,7 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | null>(null)
 
+// 在应用内统一保存登录令牌、用户资料和首次身份恢复状态。
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setTokenState] = useState<string | null>(() => getToken())
   const [user, setUser] = useState<User | null>(null)
@@ -34,6 +35,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   userRef.current = user
 
+  // 清除 token 和用户资料，使全站立即回到未登录状态。
   const logout = useCallback(() => {
     clearToken()
     setTokenState(null)
@@ -41,6 +43,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(false)
   }, [])
 
+  // 保存新 token 与用户资料，建立登录成功后的全局认证状态。
   const setAuth = useCallback((nextToken: string, nextUser: User) => {
     setToken(nextToken)
     setTokenState(nextToken)
@@ -48,10 +51,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(false)
   }, [])
 
+  // 用服务端返回的新用户资料覆盖认证上下文，供页面立即刷新头像和统计。
   const updateUser = useCallback((nextUser: User) => {
     setUser(nextUser)
   }, [])
 
+  // 验证本地 token 并重新拉取用户资料；失效时主动退出登录。
   const fetchMe = useCallback(async () => {
     const storedToken = getToken()
 
@@ -63,8 +68,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     setTokenState(storedToken)
 
-    // Only block the app on the initial bootstrap when no user is cached yet.
-    // Background refreshes must not flip isLoading back to true.
+    // 只有首次恢复身份时阻塞页面；后台刷新不能让已登录页面重新进入加载态。
     const isBootstrap = userRef.current === null
     if (isBootstrap) {
       setIsLoading(true)
@@ -105,6 +109,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
+// 读取认证上下文；脱离 AuthProvider 使用时立即报错。
 export function useAuth(): AuthContextValue {
   const context = useContext(AuthContext)
 

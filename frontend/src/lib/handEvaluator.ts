@@ -1,10 +1,3 @@
-/**
- * Frontend damage evaluator — mirrors backend pve/handEvaluator.ts + pve/damage.ts exactly.
- *
- * HAND_SCORES must stay in sync with backend/src/types/card.ts HAND_SCORES.
- * calculateDamage formula: Math.floor((chips + cardChips) * mult)
- * DEFEND reduction:        Math.floor(raw * 0.5)
- */
 
 import type { Card, HandType } from '../types/game'
 
@@ -14,11 +7,10 @@ export interface EvaluatorResult {
   cardChips: number
   mult: number
   raw: number
-  total: number  // raw after optional DEFEND halving
+  total: number
   isDefendReduced: boolean
 }
 
-// ── HAND_SCORES (mirror of backend/src/types/card.ts) ────────────────────────
 
 const HAND_SCORES: Record<HandType, { chips: number; mult: number }> = {
   STRAIGHT_FLUSH:  { chips: 100, mult: 8 },
@@ -32,8 +24,8 @@ const HAND_SCORES: Record<HandType, { chips: number; mult: number }> = {
   HIGH_CARD:       { chips: 5,   mult: 1 },
 }
 
-// ── Hand detection (mirror of backend/src/pve/handEvaluator.ts) ──────────────
 
+// 统计手牌各点数出现次数，为前端牌型预览提供基础数据。
 function countRanks(cards: Card[]): Map<number, number> {
   const counts = new Map<number, number>()
   for (const card of cards) {
@@ -42,10 +34,12 @@ function countRanks(cards: Card[]): Map<number, number> {
   return counts
 }
 
+// 判断手牌元素是否一致，用于前端预览同花牌型。
 function isSameElement(cards: Card[]): boolean {
   return cards.every((c) => c.element === cards[0].element)
 }
 
+// 判断点数是否连续，用于前端预览顺子牌型。
 function isStraight(cards: Card[]): boolean {
   if (cards.length < 5) return false
   const ranks = [...new Set(cards.map((c) => c.rank))].sort((a, b) => a - b)
@@ -55,6 +49,7 @@ function isStraight(cards: Card[]): boolean {
   return true
 }
 
+// 根据当前手牌识别预览牌型，不参与服务端最终结算。
 export function detectHandType(cards: Card[]): HandType {
   if (cards.length === 0) return 'HIGH_CARD'
 
@@ -86,8 +81,8 @@ export function detectHandType(cards: Card[]): HandType {
   return 'HIGH_CARD'
 }
 
-// ── Damage calculation ────────────────────────────────────────────────────────
 
+// 计算页面展示用的牌型和预估伤害；真实伤害仍由服务端统一确认。
 export function evaluateHand(
   cards: Card[],
   isDefending = false,

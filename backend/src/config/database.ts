@@ -2,12 +2,12 @@ import mongoose from 'mongoose'
 
 import { User } from '../models/User.js'
 
+// 连接后清理旧版索引，避免历史 Google ID 数据继续触发唯一键冲突。
 async function repairGoogleIdIndex(): Promise<void> {
   try {
     await User.collection.dropIndex('googleId_1')
     console.log('Dropped legacy googleId index')
   } catch {
-    // index may not exist
   }
 
   await User.syncIndexes()

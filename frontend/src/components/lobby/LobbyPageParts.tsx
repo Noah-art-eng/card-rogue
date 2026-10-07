@@ -1,6 +1,7 @@
 const iconSm = 'h-[1.125rem] w-[1.125rem] shrink-0'
 const iconHeader = 'h-[1.35rem] w-[1.35rem] shrink-0 text-violet-50 sm:h-[1.5rem] sm:w-[1.5rem]'
 
+// 大厅导航和状态区域复用的 SVG 图标。
 export function LobbyIconHome({ active, iconClass }: { active?: boolean; iconClass?: string }) {
   const c = iconClass ?? iconSm
   if (active) {
@@ -29,6 +30,7 @@ export function LobbyIconHome({ active, iconClass }: { active?: boolean; iconCla
   )
 }
 
+// 大厅导航和状态区域复用的 SVG 图标。
 export function LobbyIconLeaderboard({ iconClass }: { iconClass?: string }) {
   const c = iconClass ?? iconSm
   return (
@@ -50,6 +52,7 @@ export function LobbyIconLeaderboard({ iconClass }: { iconClass?: string }) {
   )
 }
 
+// 大厅导航和状态区域复用的 SVG 图标。
 export function LobbyIconProfile({ iconClass }: { iconClass?: string }) {
   const c = iconClass ?? iconSm
   return (
@@ -69,6 +72,7 @@ export function LobbyIconProfile({ iconClass }: { iconClass?: string }) {
   )
 }
 
+// 大厅导航和状态区域复用的 SVG 图标。
 export function LobbyIconAchievements({ iconClass }: { iconClass?: string }) {
   const c = iconClass ?? iconSm
   return (
@@ -88,6 +92,7 @@ export function LobbyIconAchievements({ iconClass }: { iconClass?: string }) {
   )
 }
 
+// 大厅导航和状态区域复用的 SVG 图标。
 export function LobbyIconSettings({ iconClass }: { iconClass?: string }) {
   const c = iconClass ?? iconSm
   return (
@@ -107,6 +112,7 @@ export function LobbyIconSettings({ iconClass }: { iconClass?: string }) {
   )
 }
 
+// 大厅导航和状态区域复用的 SVG 图标。
 export function LobbyIconLogout({ iconClass }: { iconClass?: string }) {
   const c = iconClass ?? iconSm
   return (
@@ -127,6 +133,7 @@ export function LobbyIconLogout({ iconClass }: { iconClass?: string }) {
   )
 }
 
+// 大厅导航和状态区域复用的 SVG 图标。
 export function LobbyIconBell({ iconClass }: { iconClass?: string }) {
   const c = iconClass ?? iconHeader
   return (
@@ -146,6 +153,7 @@ export function LobbyIconBell({ iconClass }: { iconClass?: string }) {
   )
 }
 
+// 大厅导航和状态区域复用的 SVG 图标。
 export function LobbyIconBrightness({ iconClass }: { iconClass?: string }) {
   const c = iconClass ?? iconHeader
   return (
@@ -165,6 +173,7 @@ export function LobbyIconBrightness({ iconClass }: { iconClass?: string }) {
   )
 }
 
+// 大厅中的肉鸽模式入口卡片。
 export function LobbyPremiumCta({
   label,
   variant = 'solo',

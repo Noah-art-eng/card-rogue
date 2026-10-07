@@ -35,6 +35,7 @@ const ELEMENT_ORDER: Record<Element, number> = {
   GRASS: 2,
 }
 
+// 读取 CSS 中的手牌扇形参数，让脚本计算和响应式样式保持一致。
 function readHandFanSpread(): number {
   if (typeof document === 'undefined') return 1
   const root = document.querySelector('.game-handarea')
@@ -44,9 +45,11 @@ function readHandFanSpread(): number {
   return Number.isFinite(parsed) && parsed > 0 ? parsed : 1
 }
 
+// 监听页面宽度变化并返回当前适合手牌区域的扇形展开角度。
 function useHandFanSpread(): number {
   const [spread, setSpread] = useState(1)
   useEffect(() => {
+    // 将最新 CSS 扇形参数写回 Hook 状态，触发手牌重新排布。
     const update = () => setSpread(readHandFanSpread())
     update()
     window.addEventListener('resize', update)
@@ -55,6 +58,7 @@ function useHandFanSpread(): number {
   return spread
 }
 
+// 按元素和点数稳定排序手牌，避免重渲染时卡牌位置无故跳动。
 function sortHandCards(cards: Card[]): Card[] {
   return [...cards].sort(
     (a, b) =>
@@ -63,11 +67,7 @@ function sortHandCards(cards: Card[]): Card[] {
   )
 }
 
-/**
- * Find the card nearest to the pointer using actual rendered rects.
- * Uses padded hit zones to make hover feel natural, and a sticky bonus
- * to keep the currently hovered card from flickering.
- */
+// 用实际卡牌位置计算最近目标，并给当前悬停牌加权，避免扇形手牌间来回闪烁。
 function findNearestCardId(
   pivot: HTMLElement,
   clientX: number,
@@ -97,7 +97,7 @@ function findNearestCardId(
 
     const cx = r.left + r.width / 2
     let score = Math.abs(clientX - cx)
-    if (id === currentId) score *= 0.7  // sticky: keep current card preferred
+    if (id === currentId) score *= 0.7
     const z = Number.parseInt(el.style.zIndex || '0', 10)
     score -= z * 0.3
 
@@ -110,10 +110,12 @@ function findNearestCardId(
   return bestId
 }
 
+// 在玩家受到 Boss 伤害后显示扣血浮字。
 function PlayerDamageFloat({ value }: { value: number }) {
   return <div className="handarea__player-damage-float">-{value.toLocaleString()}</div>
 }
 
+// 为不同元素的肉鸽强化选择一致的强调色。
 function buffAccentColor(element?: string): string {
   if (element === 'WATER') return '#4ea8ff'
   if (element === 'FIRE') return '#ff6644'
@@ -121,6 +123,7 @@ function buffAccentColor(element?: string): string {
   return '#f0d060'
 }
 
+// 展示单个已获得强化，并在允许时响应玩家查看操作。
 function BuffTag({ buff, onClick }: { buff: EnhancementOption; onClick?: (b: EnhancementOption) => void }) {
   const [showTooltip, setShowTooltip] = useState(false)
   const label = buff.label ?? buff.id
@@ -152,6 +155,7 @@ function BuffTag({ buff, onClick }: { buff: EnhancementOption; onClick?: (b: Enh
   )
 }
 
+// 把本局肉鸽强化汇总为手牌区域旁的可浏览列表。
 function BuffPanel({ buffs, onBuffClick }: { buffs: EnhancementOption[]; onBuffClick?: (b: EnhancementOption) => void }) {
   const [open, setOpen] = useState(false)
   return (
@@ -176,6 +180,7 @@ function BuffPanel({ buffs, onBuffClick }: { buffs: EnhancementOption[]; onBuffC
   )
 }
 
+// 展示玩家手牌、选牌状态和战斗中浮动伤害等交互信息。
 export default function HandArea({
   phase,
   displayedPlayerHp,
@@ -203,12 +208,13 @@ export default function HandArea({
   const currentIdRef = useRef<string | null>(null)
   const [hoveredCardId, setHoveredCardId] = useState<string | null>(null)
 
+  // 在键盘或指针操作时同步当前高亮手牌，保证视觉焦点一致。
   const updateHover = useCallback((id: string | null) => {
     currentIdRef.current = id
     setHoveredCardId((prev) => (prev === id ? prev : id))
   }, [])
 
-  // Clear hover when phase changes or hand changes
+  // 阶段切换到不可操作时清掉悬停状态，避免保留失效的高亮。
   useEffect(() => {
     if (!canInteract) updateHover(null)
   }, [canInteract, updateHover])
@@ -219,8 +225,7 @@ export default function HandArea({
     }
   }, [hand, updateHover])
 
-  // Global pointermove catches hover on the card area that visually overflows
-  // above .game-handarea into .game-mid territory
+  // 扇形手牌会超出容器范围，所以监听全局指针移动来保持悬停判定准确。
   useEffect(() => {
     if (!canInteract || hand.length === 0) {
       updateHover(null)
@@ -229,6 +234,7 @@ export default function HandArea({
     const pivot = fanPivotRef.current
     if (!pivot) return
 
+    // 拖动手牌时根据指针位置更新悬停目标，便于快速连续选牌。
     const onMove = (e: PointerEvent) => {
       const id = findNearestCardId(pivot, e.clientX, e.clientY, currentIdRef.current)
       updateHover(id)

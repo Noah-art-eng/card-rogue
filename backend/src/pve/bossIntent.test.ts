@@ -210,10 +210,6 @@ const loopConfirm = confirmPlay({
 
 assert.equal(loopConfirm.phase, RoundPhase.BOSS_ATTACK, 'loop should still reach BOSS_ATTACK after confirm')
 
-// ---- End-to-end CHARGE cycle: telegraph CHARGE → BossAttack → advanceRound → next round willReleaseCharge ----
-// chargeStored is set in doBossAttackComplete (not at telegraph time), then advanceRound
-// calls generateBossTelegraph which sees chargeStored=true and forces willReleaseCharge.
-// Both orderings produce the same outcome; this test pins the full cycle.
 
 const chargeRoundEndCtx = doBossAttackComplete(
   createBossContext({

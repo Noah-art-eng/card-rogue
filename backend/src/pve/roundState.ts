@@ -5,6 +5,7 @@ import {
   type ShieldState,
 } from '../types/state.js'
 
+// 创建每回合独立维护的技能、洗牌和护盾状态。
 export function createRoundState(
   skillEnergyMax = INITIAL_SKILL_ENERGY,
   shuffleRemaining = SHUFFLE_PER_ROUND,
@@ -24,10 +25,12 @@ export function createRoundState(
   }
 }
 
+// 创建新对局首回合使用的默认回合状态。
 export function createInitialRoundState(): RoundState {
   return createRoundState(INITIAL_SKILL_ENERGY, SHUFFLE_PER_ROUND)
 }
 
+// 回合开始时恢复本回合可用的洗牌次数。
 export function resetShuffleRemaining(roundState: RoundState): RoundState {
   return {
     ...roundState,
@@ -37,6 +40,7 @@ export function resetShuffleRemaining(roundState: RoundState): RoundState {
   }
 }
 
+// 胜利或重开时移除护盾，避免上一场防御状态带入下一场。
 export function voidShield(roundState: RoundState): RoundState {
   return {
     ...roundState,
@@ -51,6 +55,7 @@ export function voidShield(roundState: RoundState): RoundState {
   }
 }
 
+// 每回合推进护盾冷却，冷却结束后才允许再次施放。
 export function tickShieldCooldown(shield: ShieldState): ShieldState {
   if (!shield.onCooldown) {
     return shield

@@ -2,6 +2,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { useAuth } from '../../stores/AuthContext'
 
+// 提供全站导航、当前用户入口和退出登录操作。
 export default function Navbar() {
   const { isAuthenticated, logout } = useAuth()
   const navigate = useNavigate()
@@ -11,6 +12,7 @@ export default function Navbar() {
   const hideCenterNav = isAuthenticated && dashboardShell
   const showHomeLink = !isAuthenticated || !dashboardShell
 
+  // 清除认证状态后返回登录页，防止受保护页面保留旧用户资料。
   function handleLogout() {
     logout()
     navigate('/', { replace: true })

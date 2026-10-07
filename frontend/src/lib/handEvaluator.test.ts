@@ -1,7 +1,3 @@
-/**
- * Contract tests — mirrors backend/src/pve/handEvaluator.test.ts + damage cases.
- * Run: npx tsx frontend/src/lib/handEvaluator.test.ts
- */
 import assert from 'node:assert/strict'
 
 import type { Card, Element, HandType } from '../types/game'
@@ -21,7 +17,6 @@ function assertHandType(cards: Card[], expected: HandType, label: string) {
   assert.equal(detectHandType(cards), expected, label)
 }
 
-// ── Backend handEvaluator.test.ts parity ─────────────────────────────────────
 
 assertHandType(
   [card('FIRE', 1), card('WATER', 2), card('GRASS', 3), card('FIRE', 4), card('WATER', 5)],
@@ -41,7 +36,6 @@ assertHandType(
   '1-10-11-12-13 should not be STRAIGHT',
 )
 
-// ── All 9 hand types ─────────────────────────────────────────────────────────
 
 assertHandType([card('FIRE', 5)], 'HIGH_CARD', 'single card = HIGH_CARD')
 assertHandType([card('FIRE', 3), card('WATER', 3)], 'PAIR', 'two same rank = PAIR')
@@ -75,14 +69,12 @@ assertHandType(
   'FOUR_OF_A_KIND',
   'four of a kind',
 )
-// straight flush
 assertHandType(
   [card('WATER', 9), card('WATER', 10), card('WATER', 11), card('WATER', 12), card('WATER', 13)],
   'STRAIGHT_FLUSH',
   'straight flush',
 )
 
-// ── Damage + DEFEND ─────────────────────────────────────────────────────────
 
 const highCard = evaluateHand([card('FIRE', 5)])
 assert.equal(highCard.handType, 'HIGH_CARD')

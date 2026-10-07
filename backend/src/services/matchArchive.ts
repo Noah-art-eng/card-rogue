@@ -31,7 +31,7 @@ export function buildMatchPayload(context: GameContext) {
   }
 }
 
-// Derive winRate in the same update as its counters so concurrent archival cannot use stale totals.
+// 胜率和局数在同一次更新中计算，避免并发归档使用过期统计值。
 async function updateUserStats(
   userId: string,
   isWin: boolean,

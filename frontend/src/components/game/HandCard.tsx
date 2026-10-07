@@ -31,6 +31,7 @@ const COLOR_THEME = {
   },
 } as const
 
+// 渲染单张手牌的牌面、选中状态和可操作反馈。
 export default function HandCard({
   card,
   selectedIndex,

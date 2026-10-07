@@ -3,6 +3,7 @@ interface LoadingScreenProps {
   fullScreen?: boolean
 }
 
+// 在路由或认证状态尚未就绪时展示统一加载画面。
 export default function LoadingScreen({
   message = 'Preparing battle…',
   fullScreen = true,

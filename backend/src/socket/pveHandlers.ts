@@ -56,10 +56,12 @@ function emitGameState(socket: Socket, context: GameContext): void {
   socket.emit('gameState', toGameState(context))
 }
 
+// 为每位用户生成稳定的服务端房间标识。
 function getUserRoomId(userId: string): string {
   return `pve-${userId}`
 }
 
+// 把业务异常统一转换为客户端可展示的 Socket 错误事件。
 function handleSocketError(socket: Socket, error: unknown): void {
   const message = error instanceof Error ? error.message : 'PvE action failed'
   socket.emit('gameError', { message })

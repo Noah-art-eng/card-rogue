@@ -42,6 +42,7 @@ const SPRITE_EFFECTS: Record<
   },
 }
 
+// 根据攻击类型裁剪精灵图，播放对应的命中帧动画。
 function SpriteSheetEffect({ mode }: { mode: AttackEffectMode }) {
   const sprite = SPRITE_EFFECTS[mode] ?? SPRITE_EFFECTS.normal
   const [frame, setFrame] = useState(0)
@@ -88,6 +89,7 @@ interface AttackEffectProps {
   visible: boolean
 }
 
+// 在战场上控制攻击特效的显示与隐藏，并根据模式选择资源。
 export default function AttackEffect({ mode, visible }: AttackEffectProps) {
   if (!visible) return null
 

@@ -8,6 +8,7 @@ import { initSocket } from './socket/index.js'
 
 const PORT = Number(process.env.PORT) || 5000
 
+// 启动 HTTP 服务，并在数据库连接成功后开始监听端口。
 async function startServer(): Promise<void> {
   try {
     await connectMongoDB()

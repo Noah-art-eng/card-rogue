@@ -5,6 +5,7 @@ export interface LoginInput {
   password: string
 }
 
+// 在登录前检查请求体是否具备可用凭据。
 export function validateLoginInput(
   body: unknown,
 ): { valid: true; data: LoginInput } | { valid: false; message: string } {

@@ -11,6 +11,7 @@ export interface PublicMatch {
   endedAt: string
 }
 
+// 移除数据库内部字段后返回可安全给客户端展示的对局记录。
 export function toPublicMatch(match: IMatch): PublicMatch {
   return {
     id: match._id.toString(),

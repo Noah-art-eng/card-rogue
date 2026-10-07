@@ -41,6 +41,7 @@ export const HAND_SCORES: Record<HandType, HandScore> = {
   [HandType.HIGH_CARD]: { chips: 5, mult: 1 },
 }
 
+// 把数值点数转换成牌面展示文本。
 export function rankToDisplayRank(rank: number): string {
   switch (rank) {
     case 1:

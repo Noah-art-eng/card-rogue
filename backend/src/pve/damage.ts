@@ -14,6 +14,7 @@ const EPIC_HANDS: HandType[] = [
   HandType.STRAIGHT_FLUSH,
 ]
 
+// 把牌型归入强化计算使用的稀有度档位。
 function getHandTier(handType: HandType): 'common' | 'rare' | 'epic' {
   if (EPIC_HANDS.includes(handType)) return 'epic'
   if (RARE_HANDS.includes(handType)) return 'rare'
@@ -22,6 +23,7 @@ function getHandTier(handType: HandType): 'common' | 'rare' | 'epic' {
 }
 
 // 按牌型、卡牌基础分、倍率、强化与防御减伤计算本次伤害。
+// 按牌型、强化和 Boss 防御状态算出本次已经结算的最终伤害。
 export function calculateDamage(
   handType: HandType,
   cards: Card[],

@@ -11,6 +11,7 @@ import RegisterPage from './pages/RegisterPage'
 import RogueGamePage from './pages/RogueGamePage'
 import { AuthProvider } from './stores/AuthContext'
 
+// 应用路由入口，统一挂载公共布局和各个页面。
 function App() {
   return (
     <AuthProvider>

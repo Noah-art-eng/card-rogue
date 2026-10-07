@@ -16,19 +16,23 @@ const PHASE_ALLOWED_EVENTS: Record<RoundPhase, GameEventType[]> = {
   ],
 }
 
+// 判断当前状态是否处于指定回合阶段。
 export function isPhase(ctx: GameContext, phase: RoundPhase): boolean {
   return ctx.phase === phase
 }
 
+// 返回指定阶段允许接收的状态机事件。
 export function getAllowedEvents(phase: RoundPhase): GameEventType[] {
   return PHASE_ALLOWED_EVENTS[phase]
 }
 
+// 检查事件是否可在当前状态机阶段执行。
 export function canAcceptEvent(ctx: GameContext, event: GameEvent): boolean {
   const allowedEvents = getAllowedEvents(ctx.phase)
   return allowedEvents.includes(event.type)
 }
 
+// 在事件非法时抛出错误，阻止状态机越阶段转换。
 export function assertCanAcceptEvent(ctx: GameContext, event: GameEvent): void {
   if (!canAcceptEvent(ctx, event)) {
     throw new Error(`Event ${event.type} is not allowed in phase ${ctx.phase}`)

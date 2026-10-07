@@ -12,6 +12,7 @@ declare global {
 
 let scriptPromise: Promise<void> | null = null
 
+// 按需加载 Google Identity 脚本，并复用已存在的加载结果。
 export function loadGoogleIdentityScript(): Promise<void> {
   if (typeof window === 'undefined') {
     return Promise.resolve()
@@ -49,10 +50,12 @@ export function loadGoogleIdentityScript(): Promise<void> {
   return scriptPromise
 }
 
+// 读取前端配置中的 Google Client ID。
 export function getGoogleClientId(): string {
   return import.meta.env.VITE_GOOGLE_CLIENT_ID?.trim() ?? ''
 }
 
+// 判断当前环境是否已配置可用的 Google 登录 Client ID。
 export function isGoogleLoginConfigured(): boolean {
   return Boolean(getGoogleClientId())
 }

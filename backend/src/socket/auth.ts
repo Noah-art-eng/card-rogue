@@ -6,6 +6,7 @@ export interface AuthenticatedSocketData {
   user: AccessTokenPayload
 }
 
+// 在 Socket 建连时验证令牌并把用户身份写入连接数据。
 export function socketAuthMiddleware(
   socket: Socket,
   next: (error?: Error) => void,

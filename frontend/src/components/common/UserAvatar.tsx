@@ -9,6 +9,7 @@ interface UserAvatarProps {
   alt?: string
 }
 
+// 按用户资料展示头像；没有可用图片时回退为昵称首字母。
 export default function UserAvatar({
   username,
   avatar,

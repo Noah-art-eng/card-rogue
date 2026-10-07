@@ -3,7 +3,7 @@ export interface BossDefinition {
   name: string
   title: string
   layer: number
-  /** Runtime/backend names used before display-layer mapping */
+  /** 展示层映射前，旧对局记录或服务端可能使用的 Boss 名称。 */
   legacyNames?: readonly string[]
 }
 
@@ -25,19 +25,23 @@ export const BOSS_BY_LAYER: Record<number, BossDefinition> = Object.fromEntries(
   ALL_BOSSES.map((boss) => [boss.layer, boss]),
 )
 
+// 按层数查找前端展示用的固定 Boss 定义。
 export function getBossForLayer(layer: number): BossDefinition | undefined {
   const normalized = Math.max(1, Math.floor(layer))
   return BOSS_BY_LAYER[normalized]
 }
 
+// 返回 Boss 的短名称，供紧凑界面展示。
 export function getBossShortNameForLayer(layer: number): string | undefined {
   return getBossForLayer(layer)?.name
 }
 
+// 规范化 Boss 名称以兼容不同来源的大小写和空格差异。
 function normalizeBossLookup(value: string): string {
   return value.trim().toLowerCase()
 }
 
+// 从对局记录中推断对应 Boss，兼容旧记录缺少完整字段的情况。
 export function resolveBossFromMatch(match: {
   layer?: number
   bossName?: string | null
@@ -59,6 +63,7 @@ export function resolveBossFromMatch(match: {
   )
 }
 
+// 优先使用对局记录名称，缺失时按层数回退到预置 Boss 名称。
 export function resolveBossDisplayName(params: {
   layer?: number
   bossName?: string | null
@@ -69,6 +74,7 @@ export function resolveBossDisplayName(params: {
   return fallback || 'Unknown Boss'
 }
 
+// 将历史对局的对手信息整理为列表可读的标签。
 export function formatMatchOpponentLabel(match: {
   mode?: string
   layer?: number

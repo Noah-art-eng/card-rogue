@@ -4,6 +4,7 @@ interface PageTransitionProps {
   children: React.ReactNode
 }
 
+// 为路由内容提供统一的进出场动画容器。
 export default function PageTransition({ children }: PageTransitionProps) {
   const { pathname } = useLocation()
   const isGameRoute = pathname === '/game' || pathname === '/rogue'

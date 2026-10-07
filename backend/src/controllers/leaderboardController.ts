@@ -10,6 +10,7 @@ interface LeaderboardQuery {
   limit?: string
 }
 
+// 按胜率和战绩查询排行榜。
 export async function getLeaderboard(
   req: Request<object, object, object, LeaderboardQuery>,
   res: Response,

@@ -7,6 +7,7 @@ import {
   type GameContext,
 } from '../types/state.js'
 
+// 定义 PvE 状态机中每个阶段的下一阶段。
 function getNextPhase(current: RoundPhase): RoundPhase {
   const currentIndex = ROUND_PHASE_ORDER.indexOf(current)
 
@@ -17,6 +18,7 @@ function getNextPhase(current: RoundPhase): RoundPhase {
   return ROUND_PHASE_ORDER[currentIndex + 1]
 }
 
+// 结算完成后重置为抽牌阶段，并递增回合号以隔离上一回合状态。
 function handleStartRound(ctx: GameContext): GameContext {
   return {
     ...ctx,
@@ -26,6 +28,7 @@ function handleStartRound(ctx: GameContext): GameContext {
   }
 }
 
+// 将状态机按既定阶段顺序推进，末尾自动回到下一回合的抽牌阶段。
 function handleAdvancePhase(ctx: GameContext): GameContext {
   return {
     ...ctx,
@@ -33,6 +36,7 @@ function handleAdvancePhase(ctx: GameContext): GameContext {
   }
 }
 
+// 把战斗结果写入当前游戏状态。
 function handleSetBattleResult(
   ctx: GameContext,
   result: BattleResult,

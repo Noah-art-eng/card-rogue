@@ -33,6 +33,7 @@ interface ScorePanelProps {
   onDiscardDraw: () => void
 }
 
+// 展示本局累计分数、当前回合伤害和牌型预览。
 export default function ScorePanel({
   phase,
   round,

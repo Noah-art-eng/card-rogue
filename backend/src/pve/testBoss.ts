@@ -3,6 +3,7 @@ import { Element } from '../types/card.js'
 import { BattleResult, RoundPhase, type BossState } from '../types/state.js'
 import { calculateChargeAttack } from './boss.js'
 
+// 创建可被测试覆盖字段覆盖的默认 Boss。
 export function createTestBoss(overrides: Partial<BossState> = {}): BossState {
   const attackPerRound = overrides.attackPerRound ?? 3
 

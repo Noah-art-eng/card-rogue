@@ -7,7 +7,6 @@ import GoogleSignInButton from '../components/auth/GoogleSignInButton'
 import LoadingScreen from '../components/common/LoadingScreen'
 import { useAuth } from '../stores/AuthContext'
 
-// Basic email format check — full validation happens server-side.
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const CHARACTER_IMAGES = [
@@ -22,7 +21,6 @@ const CHARACTER_IMAGES = [
 const CAROUSEL_TOTAL = CHARACTER_IMAGES.length;
 const AUTOPLAY_MS = 4500;
 
-/** Purple-first ambience per slide — accent tints feel like coloured light in a violet fantasy hall. */
 const FIRE_THEME = {
   frameKind: 'fire',
   frameMain: 'rgba(196, 181, 253, 0.38)',
@@ -71,10 +69,8 @@ const NATURE_THEME = {
   floorTint: 'rgba(124, 58, 237, 0.12)',
 };
 
-/** Image 1 fire, 2 ice, 3 nature, 4 fire, 5 nature, 6 ice */
 const carouselThemes = [FIRE_THEME, ICE_THEME, NATURE_THEME, FIRE_THEME, NATURE_THEME, ICE_THEME];
 
-/** Per-character vertical nudge by slot — compensates PNG framing (indices: 0/3 fire, 2 grass, 4 turtle). */
 const CHARACTER_SLOT_NUDGE_Y: Readonly<
   Record<number, Partial<Record<'active' | 'prev' | 'next', string>>>
 > = {
@@ -84,6 +80,7 @@ const CHARACTER_SLOT_NUDGE_Y: Readonly<
   4: { active: 'clamp(1.5rem, 3.5dvh, 2.75rem)' },
 };
 
+// 为不同角色预留轻微纵向偏移，让轮播卡片的视觉重心保持一致。
 function characterSlotNudgeY(
   index: number,
   slot: 'active' | 'prev' | 'next' | 'hidden',
@@ -92,6 +89,7 @@ function characterSlotNudgeY(
   return CHARACTER_SLOT_NUDGE_Y[index]?.[slot] ?? '0';
 }
 
+// 登录前拦截明显不合法的邮箱和密码输入，避免发送无效请求。
 function validate(email: string, password: string): string | null {
   if (!email.trim()) return 'Email is required.'
   if (!EMAIL_REGEX.test(email)) return 'Enter a valid email address.'
@@ -99,6 +97,7 @@ function validate(email: string, password: string): string | null {
   return null
 }
 
+// 将登录请求失败转换为页面可直接展示的提示语。
 function getLoginErrorMessage(error: unknown): string {
   if (axios.isAxiosError(error) && typeof error.response?.data?.message === 'string') {
     return error.response.data.message
@@ -113,7 +112,7 @@ function getLoginErrorMessage(error: unknown): string {
   return 'Login failed. Please try again.'
 }
 
-// Stacked carousel: only prev / active / next are visible — overlap near center behind hero.
+// 根据当前焦点计算角色轮播中每张图片的位置、缩放和层级。
 function getCarouselLayout(index: number, activeIndex: number, total: number): {
   slot: 'active' | 'prev' | 'next' | 'hidden'
   style: CSSProperties
@@ -176,6 +175,7 @@ function getCarouselLayout(index: number, activeIndex: number, total: number): {
   };
 }
 
+// 登录页面，处理账号密码登录、Google 登录和登录后的页面跳转。
 export default function LoginPage() {
   const { isAuthenticated, setAuth } = useAuth()
   const navigate = useNavigate()
@@ -187,19 +187,21 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [activeIndex, setActiveIndex] = useState(0)
 
+  // 切换到指定角色，并重置轮播自动播放的等待时间。
   const goTo = useCallback((idx: number) => {
     setActiveIndex(((idx % CAROUSEL_TOTAL) + CAROUSEL_TOTAL) % CAROUSEL_TOTAL)
   }, [])
 
+  // 切换到轮播中的上一位角色。
   const goPrev = useCallback(() => {
     setActiveIndex((i) => (i - 1 + CAROUSEL_TOTAL) % CAROUSEL_TOTAL)
   }, [])
 
+  // 切换到轮播中的下一位角色。
   const goNext = useCallback(() => {
     setActiveIndex((i) => (i + 1) % CAROUSEL_TOTAL)
   }, [])
 
-  // Stop any stray media audio (e.g. leftover BGM from reference build tabs).
   useEffect(() => {
     document.querySelectorAll('audio').forEach((node) => {
       node.pause()
@@ -207,7 +209,6 @@ export default function LoginPage() {
     })
   }, [])
 
-  // Autoplay — skipped if the user prefers reduced motion.
   useEffect(() => {
     const mq = typeof window !== 'undefined'
       ? window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -222,11 +223,11 @@ export default function LoginPage() {
     [activeIndex],
   );
 
-  // ── Guard: already authenticated ───────────────────────────────────────────
   if (isAuthenticated) {
     return <Navigate to="/lobby" replace />
   }
 
+  // 登录成功后写入认证上下文，并回到用户进入登录页前的目标页面。
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
@@ -257,7 +258,6 @@ export default function LoginPage() {
     >
       {loading ? <LoadingScreen message="Signing in…" /> : null}
       <style>{`
-        /* Root page — base tint follows theme */
         .login-page-root {
           transition: background-color 800ms ease;
         }
@@ -278,7 +278,6 @@ export default function LoginPage() {
           }
         }
 
-        /* Subtle ambient pulse on large glows only — slow, low contrast */
         .login-bg-breathe {
           animation: login-bg-breathe-kf 6.5s ease-in-out infinite;
           will-change: transform, opacity;
@@ -326,7 +325,6 @@ export default function LoginPage() {
           initial-value: rgba(15, 5, 25, 0.55);
         }
 
-        /* Left login card — themed fantasy frame (CSS vars from active carousel theme) */
         .login-form-fantasy-card {
           position: relative;
           border-radius: 1.75rem;
@@ -348,7 +346,6 @@ export default function LoginPage() {
           border-radius: inherit;
         }
 
-        /* Content above decorative frame */
         .login-form-fantasy-card > *:not(.login-form-frame-stack) {
           position: relative;
           z-index: 1;
@@ -362,7 +359,6 @@ export default function LoginPage() {
           border-radius: inherit;
         }
 
-        /* Soft outward glow */
         .login-form-frame-blur {
           position: absolute;
           inset: -10px;
@@ -377,7 +373,6 @@ export default function LoginPage() {
           transition: opacity 820ms ease, filter 820ms ease;
         }
 
-        /* Hairline rim + depth */
         .login-form-frame-rim {
           position: absolute;
           inset: 0;
@@ -391,7 +386,6 @@ export default function LoginPage() {
             0 20px 42px rgba(0, 0, 0, 0.42);
         }
 
-        /* Animated accent wash (no layout impact) */
         .login-form-frame-pulse {
           position: absolute;
           inset: 0;
@@ -446,7 +440,6 @@ export default function LoginPage() {
           }
         }
 
-        /* Two-column shell (siblings — no shared card border) */
         .login-page-layout {
           width: min(94vw, var(--cg-page-max-width, 1360px));
         }
@@ -454,7 +447,6 @@ export default function LoginPage() {
           width: 100%;
           max-height: min(78dvh, calc(100dvh - var(--navbar-height) - 0.5rem));
         }
-        /* Small / mid laptop: portrait card — narrow width, height from viewport (not aggressive dvh caps) */
         @media (min-width: 1024px) and (max-width: 1279px) {
           .login-form-card {
             flex: 0 0 auto;
@@ -472,7 +464,6 @@ export default function LoginPage() {
           }
         }
 
-        /* Carousel column — shorter on laptop so hero does not dominate */
         .login-carousel-shell {
           min-height: min(58dvh, 480px);
         }
@@ -487,7 +478,6 @@ export default function LoginPage() {
           }
         }
 
-        /* Whole-page theme layers — hue crossfade on slide change */
         .login-page-amb-layer {
           transition:
             background 850ms cubic-bezier(0.4, 0, 0.2, 1),
@@ -500,7 +490,6 @@ export default function LoginPage() {
           }
         }
 
-        /* ── Submit button: premium slow breath + soft glow + drifting inner shimmer ─ */
         @keyframes loginButtonBreathe {
           0%, 100% {
             transform: scale(1);
@@ -617,7 +606,6 @@ export default function LoginPage() {
         .login-submit-btn:active:not(:disabled)::before {
           animation-play-state: paused;
         }
-        /* Glow extends below paint box — keep register line out of decal overlap */
         @media (min-width: 1024px) and (max-width: 1511px) {
           .login-form-card .login-submit-btn {
             margin-bottom: 12px;
@@ -679,7 +667,6 @@ export default function LoginPage() {
           }
         }
 
-        /* Stacked carousel — same overlap/spread at all lg+ widths (matches 1024 laptop) */
         .login-carousel-visual {
           --carousel-prev-tx: -24%;
           --carousel-next-tx: 24%;
@@ -692,7 +679,6 @@ export default function LoginPage() {
             --carousel-side-scale: 0.6;
           }
         }
-        /* Hero character — fixed caps; do not grow on ultra-wide (same as 1024) */
         .login-carousel-character {
           width: auto;
           max-width: min(100%, clamp(360px, 50vw, 560px));
@@ -707,7 +693,6 @@ export default function LoginPage() {
           }
         }
 
-        /* Layout positioning — stacked prev / active / next */
         .login-carousel-slide {
           position: absolute;
           inset: 0;

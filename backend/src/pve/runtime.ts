@@ -8,9 +8,10 @@ import { createInitialBossRound } from './boss.js'
 import { playerHpForLayer } from './layerConfig.js'
 import { createInitialRoundState } from './roundState.js'
 
-// Live combat contexts stay process-local; durable saves and archives live in MongoDB instead.
+// 实时战斗状态只保存在当前进程，存档和对局记录才写入 MongoDB。
 const rooms = new Map<string, GameContext>()
 
+// 创建一局 PvE 的初始上下文，按层数准备玩家血量、Boss、牌堆和首回合状态。
 function createInitialContext(roomId: string, userId: string, layer = 1, rogueMode = false): GameContext {
   const roundedLayer = Math.max(1, Math.floor(layer))
   const playerHp = playerHpForLayer(roundedLayer)
@@ -61,6 +62,7 @@ export function createRoom(
   return context
 }
 
+// 判断房间是否运行在肉鸽模式。
 export function isRogueRoom(roomId: string): boolean {
   return rooms.get(roomId)?.rogueMode ?? false
 }
@@ -80,6 +82,7 @@ export function removeRoom(roomId: string): boolean {
   return rooms.delete(roomId)
 }
 
+// 返回当前进程中活跃房间数量。
 export function getRoomCount(): number {
   return rooms.size
 }

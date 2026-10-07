@@ -47,6 +47,7 @@ const DISPLAY_RANK: Record<number, string> = { 1: 'A', 11: 'J', 12: 'Q', 13: 'K'
 const ALL_RANKS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 const MAX_ENERGY = 3
 
+// 展示技能能量和目标选择面板，并把技能操作交回战斗页面发送给服务端。
 export default function SkillBar({
   phase,
   hand,
@@ -73,23 +74,27 @@ export default function SkillBar({
     ? hand.find((c) => c.id === targetCardId) ?? null
     : null
 
+  // 关闭技能选择面板，并清掉尚未提交的目标选择。
   function closePanel() {
     setPanel(null)
     setTargetCardId(null)
   }
 
+  // 打开换色技能面板，让玩家从手牌中选择目标牌。
   function openColorSkill() {
     if (locked) return
     setPanel(panel === 'color' ? null : 'color')
     setTargetCardId(null)
   }
 
+  // 打开改点技能面板，让玩家选择目标牌和新的点数。
   function openRankSkill() {
     if (locked) return
     setPanel(panel === 'rank' ? null : 'rank')
     setTargetCardId(null)
   }
 
+  // 直接触发护盾技能；护盾是否生效以服务端状态为准。
   function openShieldSkill() {
     if (energy <= 0 || shield.onCooldown || shield.active) return
     onUseShield()
@@ -97,12 +102,14 @@ export default function SkillBar({
     window.setTimeout(() => setPanel(null), 1500)
   }
 
+  // 将换色目标提交给父级战斗流程，并关闭当前技能面板。
   function applyColor(next: Element) {
     if (!targetCardId) return
     onUseChangeColor(targetCardId, next)
     closePanel()
   }
 
+  // 将改点目标提交给父级战斗流程，并关闭当前技能面板。
   function applyRank(nextRank: number) {
     if (!targetCardId) return
     onUseChangeRank(targetCardId, nextRank)
@@ -291,6 +298,7 @@ export default function SkillBar({
   )
 }
 
+// 渲染一个技能栏位，并保留锚点供技能面板定位。
 function RefSkillSlot({
   label,
   iconSrc,
@@ -344,6 +352,7 @@ function RefSkillSlot({
   )
 }
 
+// 根据当前技能类型展示换色、改点或护盾的操作面板。
 function SkillPanel({
   title,
   children,
@@ -366,6 +375,7 @@ function SkillPanel({
   )
 }
 
+// 在技能面板中以紧凑样式展示可作为目标的手牌。
 function MiniCardRow({ card, onClick }: { card: Card; onClick: () => void }) {
   const dot = ELEMENT_DOT[card.element] ?? '#888'
   const name = `${ELEMENT_SHORT[card.element]}-${card.displayRank}`

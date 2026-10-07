@@ -16,7 +16,6 @@ async function main() {
   const email = `ld${stamp}@example.com`
   const password = 'designpass1'
 
-  // Login loading overlay (before session exists)
   await page.goto(`${BASE}/login`, { waitUntil: 'networkidle' })
   await page.fill('#email', 'slow@example.com')
   await page.fill('#password', 'wrongpass1')
@@ -29,7 +28,6 @@ async function main() {
   await page.screenshot({ path: join(OUT, 'loading-login.png'), fullPage: false })
   await page.unroute('**/api/auth/login')
 
-  // Register + login to get session
   await page.goto(`${BASE}/register`, { waitUntil: 'networkidle' })
   await page.fill('#username', username)
   await page.fill('#email', email)
@@ -39,7 +37,6 @@ async function main() {
   await page.waitForTimeout(900)
   await page.screenshot({ path: join(OUT, 'transition-lobby.png'), fullPage: false })
 
-  // Lobby start game loading overlay
   await page.getByRole('button', { name: /start solo pve/i }).click()
   await page.waitForTimeout(280)
   await page.screenshot({ path: join(OUT, 'loading-lobby-start.png'), fullPage: false })

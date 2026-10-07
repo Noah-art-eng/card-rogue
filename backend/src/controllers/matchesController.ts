@@ -3,6 +3,7 @@ import type { Response } from 'express'
 import type { AuthRequest } from '../middleware/authMiddleware.js'
 import { getRecentMatchesForUser } from '../services/matchArchive.js'
 
+// 读取当前登录用户最近的对局历史。
 export async function getRecentMatches(req: AuthRequest, res: Response): Promise<void> {
   const userId = req.auth?.userId
 

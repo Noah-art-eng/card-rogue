@@ -8,6 +8,7 @@ interface XpRecord {
   awardedKeys: string[]
 }
 
+// 从本地经验缓存读取用户记录，缺失或损坏时安全回退为空记录。
 function readRecord(userId: string): XpRecord {
   try {
     const raw = localStorage.getItem(`${KEY_PREFIX}${userId}`)
@@ -22,6 +23,7 @@ function readRecord(userId: string): XpRecord {
   }
 }
 
+// 将用户经验记录写入本地缓存，供大厅立即展示进度。
 function writeRecord(userId: string, record: XpRecord): void {
   localStorage.setItem(
     `${KEY_PREFIX}${userId}`,
@@ -32,6 +34,7 @@ function writeRecord(userId: string, record: XpRecord): void {
   )
 }
 
+// 合并服务端经验与本地未同步奖励，避免结算后进度条延迟更新。
 export function getSyncedTotalXp(
   userId: string,
   stats: {
@@ -52,7 +55,7 @@ export function getSyncedTotalXp(
   return merged
 }
 
-/** Idempotent per matchKey — returns XP actually added this call. */
+// 按对局唯一键追加本地经验，重复结算时不会重复发放。
 export function awardMatchXp(userId: string, matchKey: string, amount: number): number {
   const gain = Math.max(0, Math.floor(Number(amount) || 0))
   if (gain <= 0 || !matchKey) return 0
@@ -68,6 +71,7 @@ export function awardMatchXp(userId: string, matchKey: string, amount: number): 
   return gain
 }
 
+// 用户退出或切换账号时清除对应的本地经验缓存。
 export function clearUserXp(userId: string): void {
   localStorage.removeItem(`${KEY_PREFIX}${userId}`)
 }

@@ -9,7 +9,7 @@ import { useAuth } from '../stores/AuthContext'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-/** Inline SVG glyphs for input leading cells — stays file-local only */
+// 输入框前缀图标只在注册页使用，避免为三个小图标额外建立组件文件。
 function IconUserMini() {
   return (
     <svg className="h-[1.125rem] w-[1.125rem] text-violet-300/90 sm:h-5 sm:w-5" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -28,6 +28,7 @@ function IconUserMini() {
   );
 }
 
+// 注册表单邮箱输入框使用的图标。
 function IconMailMini() {
   return (
     <svg className="h-[1.125rem] w-[1.125rem] text-violet-300/90 sm:h-5 sm:w-5" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -42,6 +43,7 @@ function IconMailMini() {
   );
 }
 
+// 注册表单密码输入框使用的图标。
 function IconLockMini() {
   return (
     <svg className="h-[1.125rem] w-[1.125rem] text-violet-300/90 sm:h-5 sm:w-5" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -57,6 +59,7 @@ function IconLockMini() {
   );
 }
 
+// 注册前校验昵称、邮箱和密码，避免将明显错误的数据提交给服务端。
 function validate(username: string, email: string, password: string): string | null {
   const trimmedUsername = username.trim()
   if (!trimmedUsername) return 'Username is required.'
@@ -70,6 +73,7 @@ function validate(username: string, email: string, password: string): string | n
   return null
 }
 
+// 将注册或自动登录失败转换为页面可直接展示的提示语。
 function getRegisterErrorMessage(error: unknown): string {
   if (axios.isAxiosError(error) && typeof error.response?.data?.message === 'string') {
     return error.response.data.message
@@ -108,6 +112,7 @@ const BENEFITS = [
   },
 ];
 
+// 注册页面，创建账号后立即登录并跳转到游戏大厅。
 export default function RegisterPage() {
   const { isAuthenticated, setAuth } = useAuth()
   const navigate = useNavigate()
@@ -122,6 +127,7 @@ export default function RegisterPage() {
     return <Navigate to="/lobby" replace />
   }
 
+  // 注册成功后复用登录流程建立认证状态，避免用户再输入一次密码。
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
@@ -237,7 +243,7 @@ export default function RegisterPage() {
             opacity: 0;
           }
         }
-        /* Single stronger pulse — nature / fire / water via --icon-glow only */
+        /* 只保留一次更明显的脉冲，颜色由 --icon-glow 决定。 */
         @keyframes elementalIconBreathe {
           0%, 100% {
             transform: scale(1);
@@ -304,7 +310,7 @@ export default function RegisterPage() {
             filter: brightness(1.1) drop-shadow(0 0 20px var(--icon-glow)) !important;
           }
         }
-        /* 1024–1279 — narrower left scrim so center crystal shows between form and benefits */
+        /* 1024–1279 宽度下缩窄左侧遮罩，让表单和权益之间仍能看到中央水晶。 */
         @media (min-width: 1024px) and (max-width: 1279px) {
           .register-hero-scrim {
             background: linear-gradient(

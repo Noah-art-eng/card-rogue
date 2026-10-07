@@ -14,6 +14,7 @@ export interface DeckState {
   hand: Card[]
 }
 
+// 按元素和点数创建一张初始牌面。
 export function createCard(element: Element, rank: number): Card {
   return {
     id: `${element}_${rank}`,
@@ -24,7 +25,7 @@ export function createCard(element: Element, rank: number): Card {
   }
 }
 
-// id is a stable card instance identity used by selection and Socket synchronization; transforms keep it unchanged.
+// 只改牌面属性，不改 id。id 是固定身份，选牌和 Socket 同步都依赖它。
 export function changeCardElement(card: Card, targetElement: Element): Card {
   return {
     ...card,
@@ -32,6 +33,7 @@ export function changeCardElement(card: Card, targetElement: Element): Card {
   }
 }
 
+// 只更新点数相关属性，保留稳定卡牌身份。
 export function changeCardRank(card: Card, targetRank: number): Card {
   return {
     ...card,
@@ -41,6 +43,7 @@ export function changeCardRank(card: Card, targetRank: number): Card {
   }
 }
 
+// 生成包含三种元素和全部点数的完整牌堆。
 export function createFullDeck(): Card[] {
   const deck: Card[] = []
 
@@ -65,6 +68,7 @@ export function shuffle<T>(items: T[]): T[] {
   return shuffled
 }
 
+// 创建并洗牌新的牌堆状态。
 export function initDeckState(): DeckState {
   const deck = shuffle(createFullDeck())
 
@@ -75,6 +79,7 @@ export function initDeckState(): DeckState {
   }
 }
 
+// 牌堆耗尽时洗回弃牌堆继续抽牌。
 function recycleDiscardPile(state: DeckState): void {
   if (state.discardPile.length === 0) {
     return
@@ -100,6 +105,7 @@ export function drawCards(state: DeckState, count: number): void {
   }
 }
 
+// 把指定手牌送入弃牌堆，再补回同等数量的新牌。
 export function shuffleHandCards(state: DeckState, cardsToShuffle: Card[]): void {
   const shuffleIds = new Set(cardsToShuffle.map((card) => card.id))
 

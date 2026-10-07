@@ -7,51 +7,39 @@ interface ShowcaseHeroSectionProps {
   setFanHovered: Dispatch<SetStateAction<boolean>>;
 }
 
-/** Slide strip: GPU translate only; timing after transform settles + idle read time */
 const SHOWCASE = {
-  /** Must match --navbar-height in Navbar.jsx (3.5 / 4 / 5 rem by breakpoint) */
   SLIDE_H: 'calc(100dvh - var(--navbar-height))',
   STRIP_MS: 920,
   STRIP_EASE: 'cubic-bezier(0.4, 0, 0.2, 1)',
-  /** ms after strip lands — entrance animations finish inside this window */
   ENTRANCE_DONE_MS: [1800, 1750, 1050, 1950, 2000],
   IDLE_MS: [2200, 2350, 2350, 2500, 2200],
   LOOP_RESET_DEBOUNCE_MS: 48,
 };
 
-// ─── Hero fan — 3 large cards, individually placed, diagonal portrait tilt ───
-// Baseline layout at 350×490; HERO_FAN_RATIO scales visual size ~12.5% for desktop.
 const HERO_FAN_RATIO = 0.875;
 const HERO_CARD_BASE_W = 350;
 const HERO_CARD_BASE_H = 490;
 const CARD_W = Math.round(HERO_CARD_BASE_W * HERO_FAN_RATIO);
 const CARD_H = Math.round(HERO_CARD_BASE_H * HERO_FAN_RATIO);
 
-// Spacing 275px at baseline — scaled with fan ratio so overlap stays proportional.
 const HERO_CARDS = [
   { src: '/cards/card_35.png', left: 0, top: Math.round(55 * HERO_FAN_RATIO), rotate: -8, z: 20, opacity: 0.88 },
   { src: '/cards/card_01.png', left: Math.round(275 * HERO_FAN_RATIO), top: Math.round(10 * HERO_FAN_RATIO), rotate: 3, z: 50, opacity: 1.00 },
   { src: '/cards/card_20.png', left: Math.round(545 * HERO_FAN_RATIO), top: Math.round(65 * HERO_FAN_RATIO), rotate: 10, z: 30, opacity: 0.88 },
 ];
 
-// On hover: side cards push outward, centre lifts (offsets scaled with fan)
 const FAN_HOVER = [
   { dx: Math.round(-22 * HERO_FAN_RATIO), dy: Math.round(8 * HERO_FAN_RATIO), dr: -4 },
   { dx: 0, dy: Math.round(-14 * HERO_FAN_RATIO), dr: 0 },
   { dx: Math.round(22 * HERO_FAN_RATIO), dy: Math.round(10 * HERO_FAN_RATIO), dr: 4 },
 ];
 
-// Ghost silhouettes — offsets from matching HERO_CARDS slot so stacks stay visually
-// glued when `.hero-fan-scale-wrapper` applies responsive scale (matches foreground fan).
 const HERO_GHOST_TUNE = [
   { dx: -14, dy: -88, rotateDelta: -8, scale: 1.12, opacity: 0.22 },
   { dx: -12, dy: -94, rotateDelta: -3, scale: 1.06, opacity: 0.24 },
   { dx: -10, dy: -86, rotateDelta: 5, scale: 1.10, opacity: 0.22 },
 ];
 
-// Section 2 — 5 fan cards spread in an arc around/before the boss
-// Cards at higher right% are clearly visible; lower right% are partially behind boss
-// Section 2 fan — must NOT reuse Hero cards (card_35, card_01, card_20)
 const S2_FAN_CARDS = [
   { src: '/cards/card_07.png', right: '54%', top: '10%', rotate: -22, opacity: 0.72 },
   { src: '/cards/card_27.png', right: '44%', top:  '7%', rotate: -10, opacity: 0.80 },
@@ -60,7 +48,6 @@ const S2_FAN_CARDS = [
   { src: '/cards/card_33.png', right: '20%', top: '13%', rotate:  23, opacity: 0.58 },
 ];
 
-// Section 3 — 3 core element cards with per-element glow tones
 const S3_CARDS = [
   {
     src: '/cards/card_12.png', label: 'Water',
@@ -82,14 +69,13 @@ const S3_CARDS = [
   },
 ];
 
-// Section 4 — 3 bare element icons, no tile containers
 const S4_TILES = [
   { src: '/images/icon-water.png',  label: 'Water',  floatClass: 's4-float-1', iconClass: 's4-icon s4-icon-water'  },
   { src: '/images/icon-fire.png',   label: 'Fire',   floatClass: 's4-float-2', iconClass: 's4-icon s4-icon-fire'   },
   { src: '/images/icon-nature.png', label: 'Nature', floatClass: 's4-float-3', iconClass: 's4-icon s4-icon-nature' },
 ];
 
-/** Shared hero markup — slide 0 & 4; entrance stagger via slot [data-entered] + .hero-stagger-* (no transform on hover targets) */
+// 首页首屏展示项目的核心卡牌玩法，并协调卡牌扇形和悬停动画。
 function ShowcaseHeroSection({ innerKey, fanHovered, setFanHovered }: ShowcaseHeroSectionProps) {
   return (
     <>
@@ -384,6 +370,7 @@ function ShowcaseHeroSection({ innerKey, fanHovered, setFanHovered }: ShowcaseHe
   );
 }
 
+// 项目首页，控制功能展示轮播和进入游戏的入口。
 function HomePage() {
   const [fanHovered, setFanHovered] = useState(false);
 
@@ -400,12 +387,13 @@ function HomePage() {
   const [s2FanTick, setS2FanTick] = useState(0);
   const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // 切换展示页时同步 DOM 位移和当前索引，保证自动轮播与手动操作一致。
   const setSlideI = (i: number) => {
     slideIndexRef.current = i;
     setSlideIndex(i);
   };
 
-  /** After landing on slide `idx`, allow entrance CSS */
+  // 标记当前页面已完成入场动画，避免轮播切换时重复播放。
   const markEntered = (idx: number) => {
     setSlideEntered((prev) => {
       const next = [...prev];
@@ -417,7 +405,7 @@ function HomePage() {
     if (idx === 4) setHeroTick4((k) => k + 1);
   };
 
-  /** Loop jump 4→0: land on real Hero already matching clone end-state (no replay = no visible jump) */
+  // 到达副本页后无动画跳回首页，使轮播可以连续循环。
   const resetLoopInstant = () => {
     setHeroSoftLanding(true);
     setStripTransition('none');
@@ -431,6 +419,7 @@ function HomePage() {
     });
   };
 
+  // 推进到下一张展示页，并在末尾使用副本页完成无跳动循环。
   const goNextSlide = () => {
     const i = slideIndexRef.current;
     if (i === 0) setHeroSoftLanding(false);
@@ -467,9 +456,9 @@ function HomePage() {
     };
   }, [slideEntered, slideIndex]);
 
+  // 只响应轮播轨道自身的过渡结束事件，子元素动画不应改变轮播状态。
   const onStripTransitionEnd = (e: TransitionEvent<HTMLDivElement>) => {
     if (e.propertyName !== 'transform') return;
-    /* Child hover transitions (fan cards, section 3 faces, etc.) bubble — ignore anything but the strip */
     if (e.target !== e.currentTarget) return;
     markEntered(slideIndexRef.current);
   };
@@ -489,7 +478,6 @@ function HomePage() {
           0%, 100% { transform: translateY(0px); }
           50%       { transform: translateY(-8px); }
         }
-        /* Per-card stagger reveal — inner wrapper only (outer keeps rotation) */
         @keyframes s2CardReveal {
           0%   { opacity: 0; transform: scale(0.85) translateY(20px); }
           100% { opacity: 1; transform: scale(1)    translateY(0px);  }
@@ -504,7 +492,6 @@ function HomePage() {
         .boss-float   { animation: floatBoss    4.5s ease-in-out infinite; }
         .s2-fan-drift { animation: s2CardsDrift 5.5s ease-in-out infinite; }
 
-        /* Fan wrapper: hover lift only — no reveal animation on wrapper */
         .s2-cards-fan {
           transition: transform 0.42s cubic-bezier(.34,1.4,.64,1);
         }
@@ -518,7 +505,6 @@ function HomePage() {
           filter: brightness(1.10);
         }
 
-        /* Fan cards: transition on transform so hover spread animates */
         .fan-card {
           transition: transform 0.42s cubic-bezier(.34,1.4,.64,1),
                       opacity   0.30s ease,
@@ -566,47 +552,39 @@ function HomePage() {
           transform: rotate(-5deg) scale(1.07) translateY(-6px);
         }
 
-        /* ── Section 4 — skill tiles ───────────────────────────────── */
         @keyframes s4TileFloat {
           0%, 100% { transform: translateY(0px);   }
           50%       { transform: translateY(-12px); }
         }
-        /* Staggered float delays per tile */
         .s4-float-1 { animation: s4TileFloat 4.2s ease-in-out 0.0s infinite; }
         .s4-float-2 { animation: s4TileFloat 4.2s ease-in-out 0.9s infinite; }
         .s4-float-3 { animation: s4TileFloat 4.2s ease-in-out 1.8s infinite; }
 
-        /* Bare icon — no container, only the image + drop-shadow glow */
         .s4-icon {
           display: block;
           cursor: pointer;
           transition: transform 0.34s cubic-bezier(.34,1.4,.64,1),
                       filter  0.34s ease;
         }
-        /* Resting glow per element */
         .s4-icon-water  { filter: drop-shadow(0 0 18px rgba(56,189,248,0.62)); }
         .s4-icon-fire   { filter: drop-shadow(0 0 18px rgba(251,113,0,0.68));  }
         .s4-icon-nature { filter: drop-shadow(0 0 16px rgba(52,211,153,0.55)); }
 
-        /* Hover: lift + stronger glow (transform via .s4-icon, filter per element) */
         .s4-icon:hover { transform: scale(1.14) translateY(-10px); }
         .s4-icon-water:hover  { filter: drop-shadow(0 0 32px rgba(56,189,248,0.95)) brightness(1.08); }
         .s4-icon-fire:hover   { filter: drop-shadow(0 0 32px rgba(251,113,0,1.00))  brightness(1.10); }
         .s4-icon-nature:hover { filter: drop-shadow(0 0 32px rgba(52,211,153,0.90)) brightness(1.08); }
 
-        /* ── Section 3 — element cards ─────────────────────────────── */
         .s3-card-face {
           transition: transform 0.38s cubic-bezier(.34,1.4,.64,1),
                       filter 0.38s ease;
           cursor: pointer;
         }
-        /* Hover target is the static column — avoids jitter when the card lifts away from the cursor */
         .s3-card-col:hover .s3-card-face {
           transform: translateY(-12px) scale(1.04);
           filter: brightness(1.08);
         }
 
-        /* ═══ Hero slides 0 & 4 — text first, then 3 fan cards L→C→R (entrance only on .hero-fan-entrance-*) ═══ */
         @keyframes heroStaggerUp {
           from { opacity: 0; transform: translate3d(0, 36px, 0); }
           to   { opacity: 1; transform: translate3d(0, 0, 0); }
@@ -639,7 +617,6 @@ function HomePage() {
         .showcase-slide-slot[data-showcase-slide="4"][data-entered="true"] .hero-stagger-subcta {
           animation: heroStaggerUp 0.88s cubic-bezier(0.45, 0, 0.15, 1) 0.22s both;
         }
-        /* Per-card fan — left(i=0) → centre → right; skip replay on soft loop landing (slide 0) */
         .showcase-slide-slot[data-showcase-slide="0"][data-entered="true"]:not([data-hero-soft-landing="true"]) .hero-fan-entrance-1,
         .showcase-slide-slot[data-showcase-slide="4"][data-entered="true"] .hero-fan-entrance-1 {
           animation: heroFanCardIn 0.72s cubic-bezier(0.45, 0, 0.15, 1) 0.48s both;
@@ -694,7 +671,6 @@ function HomePage() {
           animation: showcasePanelFromLeft 1.08s cubic-bezier(0.45, 0, 0.15, 1) forwards;
         }
 
-        /* Skills — idle until entered */
         .showcase-slide-slot[data-showcase-slide="1"]:not([data-entered="true"]) .showcase-s4-panel-anim {
           opacity: 0;
           transform: translate3d(-10%, 0, 0);
@@ -704,7 +680,6 @@ function HomePage() {
           transform: scale(0.9) translate3d(0, 28px, 0);
         }
 
-        /* Core — entrance wrappers idle (transform only on .showcase-s3-entrance-*); hover only on .s3-card-face */
         .showcase-slide-slot[data-showcase-slide="2"]:not([data-entered="true"]) .showcase-s3-entrance-1,
         .showcase-slide-slot[data-showcase-slide="2"]:not([data-entered="true"]) .showcase-s3-entrance-2,
         .showcase-slide-slot[data-showcase-slide="2"]:not([data-entered="true"]) .showcase-s3-entrance-3 {
@@ -712,7 +687,6 @@ function HomePage() {
           transform: scale(0.9) translate3d(0, 48px, 0);
         }
 
-        /* PvE — panel + fan idle */
         .showcase-slide-slot[data-showcase-slide="3"]:not([data-entered="true"]) .showcase-s2-panel-anim {
           opacity: 0;
           transform: translate3d(-10%, 0, 0);
@@ -744,7 +718,6 @@ function HomePage() {
           animation: showcaseIconPop 0.74s cubic-bezier(0.45, 0, 0.15, 1) 1.38s both;
         }
 
-        /* Section 3 — showcase stagger */
         @keyframes showcaseS3Card {
           from { opacity: 0; transform: scale(0.9) translate3d(0, 36px, 0); }
           to   { opacity: 1; transform: scale(1) translate3d(0, 0, 0); }
@@ -759,7 +732,6 @@ function HomePage() {
           animation: showcaseS3Card 0.72s cubic-bezier(0.45, 0, 0.15, 1) 0.44s both;
         }
 
-        /* Skills / PvE panels — capped via shared token (no 1512+ jump) */
         .showcase-s4-panel-responsive {
           width: 100%;
           max-width: var(--cg-showcase-panel-max, min(100%, 1180px));
@@ -772,7 +744,6 @@ function HomePage() {
           min-height: clamp(356px, 50dvh, 488px);
         }
 
-        /* Laptop: icon cluster vw matches scaled panel (~980/760 aspect) */
         @media (max-width: 1511px) {
           .showcase-s4-icons-cluster {
             width: clamp(306px, 36vw, 680px);
@@ -780,7 +751,6 @@ function HomePage() {
           }
         }
 
-        /* ── Responsive: hero fan scale ─────────────────────────────────────────
            The wrapper is separate from .fan-float so the float animation's own
            transform (translateY) is unaffected. Scale anchors at left-center so
            the left card stays in place and the group compresses rightward.       */
@@ -799,7 +769,6 @@ function HomePage() {
         @media (max-width: 1380px) {
           .hero-fan-scale-wrapper { transform: scale(0.72); transform-origin: left center; }
         }
-        /* 1024–1279: tighter scale so right card + rotation stays in frame (cards only; glow layer is sibling) */
         @media (min-width: 1024px) and (max-width: 1279px) {
           .hero-fan-scale-wrapper--cards {
             transform: scale(0.625);
@@ -989,14 +958,10 @@ function HomePage() {
                 }}
               >
                 {[
-                  /* Water — lower-left, tilted left, z behind */
                   { tile: S4_TILES[0], left: '0%',    top: '40.8%', rotate: -10, z: 1 },
-                  /* Fire  — center-top, hero icon, z front */
                   { tile: S4_TILES[1], left: '26.5%', top: '0%',    rotate:   3, z: 3 },
-                  /* Nature — right, mid-height, z middle */
                   { tile: S4_TILES[2], right: '0%',   top: '25%',   rotate:  11, z: 2 },
                 ].map(({ tile, left, top, rotate, right, z }, i) => (
-                  /* Outer — static position + rotation */
                   <div
                     key={i}
                     style={{
@@ -1341,7 +1306,6 @@ function HomePage() {
                 style={{ zIndex: 4 }}
               >
                 {S2_FAN_CARDS.map((c, i) => (
-                  /* Outer — position + rotation, not animated */
                   <div
                     key={i}
                     className="s2-fan-card absolute"
@@ -1399,7 +1363,6 @@ function HomePage() {
                     width: '100%',
                     height: '100%',
                     objectFit: 'cover',
-                    /* clip-path hides the dark square corners of the framed image */
                     clipPath: 'circle(47% at 50% 50%)',
                     filter:
                       'drop-shadow(0 0 44px rgba(109,40,217,0.80)) ' +

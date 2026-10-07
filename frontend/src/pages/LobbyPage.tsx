@@ -23,6 +23,7 @@ const LOBBY_SEASON_ICON_URL = '/lobby/season-icon.PNG'
 const LOBBY_BACKGROUND_VIDEO_URL = '/lobby/lobbyBackground.mp4'
 const SEASON_END_MS = new Date('2026-09-01T00:00:00Z').getTime()
 
+// 将赛季结束的剩余毫秒数转换为大厅横幅可展示的倒计时。
 function formatSeasonCountdown(msRemaining: number): string | null {
   if (msRemaining <= 0) return null
   const totalMinutes = Math.floor(msRemaining / 60_000)
@@ -41,6 +42,7 @@ interface RecentMatchRow {
   isWin: boolean
 }
 
+// 将最近对局结束时间转换为相对时间，方便大厅快速浏览战绩。
 function formatMatchEndedRelative(endedAtInput: string | null | undefined): string {
   if (endedAtInput == null || endedAtInput === '') return ''
   const d = new Date(endedAtInput)
@@ -57,6 +59,7 @@ function formatMatchEndedRelative(endedAtInput: string | null | undefined): stri
   const hr = Math.floor(min / 60)
   if (hr < 24) return hr === 1 ? '1 hour ago' : `${hr} hours ago`
 
+  // 归一到当天零点后比较日期，避免不足 24 小时的跨日记录显示错误。
   const sod = (t: Date) => new Date(t.getFullYear(), t.getMonth(), t.getDate()).getTime()
   const calendarDays = Math.round((sod(now) - sod(d)) / 86_400_000)
   if (calendarDays === 1) return 'Yesterday'
@@ -64,6 +67,7 @@ function formatMatchEndedRelative(endedAtInput: string | null | undefined): stri
   return `${Math.max(1, Math.floor(hr / 24))} days ago`
 }
 
+// 游戏大厅，展示用户资料、最近对局，并提供普通 PvE 与肉鸽模式入口。
 export default function LobbyPage() {
   const { user, updateUser } = useAuth()
   const navigate = useNavigate()
@@ -84,11 +88,13 @@ export default function LobbyPage() {
   const displayNameCaps = displayName.toUpperCase()
   const hasAvatarImage = hasCustomAvatar(user?.avatar)
 
+  // 用户点击头像区域时打开隐藏的文件选择器。
   const handleAvatarPick = useCallback(() => {
     if (avatarUploading) return
     avatarInputRef.current?.click()
   }, [avatarUploading])
 
+  // 选中头像文件后上传到服务端，并用返回的资料刷新认证上下文。
   const handleAvatarChange = useCallback(
     async (event: ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0]
@@ -130,6 +136,7 @@ export default function LobbyPage() {
   useEffect(() => {
     let timer: ReturnType<typeof setInterval> | null = null
 
+    // 每分钟更新一次赛季倒计时，结束后停止继续显示剩余时间。
     function tick() {
       const next = formatSeasonCountdown(SEASON_END_MS - Date.now())
       if (next === null) {
@@ -153,6 +160,7 @@ export default function LobbyPage() {
   useEffect(() => {
     let cancelled = false
 
+    // 进入大厅后加载最近对局，失败时保留页面其余功能可用。
     async function loadRecent() {
       if (!user) {
         if (!cancelled) {
@@ -207,6 +215,7 @@ export default function LobbyPage() {
   const soloCardGlow =
     'shadow-[0_0_36px_rgba(139,92,246,0.32),0_10px_36px_rgba(0,0,0,0.45)]'
 
+  // 从大厅进入普通 PvE 前先确认用户资料仍有效。
   const handleStartSolo = useCallback(async () => {
     if (startingGame) return
     setStartingGame(true)

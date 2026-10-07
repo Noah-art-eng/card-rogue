@@ -17,7 +17,6 @@ async function main() {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } })
 
   try {
-    // Register (ignore if already exists)
     await page.goto(`${BASE}/register`)
     await page.fill('input[type="email"]', EMAIL)
     await page.fill('input[type="password"]', PASSWORD)
@@ -28,7 +27,6 @@ async function main() {
     await page.click('button[type="submit"]')
     await page.waitForTimeout(1500)
 
-    // Login if register redirected to login or failed
     if (page.url().includes('/login') || !(await page.url()).includes('/lobby')) {
       await page.goto(`${BASE}/login`)
       await page.fill('input[type="email"]', EMAIL)

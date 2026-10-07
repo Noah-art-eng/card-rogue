@@ -9,6 +9,7 @@ interface GameOverlayProps {
   onExitToLobby: () => void
 }
 
+// 根据胜负结果展示结算、重开或返回大厅操作。
 export default function GameOverlay({
   battleResult,
   layer,

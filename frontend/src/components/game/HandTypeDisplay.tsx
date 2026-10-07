@@ -17,6 +17,7 @@ interface HandTypeDisplayProps {
   evaluation: EvaluatorResult
 }
 
+// 展示前端预览出的牌型和预估伤害，最终结算仍以服务端为准。
 export default function HandTypeDisplay({ evaluation }: HandTypeDisplayProps) {
   const { handType, chips, cardChips, mult, total, isDefendReduced } = evaluation
 

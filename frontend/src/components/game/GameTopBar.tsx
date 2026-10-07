@@ -10,6 +10,7 @@ interface GameTopBarProps {
   onToggleMute?: () => void
 }
 
+// 展示当前层数、分数和离开对局入口。
 export default function GameTopBar({
   connected,
   layer,

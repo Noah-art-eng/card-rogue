@@ -19,6 +19,7 @@ interface PlayerHUDProps {
   playerRankTitle?: string
 }
 
+// 展示玩家血量、护盾与受击反馈。
 export default function PlayerHUD({
   hp,
   maxHp,

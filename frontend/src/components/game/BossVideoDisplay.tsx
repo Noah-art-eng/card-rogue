@@ -23,6 +23,7 @@ interface BossVideoDisplayProps {
   onDefeatedAnimationEnd?: () => void
 }
 
+// 按战斗阶段播放 Boss 待机、攻击和倒下视频。
 export default function BossVideoDisplay({
   mode,
   alt = 'Boss',
@@ -43,6 +44,7 @@ export default function BossVideoDisplay({
     defeatedEndNotifiedRef.current = false
   }, [mode])
 
+  // Boss 攻击视频结束时把动画完成信号交回战斗页面。
   function handleEnded() {
     if (mode === 'attack') {
       queueMicrotask(() => onAttackEndedRef.current?.())
@@ -60,7 +62,6 @@ export default function BossVideoDisplay({
       try {
         videoRef.current?.pause()
       } catch {
-        /* noop */
       }
     }
   }
@@ -100,7 +101,6 @@ export default function BossVideoDisplay({
           try {
             v.currentTime = 0
           } catch {
-            /* noop */
           }
           v.play()?.catch(() => {
             setVideoFailed(true)

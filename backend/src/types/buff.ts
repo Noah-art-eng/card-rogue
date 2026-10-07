@@ -73,10 +73,12 @@ export interface Upgrade {
   buff: Buff
 }
 
+// 创建指定元素的筹码倍率强化。
 export function createElementChipMult(element: Element, mult = 1.1): ElementChipMult {
   return { type: 'ELEMENT_CHIP_MULT', element, mult }
 }
 
+// 把强化效果包装成前端可展示的升级选项。
 export function createUpgrade(id: string, label: string, description: string, buff: Buff): Upgrade {
   return { id, label, description, buff }
 }
@@ -87,6 +89,7 @@ export const FIRST_LAYER_UPGRADES: Upgrade[] = [
   createUpgrade('grass_spec', 'Grass Spec', 'Grass cards chip ×1.1', createElementChipMult(ElementEnum.GRASS)),
 ]
 
+// 把已选择的强化叠加到玩家基础属性上。
 export function applyPlayerBuffs(
   buffs: Buff[],
   baseMaxHp: number,
@@ -103,6 +106,7 @@ export function applyPlayerBuffs(
 
 const ELEMENT_NAMES: Record<Element, string> = { WATER: 'Water', FIRE: 'Fire', GRASS: 'Grass' }
 
+// 按元素、层数和已拥有强化生成不重复的奖励候选。
 export function generateUpgradePool(
   chosenElement: Element,
   layer: number,
@@ -175,6 +179,7 @@ export function generateUpgradePool(
   return pool.slice(0, 3)
 }
 
+// 生成强化去重时使用的稳定键。
 export function buffKey(b: Buff): string {
   const el = 'element' in b ? b.element : ''
   return `${b.type}:${el}`

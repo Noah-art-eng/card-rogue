@@ -49,6 +49,7 @@ const BONUS_ICON_MAP: Record<string, string> = {
   ALL_CHIPS_BONUS: '/images/icon-chip+2.png',
 }
 
+// 通关一层后展示可选强化，并将玩家选择提交给肉鸽流程。
 export default function Enhancement({ options, floor, onConfirm }: EnhancementProps) {
   if (!options.length) return null
 

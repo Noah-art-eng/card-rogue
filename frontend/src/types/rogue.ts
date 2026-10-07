@@ -20,6 +20,7 @@ export interface RogueSnapshot {
   stats?: { totalRounds?: number }
 }
 
+// 判断肉鸽存档是否处于可恢复的中断状态。
 export function isResumableRogueRun(snapshot: RogueSnapshot): boolean {
   const layer = snapshot.layer ?? 1
   const buffCount = snapshot.enhancements?.length ?? 0

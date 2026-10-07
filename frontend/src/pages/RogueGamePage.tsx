@@ -44,6 +44,7 @@ const LOSE_OVERLAY_DELAY_MS = 400
 const SHIELD_PULSE_MS = 1500
 const MAX_SELECT = 5
 
+// 肉鸽战斗页面，在 PvE 回合流程外处理存档、强化和下一层推进。
 export default function RogueGamePage() {
   const navigate = useNavigate()
   const { user } = useAuth()
@@ -96,6 +97,7 @@ export default function RogueGamePage() {
   } = useGameAudio()
   const audioUnlockedRef = useRef(false)
 
+  // 首次操作时解锁浏览器音频，避免自动播放策略拦截后续战斗音效。
   const ensureAudioUnlocked = useCallback(() => {
     if (audioUnlockedRef.current) return
     audioUnlockedRef.current = true
@@ -109,16 +111,14 @@ export default function RogueGamePage() {
   enhancementsRef.current = enhancements
   const playerHpRef = useRef(0)
   const floor = gameState?.layer ?? 1
-  /** Client-side card picks for preview (SKILL/SHUFFLE) and UI; synced to server in PLAY/SHUFFLE. */
+  // 预览阶段的选牌先保存在页面；进入出牌或洗牌阶段后再与服务端同步。
   const [selectedCardIds, setSelectedCardIds] = useState<string[]>([])
   const [skillLogEvent, setSkillLogEvent] = useState<{
     kind: 'rank' | 'color'
     id: number
   } | null>(null)
 
-  // ── totalScore: authoritative source is play.score committed per round ───────
-  // Accumulate when phase enters BOSS_ATTACK (boss survived) or battleResult=WIN.
-  // Use a round-keyed Set to prevent double counting on re-renders.
+  // 总分只累加服务端确认的 play.score，用回合键避免 React 重渲染重复计分。
   const [totalScore, setTotalScore] = useState(0)
   const scoredRoundsRef = useRef(new Set<string>())
 
@@ -200,6 +200,7 @@ export default function RogueGamePage() {
   }, [gameState?.player.hp, gameState?.round, gameState?.boss.hp, gameState?.layer, enhancements, gameState?.battleResult])
 
   useEffect(() => {
+    // 页面隐藏或卸载前保存可恢复的肉鸽快照，防止中断后丢失当前进度。
     const save = () => {
       if (!gameState) return
       saveRogueProgress({
@@ -214,7 +215,6 @@ export default function RogueGamePage() {
     return () => window.removeEventListener('beforeunload', save)
   }, [gameState, enhancements])
 
-  // ── totalScore accumulation ───────────────────────────────────────────────
   useEffect(() => {
     if (!gameState) return
     const { phase, round, battleResult, play } = gameState
@@ -255,7 +255,7 @@ export default function RogueGamePage() {
     setSelectedCardIds((prev) => prev.filter((id) => gameState.hand.some((c) => c.id === id)))
   }, [gameState?.hand])
 
-  // ── Pending auto-confirm: after enterPlay + selectCard sync reaches PLAY ──
+  // 从准备阶段切到 PLAY 后，等选牌同步完成再自动确认，避免服务端收到空牌组。
   useEffect(() => {
     if (!socket || !gameState) return
     if (
@@ -285,12 +285,13 @@ export default function RogueGamePage() {
     setSelectedCardIds([])
   }, [playPhase, serverSelectedKey, localSelectedKey, socket, gameState, selectedCardIds.length, playPlay])
 
-  // ── Socket setup ─────────────────────────────────────────────────────────
+  // Socket 只接收服务端权威状态，页面不自行推演战斗结果。
   useEffect(() => {
     if (!rogueReady) return
 
     const gameSocket = createGameSocket()
 
+    // 新建或恢复对局时清掉旧展示状态，避免上一层动画和计时器遗留。
     function resetSessionPresentation() {
       setTotalScore(0)
       setLastPlayScore(0)
@@ -406,7 +407,8 @@ export default function RogueGamePage() {
     }
   }, [rogueReady, restartNonce])
 
-  // ── Battle presentation (boss video + phase banners) ─────────────────────
+  // Boss 攻击期间暂缓血量刷新，等动画结束后再结算画面，避免直接跳血。
+  // 重置或过层时取消尚未发出的动画结算确认，防止旧回合继续推进状态。
   function clearResolveTimer() {
     if (resolveTimerRef.current) {
       clearTimeout(resolveTimerRef.current)
@@ -414,6 +416,7 @@ export default function RogueGamePage() {
     }
   }
 
+  // 停止受击展示的兜底计时器，避免下一次攻击提前结束当前动画。
   function clearHitFallbackTimer() {
     if (hitFallbackTimerRef.current) {
       clearTimeout(hitFallbackTimerRef.current)
@@ -421,6 +424,7 @@ export default function RogueGamePage() {
     }
   }
 
+  // 取消玩家攻击后的延迟分支，避免旧攻击再触发下一层或 Boss 反击展示。
   function clearPostPlayerAttackTimer() {
     if (postPlayerAttackTimerRef.current) {
       clearTimeout(postPlayerAttackTimerRef.current)
@@ -428,6 +432,7 @@ export default function RogueGamePage() {
     }
   }
 
+  // 取消胜利覆盖层的兜底开启，避免离开当前层后重新显示覆盖层。
   function clearWinRevealFallback() {
     if (winRevealFallbackRef.current) {
       clearTimeout(winRevealFallbackRef.current)
@@ -435,6 +440,7 @@ export default function RogueGamePage() {
     }
   }
 
+  // 替换攻击方提示前先取消旧计时器，保证提示按最新阶段关闭。
   function clearBattleBannerTimer() {
     if (battleBannerTimerRef.current) {
       clearTimeout(battleBannerTimerRef.current)
@@ -442,6 +448,7 @@ export default function RogueGamePage() {
     }
   }
 
+  // 新攻击特效开始前撤销旧隐藏任务，避免特效被提前收起。
   function clearAttackEffectTimer() {
     if (attackEffectTimerRef.current) {
       clearTimeout(attackEffectTimerRef.current)
@@ -449,6 +456,7 @@ export default function RogueGamePage() {
     }
   }
 
+  // 新伤害浮字出现前撤销旧隐藏任务，避免不同攻击的浮字相互干扰。
   function clearPlayerDamageFloatTimer() {
     if (playerDamageFloatTimerRef.current) {
       clearTimeout(playerDamageFloatTimerRef.current)
@@ -456,6 +464,7 @@ export default function RogueGamePage() {
     }
   }
 
+  // 结束攻击展示后取消重试，避免过期状态再次写入页面。
   function clearBossAttackUxFlushRetry() {
     if (bossAttackUxFlushRetryRef.current) {
       clearTimeout(bossAttackUxFlushRetryRef.current)
@@ -463,6 +472,7 @@ export default function RogueGamePage() {
     }
   }
 
+  // 护盾状态变化时取消旧闪光计时器，避免视觉状态与技能状态脱节。
   function clearShieldPulseTimer() {
     if (shieldPulseTimerRef.current) {
       clearTimeout(shieldPulseTimerRef.current)
@@ -470,6 +480,7 @@ export default function RogueGamePage() {
     }
   }
 
+  // Boss 攻击开始时先冻结血量显示，等动画结束再展示服务端结算后的数值。
   function beginBossAttackHpHold() {
     bossAttackUxFlushedRef.current = false
     holdHpSyncDuringBossAttackRef.current = true
@@ -477,6 +488,7 @@ export default function RogueGamePage() {
     setBossAttackPresentationHold(true)
   }
 
+  // 将已到达的服务端伤害结果一次性呈现到页面，并补上受击反馈。
   function flushBossAttackPresentation() {
     if (bossAttackUxFlushedRef.current) return
     bossAttackUxFlushedRef.current = true
@@ -509,6 +521,7 @@ export default function RogueGamePage() {
     }
   }
 
+  // 只有服务端状态已推进或伤害已明确时才结束攻击展示，避免画面提前跳血。
   function tryFlushBossAttackUx(): boolean {
     if (bossAttackUxFlushedRef.current) return true
     if (!holdHpSyncDuringBossAttackRef.current) return false
@@ -531,6 +544,7 @@ export default function RogueGamePage() {
     return true
   }
 
+  // 状态稍晚到达时短暂重试展示结算，防止 Boss 攻击动画停在中间状态。
   function requestBossAttackUxFlush() {
     if (tryFlushBossAttackUx()) return
 
@@ -545,6 +559,7 @@ export default function RogueGamePage() {
     }, 80)
   }
 
+  // 玩家攻击特效播完后，根据服务端结果切到过层、胜利或 Boss 反击展示。
   function schedulePostPlayerAttackPresentation() {
     clearPostPlayerAttackTimer()
     postPlayerAttackFlushedRef.current = false
@@ -578,10 +593,12 @@ export default function RogueGamePage() {
     }, ATTACK_EFFECT_VISIBLE_MS)
   }
 
+  // 记录本次确认出的牌，后续攻击特效需要据此判断表现形式。
   function snapshotPlayedCards(cards: Card[]) {
     lastPlayedCardsRef.current = [...cards]
   }
 
+  // 同一回合只播放一次玩家攻击特效和伤害浮字。
   function triggerPlayerAttackPresentation(round: number, score: number) {
     const effectKey = `r${round}-fx-${score}`
     if (attackEffectShownRef.current.has(effectKey)) return
@@ -605,6 +622,7 @@ export default function RogueGamePage() {
     }, ATTACK_EFFECT_VISIBLE_MS)
   }
 
+  // 短暂展示当前攻击方提示，并由计时器自动收起。
   function showBattleBanner(next: PresentationBattlePhase) {
     setBattlePhase(next)
     clearBattleBannerTimer()
@@ -614,10 +632,12 @@ export default function RogueGamePage() {
     }, BATTLE_BANNER_MS)
   }
 
+  // 用回合号生成 Boss 攻击的幂等键，阻止同一段动画重复确认。
   function getBossAttackKey(state: GameState): string {
     return `${state.round}:BOSS_ATTACK`
   }
 
+  // Boss 攻击动画结束后只向服务端确认一次，驱动下一步回合结算。
   function emitResolveAnimationComplete() {
     const gs = gameStateRef.current
     if (!socket || !gs) return
@@ -630,6 +650,7 @@ export default function RogueGamePage() {
     socket.emit('resolveAnimationComplete')
   }
 
+  // 视频结束事件缺失时用超时兜底，避免对局无法离开 Boss 攻击阶段。
   function scheduleBossAttackResolveFallback() {
     const gs = gameStateRef.current
     if (!gs || gs.phase !== 'BOSS_ATTACK' || gs.battleResult !== 'ONGOING') return
@@ -644,6 +665,7 @@ export default function RogueGamePage() {
     }, BOSS_ATTACK_VIDEO_FALLBACK_MS)
   }
 
+  // 收到 Boss 攻击阶段后启动对应动画，并锁住血量直到伤害结果可展示。
   function beginBossAttackPresentation() {
     const gs = gameStateRef.current
     if (!gs) return
@@ -659,6 +681,7 @@ export default function RogueGamePage() {
     scheduleBossAttackResolveFallback()
   }
 
+  // Boss 攻击视频播完后通知服务端继续结算，并尝试刷新页面血量。
   function handleBossAttackEnded() {
     clearResolveTimer()
     emitResolveAnimationComplete()
@@ -666,6 +689,7 @@ export default function RogueGamePage() {
     requestBossAttackUxFlush()
   }
 
+  // Boss 倒下动画完成后才允许展示胜利覆盖层。
   function handleBossDefeatedAnimationEnd() {
     if (pendingLayerRef.current != null) {
       pendingLayerRef.current = null
@@ -757,14 +781,13 @@ export default function RogueGamePage() {
   }, [])
 
 
-  // ── Damage preview evaluator ──────────────────────────────────────────────
   const evaluatorResult = useMemo(() => {
     if (!gameState || previewSelectedCards.length === 0) return null
     return evaluateHand(previewSelectedCards, gameState.bossRound.isDefending)
   }, [gameState?.bossRound.isDefending, previewSelectedCards])
 
-  // ── Handlers ─────────────────────────────────────────────────────────────
 
+  // 在可选牌阶段同步本地与服务端的选牌状态，限制一回合最多五张。
   function handleCardClick(cardId: string) {
     if (!gameState) return
     const { phase } = gameState
@@ -789,11 +812,8 @@ export default function RogueGamePage() {
     })
   }
 
-  /**
-   * Play & Attack — preview picks are local until confirm:
-   * - PLAY: confirmPlay immediately
-   * - SKILL/SHUFFLE: enterPlay, sync picks, auto-confirm in PLAY (pendingConfirmRef)
-   */
+  // 准备和洗牌阶段先同步选牌再进入 PLAY；只有 PLAY 阶段才能真正确认出牌。
+  // 玩家确认出牌后先补齐服务端选牌，再由服务端统一计算伤害和回合结果。
   function handlePlayAttack() {
     if (!socket || !gameState || selectedCardIds.length === 0) return
     ensureAudioUnlocked()
@@ -827,16 +847,14 @@ export default function RogueGamePage() {
     }
   }
 
-  /**
-   * Discard & Draw — one click from SKILL (like original playHand pattern):
-   * enterShuffle → sync picks → shuffleCards on the server in order.
-   */
+  // 从准备阶段洗牌时先进入洗牌状态并同步选牌，保证服务端按同一顺序弃牌和补牌。
   function handleDiscardDraw() {
     if (!socket || !gameState || selectedCardIds.length === 0) return
     ensureAudioUnlocked()
     const { phase, roundState, play } = gameState
     if (roundState.shuffle.remaining <= 0) return
 
+    // 补齐两端选牌差异后再洗牌，保证服务端按用户看到的牌组弃牌和补牌。
     function emitShuffleWithSelection() {
       const serverIds = new Set(play.selectedCards.map((c) => c.id))
       const localIds = new Set(selectedCardIds)
@@ -872,6 +890,7 @@ export default function RogueGamePage() {
     }
   }
 
+  // 在技能阶段请求护盾，实际技能效果仍以服务端返回的状态为准。
   function handleUseShield() {
     if (!socket || gameState?.phase !== 'SKILL') return
     ensureAudioUnlocked()
@@ -879,6 +898,7 @@ export default function RogueGamePage() {
     socket.emit('useSkill', { skillId: 'shield' })
   }
 
+  // 将选中卡牌和目标元素发给服务端，由服务端完成换色和状态同步。
   function handleUseChangeColor(cardId: string, targetElement: Element) {
     if (!socket || gameState?.phase !== 'SKILL' || !cardId) return
     ensureAudioUnlocked()
@@ -887,6 +907,7 @@ export default function RogueGamePage() {
     socket.emit('useSkill', { skillId: 'changeColor', cardId, targetElement })
   }
 
+  // 将选中卡牌和目标点数发给服务端，页面只负责限制合法点数范围。
   function handleUseChangeRank(cardId: string, targetRank: number) {
     if (!socket || gameState?.phase !== 'SKILL' || !cardId) return
     if (targetRank < 1 || targetRank > 13) return
@@ -896,6 +917,7 @@ export default function RogueGamePage() {
     socket.emit('useSkill', { skillId: 'changeRank', cardId, targetRank })
   }
 
+  // 用户确认继续时把存档快照交给新 Socket 会话恢复。
   function continueFromSave() {
     if (!existingSave) return
     pendingRestoreRef.current = existingSave
@@ -904,6 +926,7 @@ export default function RogueGamePage() {
     setRogueReady(true)
   }
 
+  // 用户放弃旧存档后清空本地恢复信息，并从第一层创建新流程。
   function startNewGame() {
     setSaveChoiceVisible(false)
     setExistingSave(null)
@@ -916,6 +939,7 @@ export default function RogueGamePage() {
       .catch(console.error)
   }
 
+  // 记录本层选定的强化，并通知服务端生成下一层战斗状态。
   const confirmEnhancement = useCallback(
     (enhancement: EnhancementOption) => {
       const next = [...enhancementsRef.current, enhancement]
@@ -931,6 +955,7 @@ export default function RogueGamePage() {
     [socket],
   )
 
+  // 失败后从服务端保存的检查点恢复当前层及已获得的强化。
   async function handleRetryFloor() {
     if (!socket) return
     try {
@@ -960,6 +985,7 @@ export default function RogueGamePage() {
     }
   }
 
+  // 结束一局肉鸽后清空存档和页面状态，再重新创建第一层。
   async function handlePlayAgain() {
     victoryTriggeredRef.current = false
     setEnhancements([])
@@ -970,6 +996,7 @@ export default function RogueGamePage() {
     setRestartNonce((value) => value + 1)
   }
 
+  // 主动离开前要求服务端保存当前肉鸽状态，保证下次可以继续。
   async function handleSaveAndExit() {
     if (gameState) {
       await saveRogueProgress({
@@ -983,6 +1010,7 @@ export default function RogueGamePage() {
     navigate('/lobby')
   }
 
+  // 放弃当前肉鸽流程时删除服务端存档，再返回大厅。
   async function handleExitWithoutSaving() {
     await abandonRogueRun().catch(() => {})
     navigate('/lobby')

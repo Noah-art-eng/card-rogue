@@ -15,17 +15,18 @@ const STORAGE_MUTED_SCHEMA = 'cg-game-audio-muted-schema'
 const MUTED_SCHEMA_VERSION = '2'
 const MIN_SFX_INTERVAL_MS = 45
 
+// 将旧版音频偏好迁移到当前存储键，保持升级后的静音设置。
 function migrateMutedPreference(): void {
   try {
     if (localStorage.getItem(STORAGE_MUTED_SCHEMA) === MUTED_SCHEMA_VERSION) return
-    // v2: default unmuted; drop legacy values that may have been written incorrectly.
+    // 新版默认开启声音，旧键可能保存了错误值，所以首次迁移时直接清除。
     localStorage.removeItem(STORAGE_MUTED)
     localStorage.setItem(STORAGE_MUTED_SCHEMA, MUTED_SCHEMA_VERSION)
   } catch {
-    // ignore storage failures
   }
 }
 
+// 从本地偏好读取静音状态，异常时保持默认开启声音。
 function readMutedPreference(): boolean {
   try {
     migrateMutedPreference()
@@ -35,6 +36,7 @@ function readMutedPreference(): boolean {
   }
 }
 
+// 从本地偏好读取音量，并把异常值限制为合法范围。
 function readVolumePreference(): number {
   try {
     const raw = localStorage.getItem(STORAGE_VOLUME)
@@ -46,6 +48,7 @@ function readVolumePreference(): number {
   }
 }
 
+// 保存用户静音偏好，供下次打开页面恢复。
 function persistUserMutedPreference(muted: boolean): void {
   try {
     if (muted) {
@@ -55,7 +58,6 @@ function persistUserMutedPreference(muted: boolean): void {
     }
     localStorage.setItem(STORAGE_MUTED_SCHEMA, MUTED_SCHEMA_VERSION)
   } catch {
-    // ignore storage failures
   }
 }
 
@@ -114,11 +116,10 @@ class GameAudioManager {
     try {
       localStorage.setItem(STORAGE_VOLUME, String(this.sfxVolume))
     } catch {
-      // ignore storage failures
     }
   }
 
-  /** Update runtime mute state without touching persisted user preference. */
+  /** 只更新运行时静音状态，不覆盖用户已保存的偏好。 */
   private applyMuted(muted: boolean): void {
     this.muted = muted
     if (muted) {
@@ -129,7 +130,7 @@ class GameAudioManager {
     this.notifyMutedChange()
   }
 
-  /** Explicit user preference change (mute button). */
+  /** 用户主动切换静音时，同时更新运行时状态和本地偏好。 */
   setMuted(muted: boolean): void {
     this.applyMuted(muted)
     persistUserMutedPreference(muted)
@@ -157,7 +158,7 @@ class GameAudioManager {
       this.bgm.currentTime = 0
       this.bgm.muted = false
     } catch {
-      // browser may still block until a direct gesture; ignore
+      // 浏览器仍可能要求直接手势才能播放；此处等待下一次用户操作再解锁。
     }
 
     if (!this.muted) {

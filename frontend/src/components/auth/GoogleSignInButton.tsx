@@ -12,6 +12,7 @@ interface GoogleSignInButtonProps {
   className?: string
 }
 
+// Google 登录按钮内使用的品牌图标。
 function GoogleLogo() {
   return (
     <svg width="20" height="20" viewBox="0 0 18 18" aria-hidden="true" className="shrink-0">
@@ -35,6 +36,7 @@ function GoogleLogo() {
   )
 }
 
+// 加载 Google 身份脚本并把凭据交给登录页处理。
 export default function GoogleSignInButton({
   variant = 'login',
   className = '',
