@@ -1,3 +1,8 @@
+/**
+ * 浏览器本地 token 的最小读写封装。
+ * API 客户端、Socket 连接和认证上下文通过同一键读取、保存或清除登录身份。
+ */
+
 const TOKEN_KEY = 'card-game-token'
 
 // 读取本地保存的认证 token。

@@ -1,3 +1,8 @@
+/**
+ * 页面使用全局音频管理器的 React Hook。
+ * 它把解锁音频、播放音效、静音和音量控制包装成稳定回调，并订阅静音状态更新界面。
+ */
+
 import { useCallback, useEffect, useState } from 'react'
 
 import { gameAudioManager } from '../utils/audioManager'

@@ -1,3 +1,8 @@
+/**
+ * 战斗页顶部的连接、层数、分数与退出信息。
+ * 它只展示页面已拥有的状态，不参与 PvE 结算。
+ */
+
 import './game-topbar.css'
 
 interface GameTopBarProps {

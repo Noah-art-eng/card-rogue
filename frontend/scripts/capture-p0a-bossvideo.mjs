@@ -1,3 +1,8 @@
+/**
+ * Boss 视频播放场景的自动回归脚本。
+ * 它进入 PvE 对局并捕捉 Boss 视频相关画面，用于检查攻击和倒下动画资源。
+ */
+
 import { chromium } from 'playwright'
 import { mkdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'

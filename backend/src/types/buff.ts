@@ -1,3 +1,8 @@
+/**
+ * 肉鸽强化效果及其应用规则。
+ * 强化池会按层数和元素生成，战斗初始化时再把生命、伤害、抽牌和技能能量效果合并到玩家状态。
+ */
+
 import type { Element, HandType } from './card.js'
 import { Element as ElementEnum } from './card.js'
 

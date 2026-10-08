@@ -1,3 +1,8 @@
+/**
+ * MongoDB 用户账号与战绩统计的文档结构。
+ * 密码、Google 身份、头像和大厅所需统计集中保存在这里，认证与排行榜都会读取它。
+ */
+
 import mongoose, { Schema, type Document, type Model } from 'mongoose'
 
 export interface IUserStats {

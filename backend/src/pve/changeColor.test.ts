@@ -1,3 +1,8 @@
+/**
+ * 换色技能的卡牌实例契约测试。
+ * 它验证元素会改变而稳定 card.id、点数和展示值保持一致，避免选牌和 Socket 定位失效。
+ */
+
 import assert from 'node:assert/strict'
 
 import { Element, HandType } from '../types/card.js'

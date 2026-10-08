@@ -1,3 +1,8 @@
+/**
+ * 服务端卡牌、元素、点数和牌型的数据定义。
+ * 牌堆、牌型识别和伤害计算都以这些基础结构与分数表为准。
+ */
+
 export enum Element {
   WATER = 'WATER',
   FIRE = 'FIRE',

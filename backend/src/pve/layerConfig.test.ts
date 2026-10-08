@@ -1,3 +1,8 @@
+/**
+ * 层数、玩家血量和 Boss 意图权重测试。
+ * 它锁定普通 PvE 的层数归一化，以及不同层级对生存数值和 Boss 行为的影响。
+ */
+
 import assert from 'node:assert/strict'
 
 import { createBossForLayer } from './bossConfig.js'

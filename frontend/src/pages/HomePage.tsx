@@ -1,3 +1,8 @@
+/**
+ * 项目首页的展示和轮播页面。
+ * 它组织卡牌、Boss 和玩法展示区，并管理自动轮播、手动切换及进入游戏的入口。
+ */
+
 import { useState, useRef, useEffect, type Dispatch, type SetStateAction, type TransitionEvent } from 'react';
 import { Link } from 'react-router-dom';
 

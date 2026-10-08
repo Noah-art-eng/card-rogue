@@ -1,3 +1,8 @@
+/**
+ * PvE 层数归一化、玩家血量和 Boss 意图权重规则。
+ * 普通 Socket 输入会限制在静态配置范围，而肉鸽内部仍能按层数继续成长。
+ */
+
 import type { BossIntentWeights } from '../types/boss.js'
 
 export const MIN_LAYER = 1

@@ -1,3 +1,8 @@
+/**
+ * PvE 与肉鸽模式的 Socket.IO 事件总线。
+ * 客户端操作在这里读取内存房间、调用战斗 action、归档结束对局，再把裁剪后的权威状态发回当前玩家。
+ */
+
 import type { Server, Socket } from 'socket.io'
 
 import {

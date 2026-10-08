@@ -1,3 +1,8 @@
+/**
+ * 设计展示截图脚本。
+ * 它用 Playwright 打开本地前端、创建临时账号并截图首页与关键页面，便于人工比对视觉效果。
+ */
+
 import { mkdir } from 'node:fs/promises'
 import { join } from 'node:path'
 import { chromium } from 'playwright'

@@ -1,3 +1,8 @@
+/**
+ * 新账号注册页面。
+ * 它校验昵称、邮箱和密码，注册成功后立即走登录流程建立认证状态并进入大厅。
+ */
+
 import axios from 'axios'
 import { useState, type FormEvent } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'

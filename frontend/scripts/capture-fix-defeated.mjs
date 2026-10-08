@@ -1,3 +1,8 @@
+/**
+ * Boss 击败场景的浏览器回归脚本。
+ * 脚本自动推进对局并截取击败动画与最终状态，帮助检查胜利展示没有被后续改动破坏。
+ */
+
 import { chromium } from 'playwright'
 import { mkdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'

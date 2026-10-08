@@ -1,3 +1,8 @@
+/**
+ * 玩家血量、护盾和受击状态的 HUD。
+ * 战斗页面传入服务端同步后的数值，组件通过动画区分普通受伤、护盾吸收和濒危状态。
+ */
+
 import type { ShieldState } from '../../types/game'
 import {
   GAME_AVATAR_FRAME_SHIELD_SRC,

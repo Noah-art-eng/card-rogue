@@ -1,3 +1,8 @@
+/**
+ * 牌型识别规则测试。
+ * 不同元素和点数组合在这里锁定为正确的牌型，防止伤害计算的基础分类回归。
+ */
+
 import assert from 'node:assert/strict'
 
 import { Element, HandType } from '../types/card.js'

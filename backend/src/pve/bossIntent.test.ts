@@ -1,3 +1,8 @@
+/**
+ * Boss 攻击、防御和蓄力意图的结算测试。
+ * 这里特别锁定 DEFEND 只减伤一次，并验证意图预告、攻击伤害和回合重置不会互相串扰。
+ */
+
 import assert from 'node:assert/strict'
 
 import { BossIntent } from '../types/boss.js'

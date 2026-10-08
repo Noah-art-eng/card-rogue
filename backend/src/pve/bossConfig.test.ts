@@ -1,3 +1,8 @@
+/**
+ * Boss 配置与高层成长规则测试。
+ * 它锁定前十层固定配置以及第十一层之后继续按公式生成的契约，防止把肉鸽错误限制在第十层。
+ */
+
 import assert from 'node:assert/strict'
 
 import { BossIntent } from '../types/boss.js'

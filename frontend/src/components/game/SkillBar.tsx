@@ -1,3 +1,8 @@
+/**
+ * PvE 技能栏和目标选择面板。
+ * 护盾、换色和改点的本地选择在这里完成，最终目标和技能 ID 再交给战斗页面发送到服务端。
+ */
+
 import { useState, type ReactNode } from 'react'
 import '../../styles/skill-bar.css'
 import type { Card, Element, RoundPhase, RoundSkillsState } from '../../types/game'

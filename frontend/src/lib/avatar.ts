@@ -1,3 +1,8 @@
+/**
+ * 前端头像地址、首字母和边框资源的统一处理。
+ * 页面通过这些方法兼容相对路径、完整 URL 和无头像用户，避免每处重复回退规则。
+ */
+
 const DEFAULT_AVATAR = '/images/player.png'
 
 export const GAME_AVATAR_FRAME_SRC = '/images/avatar-frame.png'

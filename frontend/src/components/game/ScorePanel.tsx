@@ -1,3 +1,8 @@
+/**
+ * 出牌、洗牌和分数预览的操作面板。
+ * 它根据回合阶段禁用不该执行的按钮，同时展示本局总分和当前选牌的预估结果。
+ */
+
 import { useEffect, useRef, useState } from 'react'
 import type { HandType, RoundPhase } from '../../types/game'
 import type { EvaluatorResult } from '../../lib/handEvaluator'

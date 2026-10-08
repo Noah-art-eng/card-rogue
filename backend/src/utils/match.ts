@@ -1,3 +1,8 @@
+/**
+ * MongoDB 对局文档到公开 API 数据的转换。
+ * 数据库内部字段在这里被整理为前端历史列表所需的稳定结构。
+ */
+
 import type { IMatch } from '../models/Match.js'
 
 export interface PublicMatch {

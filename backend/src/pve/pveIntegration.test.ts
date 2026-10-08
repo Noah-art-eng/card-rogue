@@ -1,3 +1,8 @@
+/**
+ * PvE 运行时与回合流程的集成测试。
+ * 它从创建房间到出牌和结算一起验证，确保各个 PvE 模块组合后仍能推进完整对局。
+ */
+
 
 import assert from 'node:assert/strict'
 

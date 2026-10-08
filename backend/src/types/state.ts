@@ -1,3 +1,8 @@
+/**
+ * 服务端 PvE 完整游戏上下文与回合状态类型。
+ * 运行时房间、战斗 action 和 Socket 输出都围绕这份结构读写玩家、Boss、手牌和阶段。
+ */
+
 import type { BossBehaviorState, BossIntentWeights, BossRoundState } from './boss.js'
 import type { Buff } from './buff.js'
 import type { Card, Element, HandType } from './card.js'

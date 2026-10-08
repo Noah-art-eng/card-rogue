@@ -1,3 +1,8 @@
+/**
+ * 路由内容的过渡动画容器。
+ * 页面路径变化时由这里切换进出场状态，布局组件无需各自维护动画时机。
+ */
+
 import { useLocation } from 'react-router-dom'
 
 interface PageTransitionProps {

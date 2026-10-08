@@ -1,3 +1,8 @@
+/**
+ * PvE 回合循环测试。
+ * 它锁定抽牌、预告、技能、出牌和 Boss 攻击的正常顺序，并确认结束对局不会继续推进。
+ */
+
 import assert from 'node:assert/strict'
 
 import { BossIntent } from '../types/boss.js'

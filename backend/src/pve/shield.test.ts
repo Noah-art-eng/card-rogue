@@ -1,3 +1,8 @@
+/**
+ * 护盾技能和冷却规则测试。
+ * 它验证护盾如何吸收 Boss 攻击、何时进入冷却，以及胜负结算不会留下错误的护盾状态。
+ */
+
 import assert from 'node:assert/strict'
 
 import { BossIntent } from '../types/boss.js'

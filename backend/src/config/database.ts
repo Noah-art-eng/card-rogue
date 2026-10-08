@@ -1,3 +1,8 @@
+/**
+ * MongoDB 连接和历史索引修复入口。
+ * 启动时连接数据库，并补齐 Google 登录依赖的稀疏唯一索引，避免旧数据影响认证。
+ */
+
 import mongoose from 'mongoose'
 
 import { User } from '../models/User.js'

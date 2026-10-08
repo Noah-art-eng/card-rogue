@@ -1,3 +1,8 @@
+/**
+ * 肉鸽模式在前端的战斗总流程。
+ * 基础战斗与普通 PvE 共用服务端规则，这里额外处理每层强化、下一层推进、失败重试和存档恢复。
+ */
+
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { Socket } from 'socket.io-client'

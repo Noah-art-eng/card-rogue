@@ -1,3 +1,8 @@
+/**
+ * 技能能量消耗与回合恢复测试。
+ * 它验证技能不能超额使用，并锁定能量在下一回合按规则恢复。
+ */
+
 import assert from 'node:assert/strict'
 
 import { INITIAL_SKILL_ENERGY, RoundPhase } from '../types/state.js'

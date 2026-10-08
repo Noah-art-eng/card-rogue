@@ -1,3 +1,8 @@
+/**
+ * 大厅页面复用的 SVG 图标和模式入口片段。
+ * 这些小组件保持大厅主体页面专注于数据与流程，同时共享一致的导航和 PvE/肉鸽入口外观。
+ */
+
 const iconSm = 'h-[1.125rem] w-[1.125rem] shrink-0'
 const iconHeader = 'h-[1.35rem] w-[1.35rem] shrink-0 text-violet-50 sm:h-[1.5rem] sm:w-[1.5rem]'
 

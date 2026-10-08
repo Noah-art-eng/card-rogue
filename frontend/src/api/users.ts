@@ -1,3 +1,8 @@
+/**
+ * 当前用户资料和头像接口的前端请求封装。
+ * 认证上下文与大厅通过这里刷新身份资料或上传新的头像文件。
+ */
+
 import apiClient from './client'
 import type { User } from '../types/user'
 

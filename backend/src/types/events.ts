@@ -1,3 +1,8 @@
+/**
+ * PvE 状态机可接收事件的数据定义。
+ * 回合机器用这些事件区分开始回合、推进阶段和写入胜负结果。
+ */
+
 import type { BattleResult } from './state.js'
 
 export enum GameEventType {

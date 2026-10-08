@@ -1,3 +1,8 @@
+/**
+ * 前端排行榜接口的数据结构。
+ * 排行榜页面依照这些字段展示名次、胜率、对局数和当前用户的额外排名信息。
+ */
+
 export interface LeaderboardEntry {
   rank: number
   userId: string

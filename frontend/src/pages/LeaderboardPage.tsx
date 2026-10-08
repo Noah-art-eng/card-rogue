@@ -1,3 +1,8 @@
+/**
+ * 排行榜页面。
+ * 页面读取服务端排名和当前用户名次，再将胜率、奖牌和个人排名整理为可浏览的榜单。
+ */
+
 import axios from 'axios'
 import { useCallback, useEffect, useState, type CSSProperties } from 'react'
 import { useNavigate } from 'react-router-dom'

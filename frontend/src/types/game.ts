@@ -1,3 +1,8 @@
+/**
+ * 前端 PvE 状态的共用类型。
+ * 页面、组件和 Socket gameState 通过这些结构保持玩家、Boss、手牌、技能和回合字段一致。
+ */
+
 export type RoundPhase =
   | 'DRAW'
   | 'BOSS_TELEGRAPH'

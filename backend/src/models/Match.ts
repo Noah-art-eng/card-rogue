@@ -1,3 +1,8 @@
+/**
+ * MongoDB 中已结束 PvE 对局的文档结构。
+ * 每条记录保存层数、Boss、胜负、回合数和伤害，供历史列表与玩家统计使用。
+ */
+
 import mongoose, { Schema, type Document, type Model, type Types } from 'mongoose'
 
 export type MatchMode = 'PVE'

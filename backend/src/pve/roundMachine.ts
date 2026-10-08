@@ -1,3 +1,8 @@
+/**
+ * PvE 回合状态机的阶段转换。
+ * 它根据事件推进抽牌、预告、技能、洗牌、出牌和 Boss 攻击，非法转换会先被守卫规则拦截。
+ */
+
 import { assertCanAcceptEvent } from './guards.js'
 import { GameEventType, type GameEvent } from '../types/events.js'
 import {

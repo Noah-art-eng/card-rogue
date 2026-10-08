@@ -1,3 +1,8 @@
+/**
+ * 完整游戏页面的自动截图脚本。
+ * 它启动浏览器、建立临时用户和对局，再保存多个区域图像用于视觉验收。
+ */
+
 import { chromium } from 'playwright'
 import { mkdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'

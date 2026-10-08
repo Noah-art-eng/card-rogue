@@ -1,3 +1,8 @@
+/**
+ * 战斗攻击特效的精灵图播放组件。
+ * 普通攻击与不同元素攻击会选择不同帧图；页面只控制显示时机，不用它参与伤害计算。
+ */
+
 import { useEffect, useState } from 'react'
 
 import type { AttackEffectMode } from '../../lib/attackEffectMode'

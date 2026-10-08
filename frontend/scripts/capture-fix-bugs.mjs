@@ -1,3 +1,8 @@
+/**
+ * PvE 回归截图脚本。
+ * 它通过浏览器自动注册、进入战斗并执行护盾和出牌步骤，用截图记录此前修复的交互场景。
+ */
+
 import { chromium } from 'playwright'
 import { mkdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'

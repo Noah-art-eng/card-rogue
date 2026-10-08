@@ -1,3 +1,8 @@
+/**
+ * PvE 状态机事件的阶段校验。
+ * 操作进入业务结算前会先在这里确认当前阶段是否允许该事件，避免客户端跳过正常回合顺序。
+ */
+
 import { GameEventType, type GameEvent } from '../types/events.js'
 import { RoundPhase, type GameContext } from '../types/state.js'
 

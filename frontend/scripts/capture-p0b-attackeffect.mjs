@@ -1,3 +1,8 @@
+/**
+ * 玩家攻击特效的自动回归脚本。
+ * 它自动进入出牌阶段、确认攻击并等待状态变化，记录特效是否正常出现和结束。
+ */
+
 import { chromium } from 'playwright'
 import { mkdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'

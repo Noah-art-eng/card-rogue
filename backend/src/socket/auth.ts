@@ -1,3 +1,8 @@
+/**
+ * Socket.IO 连接建立时的 JWT 认证。
+ * 握手 token 验证成功后会把用户身份放入 socket.data，PvE 事件处理器据此隔离房间。
+ */
+
 import type { Socket } from 'socket.io'
 
 import { verifyAccessToken, type AccessTokenPayload } from '../utils/jwt.js'

@@ -1,3 +1,8 @@
+/**
+ * PvE 玩家操作与出牌结算的核心规则测试。
+ * 这里锁定选牌、出牌、技能和 Boss 回合的状态变化，避免服务端 action 修改后破坏基本战斗流程。
+ */
+
 import assert from 'node:assert/strict'
 
 import { BossIntent } from '../types/boss.js'

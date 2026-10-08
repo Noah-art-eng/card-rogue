@@ -1,3 +1,9 @@
+/**
+ * 登录和注册页共用的 Google 登录占位入口。
+ * 当前环境未配置 Google 登录，所以组件只展示统一的品牌按钮和提示文字，
+ * 不会自行加载身份脚本或发起认证请求。
+ */
+
 import './GoogleSignInButton.css'
 
 const SIZE_CLASSES = {
@@ -12,7 +18,6 @@ interface GoogleSignInButtonProps {
   className?: string
 }
 
-// Google 登录按钮内使用的品牌图标。
 function GoogleLogo() {
   return (
     <svg width="20" height="20" viewBox="0 0 18 18" aria-hidden="true" className="shrink-0">
@@ -36,7 +41,6 @@ function GoogleLogo() {
   )
 }
 
-// 加载 Google 身份脚本并把凭据交给登录页处理。
 export default function GoogleSignInButton({
   variant = 'login',
   className = '',

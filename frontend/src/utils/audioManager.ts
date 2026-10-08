@@ -1,3 +1,8 @@
+/**
+ * 浏览器中的全局背景音乐和音效管理器。
+ * 它读取用户音量/静音偏好，处理浏览器解锁限制，并让不同页面共享同一组播放和节流规则。
+ */
+
 type SfxKey = 'select' | 'discard' | 'play' | 'skillShield' | 'skillChange'
 
 const AUDIO_PATHS: Record<SfxKey | 'bgm', string> = {

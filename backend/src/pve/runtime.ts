@@ -1,3 +1,8 @@
+/**
+ * PvE 实时房间的内存状态管理。
+ * 玩家手牌、Boss、血量和回合暂存在当前进程，Socket 事件不断读取和更新这些房间；MongoDB 只保存肉鸽存档和已结束战绩。
+ */
+
 import {
   BattleResult,
   RoundPhase,

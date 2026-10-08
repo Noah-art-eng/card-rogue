@@ -1,3 +1,8 @@
+/**
+ * Boss 本回合意图和攻击数值的计算规则。
+ * 每回合会从权重中抽取攻击、防御或蓄力意图，再生成客户端展示需要的预告和最终伤害。
+ */
+
 import {
   CHARGE_ATTACK_MULTIPLIER,
   BossIntent,

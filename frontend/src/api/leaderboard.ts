@@ -1,3 +1,8 @@
+/**
+ * 排行榜接口的前端请求封装。
+ * 排行榜页面通过这里传入排序和分页参数，并取得统一的数据结构。
+ */
+
 import apiClient from './client'
 import type { LeaderboardResponse } from '../types/leaderboard'
 

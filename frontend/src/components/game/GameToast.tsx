@@ -1,3 +1,8 @@
+/**
+ * 战斗页面的短暂提示条。
+ * Socket 或操作失败信息由页面传入后，在不打断战斗布局的情况下显示。
+ */
+
 interface GameToastProps {
   message: string
 }

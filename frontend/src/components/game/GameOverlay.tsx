@@ -1,3 +1,8 @@
+/**
+ * PvE 胜负后的覆盖层。
+ * 它根据最终战斗结果展示重开、继续肉鸽或返回大厅等下一步操作。
+ */
+
 import type { BattleResult } from '../../types/game'
 
 interface GameOverlayProps {

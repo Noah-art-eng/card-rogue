@@ -1,3 +1,8 @@
+/**
+ * PvE 测试共用的 Boss 和战斗状态工厂。
+ * 测试通过这些可控默认值构造不同意图和血量场景，避免每个用例重复拼装完整游戏上下文。
+ */
+
 import { BossIntent } from '../types/boss.js'
 import { Element } from '../types/card.js'
 import { BattleResult, RoundPhase, type BossState } from '../types/state.js'

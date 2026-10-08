@@ -1,3 +1,9 @@
+/**
+ * 普通 PvE 战斗在前端的总流程。
+ * 页面接收服务端战斗状态，再组织选牌、技能、Boss 攻击和动画；真正伤害和回合结果由服务端计算。
+ * Boss 攻击时还会协调动画与血量更新时间，避免状态先到造成画面直接跳血。
+ */
+
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import type { Socket } from 'socket.io-client'

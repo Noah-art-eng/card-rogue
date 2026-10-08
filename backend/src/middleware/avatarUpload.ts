@@ -1,3 +1,8 @@
+/**
+ * 头像文件上传的 Multer 配置。
+ * 它限制文件类型和大小，并用认证用户 ID 生成本地文件名，防止上传内容混入任意格式。
+ */
+
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'

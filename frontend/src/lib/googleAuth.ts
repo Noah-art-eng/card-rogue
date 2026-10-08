@@ -1,3 +1,8 @@
+/**
+ * Google Identity 脚本加载与配置读取工具。
+ * 登录按钮通过它复用脚本加载 Promise，并检查当前环境是否配置了 Client ID。
+ */
+
 const GOOGLE_SCRIPT_SRC = 'https://accounts.google.com/gsi/client'
 
 declare global {

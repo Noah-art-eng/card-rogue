@@ -1,3 +1,8 @@
+/**
+ * 站点顶部导航与用户菜单。
+ * 它根据当前路由决定可见链接，并通过认证上下文完成退出登录和页面跳转。
+ */
+
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { useAuth } from '../../stores/AuthContext'

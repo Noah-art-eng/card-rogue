@@ -1,3 +1,8 @@
+/**
+ * 玩家受击与护盾吸收的自动回归脚本。
+ * 它分别构造普通受伤和护盾场景，截图检查血量、浮字与动画的同步。
+ */
+
 import { chromium } from 'playwright'
 import { mkdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'

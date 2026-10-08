@@ -1,3 +1,8 @@
+/**
+ * 普通页面的共享外壳。
+ * 导航栏和页面过渡在这里统一包裹；沉浸式战斗路由会绕开这层布局。
+ */
+
 import { Outlet, useLocation } from 'react-router-dom'
 
 import PageTransition from '../common/PageTransition'

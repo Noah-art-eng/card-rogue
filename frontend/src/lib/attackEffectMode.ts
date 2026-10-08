@@ -1,3 +1,8 @@
+/**
+ * 从本次出牌推断前端攻击特效类型的小工具。
+ * 它只检查卡牌元素来选择火、水、自然或普通视觉效果，不参与服务端伤害结算。
+ */
+
 import type { Card } from '../types/game'
 
 export type AttackEffectMode = 'fire' | 'water' | 'nature' | 'normal'

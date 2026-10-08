@@ -1,3 +1,8 @@
+/**
+ * 前端用于展示 Boss 的固定资料表。
+ * 历史记录和大厅会从层数或旧名称解析 Boss 的显示名；真正战斗数值仍由后端决定。
+ */
+
 export interface BossDefinition {
   id: string
   name: string

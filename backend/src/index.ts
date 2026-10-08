@@ -1,3 +1,8 @@
+/**
+ * 后端进程启动入口。
+ * 这里连接 MongoDB、创建 HTTP 服务和 Socket.IO 服务，并开始监听环境变量指定的端口。
+ */
+
 import 'dotenv/config'
 
 import { createServer } from 'http'

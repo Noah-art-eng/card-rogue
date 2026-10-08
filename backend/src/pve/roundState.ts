@@ -1,3 +1,8 @@
+/**
+ * 单个 PvE 回合的临时状态管理。
+ * 技能能量、护盾冷却和洗牌次数会在这里初始化或递减，下一回合再按规则重置。
+ */
+
 import {
   INITIAL_SKILL_ENERGY,
   SHUFFLE_PER_ROUND,

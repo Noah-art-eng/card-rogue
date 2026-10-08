@@ -1,3 +1,8 @@
+/**
+ * 受保护接口共用的 JWT 认证中间件。
+ * 它从 Authorization 请求头验证 token，并把用户身份写到请求对象，供后续路由读取。
+ */
+
 import type { NextFunction, Request, Response } from 'express'
 
 import { verifyAccessToken, type AccessTokenPayload } from '../utils/jwt.js'

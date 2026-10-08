@@ -1,3 +1,9 @@
+/**
+ * PvE 战斗中玩家和 Boss 操作的主要处理流程。
+ * 出牌、技能、洗牌和动画结算都会推进服务端游戏状态；伤害和回合结果在这里确定后，再由 Socket 层同步给前端。
+ * 这里保存的是服务端认可的最终结果，浏览器只负责发起操作和展示。
+ */
+
 import type { Buff } from '../types/buff.js'
 import { applyPlayerBuffs, buffKey } from '../types/buff.js'
 import { BossIntent } from '../types/boss.js'

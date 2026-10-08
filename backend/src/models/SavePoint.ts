@@ -1,3 +1,8 @@
+/**
+ * MongoDB 中肉鸽存档的文档结构。
+ * 每个用户只保留一份当前快照，刷新或重新进入肉鸽时据此恢复进度。
+ */
+
 import mongoose, { Schema, type Document, type Model } from 'mongoose'
 
 export interface ISavePoint extends Document {

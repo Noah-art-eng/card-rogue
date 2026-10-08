@@ -1,3 +1,8 @@
+/**
+ * 单张手牌的牌面与选中反馈。
+ * 元素、点数、稀有度和扇形布局由父级传入，组件只负责把这些状态呈现为可点击卡牌。
+ */
+
 import type { Card } from '../../types/game'
 import { getCardImagePath } from '../../lib/cardImage'
 import { getCardRarity } from '../../lib/cardRarity'

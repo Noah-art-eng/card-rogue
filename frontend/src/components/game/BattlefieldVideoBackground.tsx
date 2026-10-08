@@ -1,3 +1,8 @@
+/**
+ * 战场背景视频与图片回退。
+ * 视频资源无法播放时自动切换静态背景，让战斗界面仍能保持可用。
+ */
+
 import { useState } from 'react'
 
 const BG_VIDEO_SRC = '/animation/battle-feild-animation.mp4'

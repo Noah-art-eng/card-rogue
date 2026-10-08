@@ -1,3 +1,8 @@
+/**
+ * 登录 JWT 的签发与验证工具。
+ * 认证控制器生成只含用户 ID 的短期 token，HTTP 与 Socket 中间件再用同一密钥验证它。
+ */
+
 import jwt from 'jsonwebtoken'
 
 export interface AccessTokenPayload {

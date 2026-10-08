@@ -1,3 +1,8 @@
+/**
+ * Boss 待机、攻击和倒下动画的播放组件。
+ * 视频事件会回传给战斗页面，页面再通知服务端推进回合，避免动画和状态结算脱节。
+ */
+
 import { useEffect, useRef, useState } from 'react'
 
 export type BossVideoMode = 'idle' | 'attack' | 'defeated'

@@ -1,3 +1,10 @@
+/**
+ * 前端手牌预览规则测试。
+ *
+ * 这里锁定浏览器展示用的牌型和 DEFEND 预估伤害，
+ * 防止页面即时反馈与服务端实际结算规则出现明显偏差。
+ */
+
 import assert from 'node:assert/strict'
 
 import type { Card, Element, HandType } from '../types/game'

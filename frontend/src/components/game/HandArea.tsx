@@ -1,3 +1,8 @@
+/**
+ * 玩家手牌、选牌和肉鸽强化的展示区域。
+ * 它按响应式扇形布局排列卡牌，处理悬停/拖动焦点，并展示护盾、强化和受击浮字。
+ */
+
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import type { Card, Element, RoundPhase, ShieldState } from '../../types/game'

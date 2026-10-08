@@ -1,3 +1,8 @@
+/**
+ * 全站可复用的加载画面。
+ * 认证恢复或路由等待时传入不同提示，保持页面未就绪时的视觉反馈一致。
+ */
+
 interface LoadingScreenProps {
   message?: string
   fullScreen?: boolean

@@ -1,3 +1,8 @@
+/**
+ * 肉鸽存档和层级事件的 API 入口。
+ * 页面通过这里开始新局、保存快照、选择强化、处理胜负和读取可恢复存档。
+ */
+
 import apiClient from './client'
 import type { EnhancementOption, FloorLostResult, RogueSaveRecord } from '../types/rogue'
 

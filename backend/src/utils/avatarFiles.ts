@@ -1,3 +1,8 @@
+/**
+ * 本地托管头像文件的清理工具。
+ * 只有项目上传目录中的头像会被删除，外部 URL 不会因为用户更新头像而被误处理。
+ */
+
 import fs from 'node:fs'
 import path from 'node:path'
 

@@ -1,3 +1,8 @@
+/**
+ * 排行榜查询的服务端实现。
+ * 它按胜率聚合用户统计、过滤未完成足够对局的玩家，并返回分页榜单与当前用户名次。
+ */
+
 import type { Request, Response, NextFunction } from 'express'
 
 import { User } from '../models/User.js'

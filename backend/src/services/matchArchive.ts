@@ -1,3 +1,8 @@
+/**
+ * 结束对局的 MongoDB 归档与用户统计更新。
+ * 胜负确定后这里写入战绩、原子更新局数/胜率/最高伤害，并阻止同一局被重复归档。
+ */
+
 import { Match } from '../models/Match.js'
 import { User } from '../models/User.js'
 import { BattleResult, type GameContext } from '../types/state.js'

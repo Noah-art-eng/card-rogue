@@ -1,3 +1,8 @@
+/**
+ * 第二轮页面截图采集脚本。
+ * 它使用 Playwright 创建临时账号并保存指定页面截图，供后续视觉检查。
+ */
+
 import { mkdir } from 'node:fs/promises'
 import { join } from 'node:path'
 import { chromium } from 'playwright'

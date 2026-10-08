@@ -1,3 +1,8 @@
+/**
+ * 账号密码注册和登录的 HTTP 入口。
+ * 请求先经过校验，再创建或核对用户密码，最后返回 JWT 和可公开展示的用户资料。
+ */
+
 import bcrypt from 'bcrypt'
 import type { Request, Response } from 'express'
 

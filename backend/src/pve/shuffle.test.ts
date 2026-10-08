@@ -1,3 +1,8 @@
+/**
+ * 洗牌、弃牌和补牌规则测试。
+ * 它锁定可洗牌次数、已选卡牌处理和下一回合重置，避免手牌流转出现重复或遗漏。
+ */
+
 import assert from 'node:assert/strict'
 
 import { HAND_SIZE } from './deck.js'

@@ -1,3 +1,8 @@
+/**
+ * 牌面图片路径的映射规则。
+ * 元素和点数会被转换为静态资源编号，手牌组件据此取得正确的卡图。
+ */
+
 import type { Element } from '../types/game'
 
 const ELEMENT_OFFSETS: Record<Element, number> = {

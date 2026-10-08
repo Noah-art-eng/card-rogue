@@ -1,3 +1,8 @@
+/**
+ * 肉鸽过层后的强化选择界面。
+ * 它展示服务端给出的候选强化，玩家确认后将所选项交回肉鸽流程开启下一层。
+ */
+
 import type { EnhancementOption } from '../../types/rogue'
 
 interface EnhancementProps {

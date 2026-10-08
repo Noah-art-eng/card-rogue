@@ -1,3 +1,8 @@
+/**
+ * 注册请求的字段校验。
+ * 昵称、邮箱和密码会在创建账号前检查长度和格式，避免无效数据进入数据库。
+ */
+
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export interface RegisterInput {

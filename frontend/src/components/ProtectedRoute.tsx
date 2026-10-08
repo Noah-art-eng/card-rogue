@@ -1,3 +1,8 @@
+/**
+ * 受保护页面的前端访问门。
+ * 它等待 token 对应的用户资料恢复完成；没有身份时跳转登录，避免受限页面短暂闪现。
+ */
+
 import { useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 

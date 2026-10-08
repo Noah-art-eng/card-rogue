@@ -1,3 +1,8 @@
+/**
+ * 肉鸽模式的 REST 存档与强化流程。
+ * 页面从这里开始新局、读取或保存快照、领取下一层强化和恢复失败检查点；持久化细节交给 SavePoint 服务。
+ */
+
 import { Router } from 'express'
 import type { Response } from 'express'
 

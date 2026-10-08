@@ -1,3 +1,8 @@
+/**
+ * 前端路由总入口。
+ * 这里把认证 Provider、公共布局、公开页和受保护的大厅/PvE/肉鸽页面组合成一条路由树。
+ */
+
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
 import RootLayout from './components/layout/RootLayout'

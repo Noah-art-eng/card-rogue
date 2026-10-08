@@ -1,3 +1,8 @@
+/**
+ * 服务端最终伤害的计算规则。
+ * 它按牌型、卡牌点数、肉鸽强化和 Boss 防御状态汇总伤害，结果会写入本回合的 play.score。
+ */
+
 import { HAND_SCORES, HandType, type Card } from '../types/card.js'
 import type { Buff } from '../types/buff.js'
 

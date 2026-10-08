@@ -1,3 +1,8 @@
+/**
+ * Socket.IO 服务初始化入口。
+ * 它复用 HTTP 服务和 CORS 配置，注册连接认证及 PvE 事件处理器。
+ */
+
 import type { Server as HttpServer } from 'http'
 import { Server } from 'socket.io'
 

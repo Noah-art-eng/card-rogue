@@ -1,3 +1,8 @@
+/**
+ * 当前用户资料与头像上传的 HTTP 入口。
+ * 它从认证身份读取用户，保存新头像并清理旧的托管文件，同时将上传错误转换成可展示的响应。
+ */
+
 import type { Response } from 'express'
 import type { NextFunction } from 'express'
 import multer from 'multer'

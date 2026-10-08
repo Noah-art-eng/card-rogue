@@ -1,3 +1,8 @@
+/**
+ * 当前选牌牌型和预估伤害的展示组件。
+ * 数字来自前端预览计算，用于即时反馈；确认出牌后仍由服务端重新结算。
+ */
+
 import type { HandType } from '../../types/game'
 import type { EvaluatorResult } from '../../lib/handEvaluator'
 

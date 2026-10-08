@@ -1,3 +1,8 @@
+/**
+ * 用户头像的统一展示组件。
+ * 它优先显示服务端头像地址，缺失或加载失败时回退为昵称首字母或默认图片。
+ */
+
 import { getAvatarDisplaySrc, getUserInitials, hasCustomAvatar } from '../../lib/avatar'
 
 interface UserAvatarProps {

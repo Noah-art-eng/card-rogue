@@ -1,3 +1,8 @@
+/**
+ * 用户登录和身份恢复的页面入口。
+ * 账号密码或 Google 登录成功后会把 token 与用户资料写入认证状态，再跳回登录前想访问的页面。
+ */
+
 import axios from 'axios'
 import { useCallback, useEffect, useMemo, useState, type CSSProperties, type FormEvent } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'

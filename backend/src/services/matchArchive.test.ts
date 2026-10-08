@@ -1,3 +1,8 @@
+/**
+ * 结束对局归档和用户统计的集成测试。
+ * 它通过内存 MongoDB 锁定胜负历史、最高伤害、胜率和重复归档保护，避免战绩统计被重复写入。
+ */
+
 import assert from 'node:assert/strict'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'

@@ -1,3 +1,8 @@
+/**
+ * 本地经验奖励缓存与去重。
+ * 对局刚结束时先记录奖励键和累计经验，等服务端统计刷新后再合并，避免重复发放或进度条滞后。
+ */
+
 import { computeTotalXp } from './xpSystem'
 
 const KEY_PREFIX = 'card-rogue-xp:'

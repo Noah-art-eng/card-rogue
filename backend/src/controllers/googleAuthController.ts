@@ -1,3 +1,8 @@
+/**
+ * Google 凭据登录的服务端入口。
+ * 它验证 Google token，查找或创建关联账号，并沿用普通登录相同的 JWT 与用户资料返回格式。
+ */
+
 import bcrypt from 'bcrypt'
 import { OAuth2Client } from 'google-auth-library'
 import type { Request, Response } from 'express'

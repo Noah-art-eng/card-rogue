@@ -1,3 +1,8 @@
+/**
+ * 各层 Boss 的固定配置与高层成长规则。
+ * 前十层读取预置 Boss；肉鸽超过第十层仍可继续，因此血量和攻击会按公式增长而不会被限制在第十层。
+ */
+
 import { Element } from '../types/card.js'
 import type { BossLayerConfig } from '../types/boss.js'
 import type { BossState } from '../types/state.js'

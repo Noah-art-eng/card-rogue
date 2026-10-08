@@ -1,3 +1,8 @@
+/**
+ * 登录后的游戏大厅。
+ * 它展示用户资料、赛季倒计时和最近战绩，并提供头像上传、普通 PvE 与肉鸽模式入口。
+ */
+
 import axios from 'axios'
 import { useEffect, useMemo, useRef, useState, useCallback, type ChangeEvent } from 'react'
 import { useNavigate } from 'react-router-dom'

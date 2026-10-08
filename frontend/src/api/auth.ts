@@ -1,3 +1,8 @@
+/**
+ * 认证接口的前端请求封装。
+ * 登录、注册和 Google 凭据请求都从这里发出，页面无需直接拼接 API 地址。
+ */
+
 import apiClient from './client'
 import type { User } from '../types/user'
 

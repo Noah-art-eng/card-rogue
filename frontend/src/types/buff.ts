@@ -1,3 +1,8 @@
+/**
+ * 前端肉鸽强化的数据结构。
+ * 强化选择组件、存档和战斗页面用这些字段展示名称、描述、元素和具体增益内容。
+ */
+
 export interface HandMultBonus {
   type: 'HAND_MULT_BONUS'
   handType: string

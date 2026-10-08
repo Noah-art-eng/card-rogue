@@ -1,3 +1,8 @@
+/**
+ * 全站登录状态与身份恢复上下文。
+ * 它保存 token 和用户资料，统一处理登录、退出、资料更新及刷新页面后的 token 验证。
+ */
+
 import {
   createContext,
   useCallback,

@@ -1,3 +1,8 @@
+/**
+ * 手牌扇形布局的数学计算。
+ * 手牌区域和单张卡片共享这里的位置、旋转和 transform 规则，避免响应式布局在不同组件中分叉。
+ */
+
 export const HAND_CARD_WIDTH = 192
 export const HAND_CARD_HEIGHT = 282
 

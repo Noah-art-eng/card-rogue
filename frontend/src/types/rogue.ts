@@ -1,3 +1,8 @@
+/**
+ * 前端肉鸽存档、强化和检查点的数据结构。
+ * 肉鸽页面和 API 层用它们传递当前层、Boss/玩家血量、强化列表及恢复结果。
+ */
+
 import type { Buff } from './buff'
 
 export interface EnhancementOption {

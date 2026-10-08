@@ -1,3 +1,8 @@
+/**
+ * PvE 牌堆生成、抽牌和卡牌变更规则。
+ * 开局、补牌、洗牌和技能变色/改点都从这里操作；牌面属性可变，但 card.id 保持稳定以支持选牌与 Socket 同步。
+ */
+
 import {
   Element,
   rankToDisplayRank,

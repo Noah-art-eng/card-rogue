@@ -1,3 +1,8 @@
+/**
+ * 普通 PvE 页面截图脚本。
+ * 它自动登录并进入游戏页，输出页面截图供检查主战斗布局。
+ */
+
 import { chromium } from 'playwright'
 import { mkdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'

@@ -1,3 +1,8 @@
+/**
+ * Express 应用的组装入口。
+ * 这里挂载 CORS、JSON 解析、静态头像、HTTP 路由和统一错误处理，供 HTTP 与 Socket 服务器共同使用。
+ */
+
 import cors from 'cors'
 import express from 'express'
 import path from 'node:path'

@@ -1,3 +1,8 @@
+/**
+ * PvE 战场的 Boss、伤害和阶段提示区域。
+ * 它把服务端状态转换为 Boss 血量、意图、攻击浮字和双方行动提示。
+ */
+
 import { resolveBossDisplayName } from '../../constants/bosses'
 import '../../styles/battlefield.css'
 import type { AttackEffectMode } from '../../lib/attackEffectMode'

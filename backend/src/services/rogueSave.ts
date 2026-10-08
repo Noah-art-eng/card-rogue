@@ -1,3 +1,8 @@
+/**
+ * 肉鸽存档的 MongoDB 读写封装。
+ * 按用户覆盖当前快照，页面恢复时读取它，通关或主动放弃时再删除它。
+ */
+
 import { SavePoint } from '../models/SavePoint.js'
 
 // 用用户 ID 覆盖或新建唯一的肉鸽存档快照。

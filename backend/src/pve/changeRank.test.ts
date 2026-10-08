@@ -1,3 +1,8 @@
+/**
+ * 改点技能的卡牌实例契约测试。
+ * 它验证点数相关展示会更新，但稳定 card.id 和元素不会随牌面变化而被重新生成。
+ */
+
 import assert from 'node:assert/strict'
 
 import { Element, HandType } from '../types/card.js'
